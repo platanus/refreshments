@@ -24,5 +24,6 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
   config.active_record.dump_schema_after_migration = false
+  config.active_storage.service = :amazon
 end
 Rack::Timeout.timeout = (ENV["RACK_TIMEOUT"] || 10).to_i
