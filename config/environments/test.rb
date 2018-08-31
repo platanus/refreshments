@@ -18,4 +18,5 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   config.active_support.deprecation = :stderr
   config.active_storage.service = :test
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end
