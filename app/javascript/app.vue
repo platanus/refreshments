@@ -5,8 +5,12 @@
     </div>
     <div class="app">
       <h2>Productos</h2>
-      <div v-for="product in products">
-        {{ product.name }}
+      <div class="product-list" key="products">
+        <div class="product-list__product" v-for="product in products">
+          <img class="product__image" :src="product.image_url">
+          <span class="product__price">$ {{ product.price }}</span>
+          <span class="product__name">{{ product.name }}</span>
+        </div>
       </div>
     </div>
   </div>
