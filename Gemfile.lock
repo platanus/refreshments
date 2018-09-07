@@ -174,6 +174,8 @@ GEM
       activesupport (>= 4.1)
     heroku-stage (0.4.0)
       rails
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.9.0)
@@ -219,6 +221,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     mustermann (1.0.3)
     nenv (0.3.0)
@@ -432,6 +435,7 @@ DEPENDENCIES
   faker
   guard-rspec
   heroku-stage
+  httparty
   jbuilder (~> 2.5)
   pg
   power-types
