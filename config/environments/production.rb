@@ -26,4 +26,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_storage.service = :amazon
 end
-Rack::Timeout.timeout = (ENV["RACK_TIMEOUT"] || 10).to_i
+Rails.application.config.middleware.insert_before(
+  Rack::Runtime, Rack::Timeout, service_timeout: ENV.fetch("RACK_TIMEOUT", 10).to_i
+)
