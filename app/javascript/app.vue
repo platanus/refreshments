@@ -6,20 +6,21 @@
     <div class="app">
       <h2>Productos</h2>
       <div class="product-list" key="products">
-        <div class="product-list__product" v-for="product in products">
-          <img class="product__image" :src="product.image_url">
-          <span class="product__price">$ {{ product.price }}</span>
-          <span class="product__name">{{ product.name }}</span>
-        </div>
+        <product v-for="product in products" :product="product"></product>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
+
+  import product from './components/product.vue';
 
   export default {
+    components: {
+      product,
+    },
     data: function () {
       return {}
     },
