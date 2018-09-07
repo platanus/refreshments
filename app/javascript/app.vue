@@ -1,22 +1,18 @@
 <template>
   <div>
-    <p>{{ message }}</p>
+    <div class="header">
+      <img class="header__logo" src="~/assets/images/platanus_logo.svg">
+    </div>
+    <div class="app">
+      <h2>Productos</h2>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
+  export default {
+    data: function () {
+      return {}
     }
   }
-}
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
