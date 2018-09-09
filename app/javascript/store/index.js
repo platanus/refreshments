@@ -21,8 +21,7 @@ const store = new Vuex.Store({
     getProducts: context => {
       api.products().then((response) => {
         const products = response.products.reduce((acc, product) => {
-          acc[product.id] = { id: product.id, name: product.name, amount: 0 };
-
+          acc[product.id] = { ...product, amount: 0 };
           return acc;
         }, {});
         context.commit('setProducts', products);
