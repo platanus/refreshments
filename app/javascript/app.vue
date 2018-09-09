@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   import product from './components/product.vue';
 
@@ -25,9 +25,9 @@
       return {}
     },
     computed: {
-      ...mapState([
-        'products'
-      ])
+      ...mapGetters({
+        'products': 'productsAsArray',
+      })
     },
     mounted() {
       this.$store.dispatch('getProducts');
