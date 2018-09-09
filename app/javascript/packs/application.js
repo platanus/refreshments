@@ -3,13 +3,13 @@
 
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from '../app.vue';
 import store from '../store';
 
-library.add(faMinus, faPlus);
+library.add(faMinus, faPlus, faTrashAlt);
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.component('font-awesome-icon', FontAwesomeIcon);
