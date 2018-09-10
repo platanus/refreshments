@@ -27,6 +27,13 @@ const store = new Vuex.Store({
         context.commit('setProducts', products);
       });
     },
+    decrementProduct: (context, payload) => {
+      const amount = payload.amount - 1 > 0 ? payload.amount - 1 : 0;
+      context.commit('setProduct', { ...payload, amount: amount });
+    },
+    incrementProduct: (context, payload) => {
+      context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
+    },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
