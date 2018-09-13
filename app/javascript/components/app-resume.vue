@@ -21,7 +21,7 @@
           Subtotal<br/>
           $ {{ totalPrice }}<br/>
         </div>
-        <div class="btn">
+        <div class="btn" @click="buy">
           Comprar
         </div>
       </div>
@@ -49,6 +49,7 @@
     methods: {
       ...mapActions([
         'toggleResume',
+        'buy'
       ]),
     }
   }
