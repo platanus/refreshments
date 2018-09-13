@@ -12,7 +12,7 @@
           <div class="resume-product__name">
             <b>(x{{ product.amount }})</b>
             {{ product.name }}
-          </Div>
+          </div>
           <div class="resume-product__total">$ {{ product.amount * product.price }}</div>
         </div>
       </div>
