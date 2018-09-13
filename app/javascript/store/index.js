@@ -76,7 +76,7 @@ const store = new Vuex.Store({
     },
     updateInvoiceSettled: context => {
       api.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
-        context.commit('setInvoiceSettled', response.settled);
+        context.commit('setInvoiceSettled', response.data.settled);
       });
     },
     testInvoice: context => {
