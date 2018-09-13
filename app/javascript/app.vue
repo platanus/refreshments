@@ -7,6 +7,8 @@
         <product v-for="product in products" :product="product"></product>
       </div>
     </div>
+    <app-resume></app-resume>
+  </div>
   </div>
 </template>
 
@@ -14,15 +16,17 @@
   import { mapGetters } from 'vuex';
 
   import appHeader from './components/app-header.vue';
+  import appResume from './components/app-resume.vue';
   import product from './components/product.vue';
 
   export default {
     components: {
       appHeader,
+      appResume,
       product,
     },
     data: function () {
-      return {}
+      return {};
     },
     computed: {
       ...mapGetters({

@@ -1,11 +1,11 @@
 @import 'refreshments/theme';
 @import 'refreshments/product';
 @import 'refreshments/header';
+@import 'refreshments/resume';
 
 .app {
   min-height: calc(100vh - 56px);
   background: white;
-  font-family: 'Montserrat', sans-serif;
   max-width: 1024px;
   margin: 0 auto;
 }

@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    showResume: false,
     products: {},
   },
   mutations: {
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
     },
     setProducts: (state, payload) => {
       state.products = payload;
+    },
+    toggleResume: state => {
+      state.showResume = !state.showResume;
     },
   },
   actions: {
@@ -34,11 +38,17 @@ const store = new Vuex.Store({
     incrementProduct: (context, payload) => {
       context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
     },
+    toggleResume: context => {
+      context.commit('toggleResume');
+    },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     totalAmount: (state, getters) => (
       getters.productsAsArray.reduce((acc, product) => acc += product.amount, 0)
+    ),
+    totalPrice: (state, getters) => (
+      getters.productsAsArray.reduce((acc, product) => acc += (product.price * product.amount), 0)
     ),
   },
 });
