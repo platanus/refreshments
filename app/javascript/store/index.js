@@ -37,6 +37,9 @@ const store = new Vuex.Store({
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
+    totalAmount: (state, getters) => (
+      getters.productsAsArray.reduce((acc, product) => acc += product.amount, 0)
+    ),
   },
 });
 
