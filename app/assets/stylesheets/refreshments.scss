@@ -1,7 +1,7 @@
 @import 'refreshments/theme';
 @import 'refreshments/product';
 
-.header {
+.app-header {
   text-align: center;
   background: white;
   border: 1px solid #eee;
@@ -10,11 +10,11 @@
   position: relative;
 }
 
-.header__logo {
+.app-header__logo {
   width: 40px;
 }
 
-.header__basket {
+.app-header__basket {
   position: absolute;
   font-size: 20px;
   text-align: right;
