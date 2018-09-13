@@ -9,6 +9,8 @@ const store = new Vuex.Store({
   state: {
     showResume: false,
     products: {},
+    invoice: {},
+    status: false,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -20,6 +22,16 @@ const store = new Vuex.Store({
     toggleResume: state => {
       state.showResume = !state.showResume;
     },
+    setInvoice: (state, payload) => {
+      state.invoice = payload;
+    },
+    setStatus: (state, payload) => {
+      state.status = payload;
+    },
+    setInvoiceSettled: (state, payload) => {
+      state.invoice.settled = payload;
+      state.status = payload;
+    }
   },
   actions: {
     getProducts: context => {
@@ -47,12 +59,29 @@ const store = new Vuex.Store({
         return acc;
       }, {});
       api.buy(products).then((response) => {
-        window.location.href = `/order/${response.id}`;
+        context.commit('setInvoice', response.invoice);
       });
     },
     toggleResume: context => {
       context.commit('toggleResume');
     },
+    cleanKart: context => {
+      context.getters.productsAsArray.forEach(product => {
+        context.commit('setProduct', { ...product, amount: 0 });
+      });
+    },
+    cleanInvoice: context => {
+      context.commit('setInvoice', {});
+      context.commit('setStatus', false);
+    },
+    updateInvoiceSettled: context => {
+      api.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
+        context.commit('setInvoiceSettled', response.settled);
+      });
+    },
+    testInvoice: context => {
+      context.commit('setInvoiceSettled', true);
+    }
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),

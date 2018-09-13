@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-fade">
-  <div class="resume" v-if="showResume">
+  <div class="resume" v-if="showResume && !invoice.id">
     <div class="resume__container">
       <div class="resume__close" @click="toggleResume">
         <font-awesome-icon far icon="times"></font-awesome-icon>
@@ -38,7 +38,8 @@
     },
     computed: {
       ...mapState([
-        'showResume'
+        'showResume',
+        'invoice'
       ]),
       ...mapGetters({
         'products': 'productsAsArray',

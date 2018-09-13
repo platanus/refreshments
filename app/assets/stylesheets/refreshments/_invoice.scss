@@ -1,0 +1,45 @@
+.invoice {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  background:  rgba(0, 0, 0, .3);
+
+  &__container {
+    background: white;
+    padding: 10px;
+    width: 400px;
+    max-height: 400px;
+    margin: auto;
+    overflow: scroll;
+    top: 50px;
+    position: relative;
+  }
+
+  &__info {
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  &__status {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: #ff253a;
+    color: white;
+    text-align: center;
+
+    &--paid {
+      background: #00b1b3;
+    }
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
