@@ -1,6 +1,7 @@
 <template>
   <div class="product-list__product" >
     <div class="product__image">
+      <span class="product__price">$ {{ product.price }}</span>
       <img :src="product.image_url">
       <div class="product__manager" v-if="product.amount > 0">
         <span class="product-manager__minus" @click="decrementProduct(product)">
@@ -16,7 +17,6 @@
         Agregar
       </div>
     </div>
-    <span class="product__price">$ {{ product.price }}</span>
     <span class="product__name">{{ product.name }}</span>
   </div>
 </template>

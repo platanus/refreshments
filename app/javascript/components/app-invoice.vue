@@ -32,7 +32,7 @@
         'invoice'
       ]),
       statusVerbose() {
-        return this.status ? 'Pagado' : 'Esperando pago...';
+        return this.status ? '¡Pagado!' : 'Esperando pago...';
       },
     },
     methods: {
