@@ -12,9 +12,9 @@
           <h3 class="invoice__status" :class="{ 'invoice__status--paid': status }">{{ statusVerbose }}</h3>
         </div>
 
-        <div class="btn" @click="testInvoice">
+<!--         <div class="btn" @click="testInvoice">
           Pagar
-        </div>
+        </div> -->
       </div>
     </div>
   </transition>
@@ -32,7 +32,7 @@
         'invoice'
       ]),
       statusVerbose() {
-        return this.status ? 'Pagado' : 'No Pagado!';
+        return this.status ? 'Pagado' : 'Esperando pago...';
       },
     },
     methods: {
