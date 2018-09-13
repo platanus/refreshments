@@ -1,2 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu|Montserrat:300,400,700');
 $primary-color: #fabc13;
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn {
+  text-align: center;
+  margin: 0 10px;
+  display: block;
+  padding: 5px;
+  border: 1px solid $primary-color;
+  border-radius: 4px;
+  background: $primary-color;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+}
