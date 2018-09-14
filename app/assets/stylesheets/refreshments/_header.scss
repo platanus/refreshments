@@ -8,17 +8,17 @@
   position: fixed;
   top: 0px;
   z-index: 5;
-}
 
-.app-header__logo {
-  width: 40px;
-}
+  &__logo {
+    width: 50px;
+  }
 
-.app-header__basket {
-  position: absolute;
-  font-size: 20px;
-  text-align: right;
-  color: #ddd;
-  top: 10px;
-  right: 30px;
+  &__basket {
+    position: absolute;
+    font-size: 20px;
+    text-align: right;
+    color: #ddd;
+    top: 10px;
+    right: 30px;
+  }
 }
