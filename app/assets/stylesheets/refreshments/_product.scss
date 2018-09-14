@@ -14,6 +14,10 @@ $primary-color: #fabc13;
     flex-direction: column;
     font-size: 18px;
 
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+
     .product__image {
       position: relative;
       width: 270px;
