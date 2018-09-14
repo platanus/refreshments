@@ -2,7 +2,6 @@
   <div>
     <app-header></app-header>
     <div class="app">
-      <h2>Productos</h2>
       <div class="product-list" key="products">
         <product v-for="product in products" :product="product"></product>
       </div>

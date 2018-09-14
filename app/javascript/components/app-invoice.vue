@@ -7,17 +7,13 @@
         </div>
         <div class="invoice__resume">
           <b>Envía {{ invoice.satoshis }} satoshis ($ {{ invoice.clp }})</b><br/>
-          <b>Escaneando el siguiente QR</b><br/>
+          <b>escaneando el QR</b><br/>
           <span class="invoice__resume__emoji">👇</span>
         </div>
         <div class="invoice__info" v-if="invoice.payment_request">
           <qrcode :value="invoice.payment_request" :options="{ size: 250 }"></qrcode>
           <h3 class="invoice__status" :class="{ 'invoice__status--paid': status }">{{ statusVerbose }}</h3>
         </div>
-
-<!--         <div class="btn" @click="testInvoice">
-          Pagar
-        </div> -->
       </div>
     </div>
   </transition>
