@@ -14,4 +14,5 @@ end
 #  memo            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  settled         :boolean          default(FALSE)
 #
