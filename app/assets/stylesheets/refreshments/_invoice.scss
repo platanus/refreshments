@@ -1,0 +1,61 @@
+.invoice {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  background:  rgba(0, 0, 0, .3);
+
+  &__container {
+    background: white;
+    padding: 10px;
+    width: 400px;
+    max-height: 450px;
+    margin: auto;
+    overflow: scroll;
+    top: 50px;
+    position: relative;
+    border-radius: 5px;
+  }
+
+  &__close {
+    font-size: 22px;
+    text-align: right;
+    margin-right: 5px;
+  }
+
+  &__resume {
+    padding: 10px;
+    text-align: center;
+
+    &__emoji {
+      font-size: 20px;
+    }
+  }
+
+  &__info {
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  &__status {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: #fabc13;
+    color: white;
+    text-align: center;
+
+    &--paid {
+      background: #00b1b3;
+    }
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

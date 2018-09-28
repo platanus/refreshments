@@ -2,10 +2,13 @@
 @import 'refreshments/product';
 @import 'refreshments/header';
 @import 'refreshments/resume';
+@import 'refreshments/invoice';
 
 .app {
   min-height: calc(100vh - 56px);
   background: white;
-  max-width: 1024px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 55px auto 0 auto;
+  padding: 30px;
+  text-align: center;
 }
