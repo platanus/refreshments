@@ -9,7 +9,9 @@ class Api::V1::InvoicesController < Api::V1::BaseController
 
   def status
     r_hash = URI.decode(params[:r_hash])
-    respond_with settled: InvoiceUtils.status(r_hash)
+    settled = InvoiceUtils.status(r_hash)
+    SettleInvoiceJob.perform_later(r_hash) if settled
+    respond_with settled: settled
   end
 
   private
