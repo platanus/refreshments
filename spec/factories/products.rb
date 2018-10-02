@@ -8,5 +8,6 @@ FactoryGirl.define do
         image/jpg'
       )
     end
+    active true
   end
 end
