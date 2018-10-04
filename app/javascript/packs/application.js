@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faMinus, faPlus, faTrashAlt, faShoppingBasket, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
 import VueQrcode from '@xkeshi/vue-qrcode';
+import VueClipboard from 'vue-clipboard2';
 
 import App from '../app.vue';
 import store from '../store';
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.component('font-awesome-layers', FontAwesomeLayers);
   Vue.component('font-awesome-layers-text', FontAwesomeLayersText);
   Vue.component(VueQrcode.name, VueQrcode);
+  Vue.use(VueClipboard);
 
   Vue.config.productionTip = false;
 

@@ -12,6 +12,7 @@
         </div>
         <div class="invoice__info" v-if="invoice.payment_request">
           <qrcode :value="invoice.payment_request" :options="{ size: 250 }"></qrcode>
+          <div class="btn btn--hash" @click="copyPaymentRequest">{{ invoice.payment_request }}</div>
           <h3 class="invoice__status" :class="{ 'invoice__status--paid': status }">{{ statusVerbose }}</h3>
         </div>
       </div>
@@ -46,6 +47,13 @@
         this.cleanInvoice();
         this.cleanKart();
         this.toggleResume();
+      },
+      copyPaymentRequest() {
+        this.$copyText(this.invoice.payment_request).then(e => {
+          console.log(e)
+        }, e => {
+          console.log(e)
+        })
       },
     },
     mounted() {
