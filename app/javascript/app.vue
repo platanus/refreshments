@@ -1,14 +1,12 @@
 <template>
   <div>
-    <app-header></app-header>
     <div class="app">
       <div class="product-list" key="products">
         <product v-for="product in products" :product="product"></product>
       </div>
+      <app-resume></app-resume>
     </div>
-    <app-resume></app-resume>
     <app-invoice></app-invoice>
-  </div>
   </div>
 </template>
 
