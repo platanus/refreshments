@@ -49,6 +49,7 @@ const store = new Vuex.Store({
     },
     incrementProduct: (context, payload) => {
       context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
+      context.dispatch('buy');
     },
     buy: context => {
       const products = context.getters.productsAsArray.reduce((acc, product) => {

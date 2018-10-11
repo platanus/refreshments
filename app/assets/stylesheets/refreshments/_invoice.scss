@@ -1,34 +1,32 @@
 .invoice {
-  &__container {
-    background: white;
-    padding: 10px;
-    width: 400px;
-    max-height: 450px;
-    margin: auto;
-    overflow: scroll;
-    top: 50px;
-    position: relative;
-    border-radius: 5px;
-  }
+  font-size: 18px;
+  padding: 10px;
+  max-height: 450px;
+  margin: auto;
+  overflow: scroll;
+  top: 50px;
+  position: relative;
+  display: flex;
+  border-top: 1px solid #eee;
 
-  &__close {
+  &__title {
+    height: 28px;
+    color: #383769;
     font-size: 22px;
-    text-align: right;
-    margin-right: 5px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    line-height: 28px;
+    margin-top: 0;
   }
 
   &__resume {
+    flex: 1 0 0;
     padding: 10px;
-    text-align: center;
-
-    &__emoji {
-      font-size: 20px;
-    }
+    text-align: left;
   }
 
   &__info {
-    width: 300px;
-    text-align: center;
+    flex: 1 0 0;
     margin: 0 auto;
   }
 
@@ -37,7 +35,6 @@
     border-radius: 20px;
     background: #fabc13;
     color: white;
-    text-align: center;
 
     &--paid {
       background: #00b1b3;

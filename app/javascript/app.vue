@@ -4,9 +4,14 @@
       <div class="product-list" key="products">
         <product v-for="product in products" :product="product"></product>
       </div>
-      <app-resume></app-resume>
+      <div class="sidebar">
+        <div class="sidebar__container">
+          <img src="~/assets/images/platanus_logo.svg" style="width: 60px;">
+          <app-resume></app-resume>
+          <app-invoice></app-invoice>
+        </div>
+      </div>
     </div>
-    <app-invoice></app-invoice>
   </div>
 </template>
 

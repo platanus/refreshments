@@ -18,11 +18,6 @@
         <span class="resume-total__title">Total</span>
         <span class="resume-total__value">${{ totalPrice }}</span>
       </div>
-      <div class="resume__actions">
-        <div class="btn" @click="buy">
-          Comprar
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -47,7 +42,6 @@
     methods: {
       ...mapActions([
         'toggleResume',
-        'buy'
       ]),
     }
   }

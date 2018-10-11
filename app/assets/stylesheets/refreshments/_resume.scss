@@ -4,18 +4,8 @@ $alt-color: #ff4343;
 $default-color: #676775;
 
 .resume {
-  height: 100vh;
-  z-index: 10;
-  border-radius: 0 0 2px 2px;
-  box-shadow: 0 18px 17px 0 #E4EBFF;
-
-  &__container {
-    background: white;
-    border-left: 1px solid $border-color;
-    width: 40vw;
-    padding: 10px 0;
-    height: calc(100vh - 20px);
-  }
+  height: calc(100% - 300px);
+  overflow: scroll;
 
   &__title {
     height: 38px;
