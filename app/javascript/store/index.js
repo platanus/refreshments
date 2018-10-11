@@ -46,22 +46,28 @@ const store = new Vuex.Store({
     decrementProduct: (context, payload) => {
       const amount = payload.amount - 1 > 0 ? payload.amount - 1 : 0;
       context.commit('setProduct', { ...payload, amount: amount });
+      context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
       context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
       context.dispatch('buy');
     },
     buy: context => {
-      const products = context.getters.productsAsArray.reduce((acc, product) => {
-        if (product.amount > 0) {
-          acc[product.id] = product.amount;
-        }
+      if (context.getters.totalAmount) {
+        const products = context.getters.productsAsArray.reduce((acc, product) => {
+          if (product.amount > 0) {
+            acc[product.id] = product.amount;
+          }
 
-        return acc;
-      }, {});
-      api.buy(products).then((response) => {
-        context.commit('setInvoice', response.invoice);
-      });
+          return acc;
+        }, {});
+
+        api.buy(products).then((response) => {
+          context.commit('setInvoice', response.invoice);
+        });
+      } else {
+        context.commit('setInvoice', {});
+      }
     },
     toggleResume: context => {
       context.commit('toggleResume');

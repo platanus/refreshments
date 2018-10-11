@@ -1,5 +1,5 @@
 <template>
-  <div class="product-list__product" >
+  <div class="product-list__product">
     <img class="product__image" :src="product.image_url"  @click="incrementProduct(product)">
   </div>
 </template>
@@ -14,9 +14,7 @@
     computed: {},
     methods: {
       ...mapActions([
-        'decrementProduct',
         'incrementProduct',
-        'toggleResume',
       ]),
     }
   }

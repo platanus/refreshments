@@ -8,11 +8,11 @@
           <div class="resume-product__name">Producto</div>
           <div class="resume-product__total">Precio</div>
         </div>
-        <div v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0">
+        <v-touch v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0" v-on:swipeleft="decrementProduct(product)" v-on:swiperight="incrementProduct(product)">
           <div class="resume-product__price">{{ product.amount }}</div>
           <div class="resume-product__name">{{ product.name }}</div>
           <div class="resume-product__total">$ {{ product.price }}</div>
-        </div>
+        </v-touch>
       </div>
       <div class="resume-total">
         <span class="resume-total__title">Total</span>
@@ -42,6 +42,8 @@
     methods: {
       ...mapActions([
         'toggleResume',
+        'decrementProduct',
+        'incrementProduct',
       ]),
     }
   }
