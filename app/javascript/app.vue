@@ -13,14 +13,12 @@
 <script>
   import { mapGetters } from 'vuex';
 
-  import appHeader from './components/app-header.vue';
   import appResume from './components/app-resume.vue';
   import appInvoice from './components/app-invoice.vue';
   import product from './components/product.vue';
 
   export default {
     components: {
-      appHeader,
       appResume,
       appInvoice,
       product,
