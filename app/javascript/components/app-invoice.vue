@@ -1,20 +1,26 @@
 <template>
-  <transition name="fade">
-    <div class="invoice">
-      <div class="invoice__resume">
-        <h3 class="invoice__title">Resumen</h3>
-        {{ invoice.satoshis || 0 }} Satoshis<br/>
-        ${{ invoice.clp || 0 }} CLP
-      </div>
-      <div class="invoice__info" v-if="invoice.payment_request">
-        <qrcode :value="invoice.payment_request" :options="{ size: 125 }"></qrcode>
-        <div class="btn btn--hash" @click="copyPaymentRequest">
-          <font-awesome-icon icon="clipboard" />
-          {{ invoice.payment_request }}
-        </div>
-      </div>
+  <div class="invoice">
+    <div class="invoice__resume">
+      <h3 class="invoice__title">Resumen</h3>
+      {{ invoice.satoshis || 0 }} Satoshis<br/>
+      ${{ invoice.clp || 0 }} CLP
     </div>
-  </transition>
+    <div class="invoice__info" v-if="invoice.payment_request">
+      <transition name="slide-fade">
+        <div class="invoice-info--unpaid" v-if="!status" key="unpaid">
+          <qrcode :value="invoice.payment_request" :options="{ size: 125 }"></qrcode>
+          <div class="btn btn--hash" @click="copyPaymentRequest">
+            <font-awesome-icon icon="clipboard" />
+            {{ invoice.payment_request }}
+          </div>
+        </div>
+        <div class="invoice-info--paid" v-else key="slide-fade">
+          <font-awesome-icon icon="check-circle"/>
+          Pagado!
+        </div>
+      </transition>
+    </div>
+  </div>
 </template>
 <script>
   import { mapState, mapActions } from 'vuex';

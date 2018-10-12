@@ -3,7 +3,7 @@
 
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faMinus, faPlus, faTrashAlt, faShoppingBasket, faTimes, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTrashAlt, faShoppingBasket, faTimes, faClipboard, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
 import VueQrcode from '@xkeshi/vue-qrcode';
 import VueClipboard from 'vue-clipboard2';
@@ -12,7 +12,7 @@ import VueTouch from 'vue-touch';
 import App from '../app.vue';
 import store from '../store';
 
-library.add(faMinus, faPlus, faTrashAlt, faShoppingBasket, faTimes, faClipboard);
+library.add(faMinus, faPlus, faTrashAlt, faShoppingBasket, faTimes, faClipboard, faCheckCircle);
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.component('font-awesome-icon', FontAwesomeIcon);
