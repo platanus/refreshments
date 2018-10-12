@@ -1,3 +1,10 @@
+$border-color: #eee;
+$title-color: #383769;
+$success-color: #00b1b3;
+
+$status-color: #fff;
+$status-bg-color: #fabc13;
+
 .invoice {
   font-size: 18px;
   padding: 10px;
@@ -7,11 +14,11 @@
   top: 50px;
   position: relative;
   display: flex;
-  border-top: 1px solid #eee;
+  border-top: 1px solid $border-color;
 
   &__title {
     height: 28px;
-    color: #383769;
+    color: $title-color;
     font-size: 22px;
     font-weight: bold;
     letter-spacing: 0.6px;
@@ -33,11 +40,11 @@
   &__status {
     padding: 10px 20px;
     border-radius: 20px;
-    background: #fabc13;
-    color: white;
+    background: $status-bg-color;
+    color: $status-color;
 
     &--paid {
-      background: #00b1b3;
+      background: $success-color;
     }
   }
 }

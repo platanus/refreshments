@@ -2,6 +2,10 @@
   <div class="resume">
     <div class="resume__container">
       <h3 class="resume__title">Tu Compra</h3>
+      <div class="resume__erase">
+        <font-awesome-icon icon="trash-alt" @click="cleanKart(); cleanInvoice();" />
+      </div>
+
       <div class="resume__product-list" key="products">
         <div class="resume__product resume__product--title">
           <div class="resume-product__price">#</div>
@@ -44,6 +48,8 @@
         'toggleResume',
         'decrementProduct',
         'incrementProduct',
+        'cleanKart',
+        'cleanInvoice'
       ]),
     }
   }

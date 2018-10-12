@@ -7,9 +7,16 @@ $default-color: #676775;
   height: calc(100% - 300px);
   overflow: scroll;
 
+  &__erase {
+    color: $alt-color;
+    text-align: right;
+    padding: 0 20px;
+    font-size: 18px;
+  }
+
   &__title {
     height: 38px;
-    color: #383769;
+    color: $title-color;
     font-size: 26px;
     font-weight: bold;
     letter-spacing: 1.37px;
@@ -28,14 +35,14 @@ $default-color: #676775;
     padding: 5px 0;
     text-align: left;
     height: 28px;
-    color: #676775;
+    color: $default-color;
     font-size: 16px;
     letter-spacing: 0.53px;
     line-height: 28px;
   }
 
   &__product--title {
-    color: rgba(255,67,67,0.63);
+    color: rgba($alt-color, 0.63);
     text-transform: uppercase;
   }
 
@@ -54,7 +61,7 @@ $default-color: #676775;
   }
 
   &-total {
-    color: #FF4343;
+    color: $alt-color;
     text-transform: uppercase;
     font-size: 18px;
     line-height: 24px;
