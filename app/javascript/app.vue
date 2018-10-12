@@ -2,7 +2,7 @@
   <div>
     <div class="app">
       <div class="product-list" key="products">
-        <product v-for="product in products" :product="product"></product>
+        <product v-for="product in sortedProductList" :product="product"></product>
       </div>
       <div class="sidebar">
         <div class="sidebar__container">
@@ -34,7 +34,10 @@
       ...mapGetters({
         'products': 'productsAsArray',
         'totalAmount': 'totalAmount',
-      })
+      }),
+      sortedProductList() {
+        return this.products.sort((a, b) => (a.name > b.name) ? 1 : -1);
+      }
     },
     mounted() {
       this.$store.dispatch('getProducts');
