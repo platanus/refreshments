@@ -1,61 +1,93 @@
+$border-color: #eee;
+$title-color: #383769;
+$success-color: #00b1b3;
+
+$status-color: #fff;
+$status-bg-color: #fabc13;
+
+$success-color: #00c7b3;
+$success-bg-color: #e0f9f6;
+
 .invoice {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  height: 100vh;
-  width: 100vw;
-  z-index: 10;
-  background:  rgba(0, 0, 0, .3);
+  font-size: 18px;
+  padding: 10px;
+  max-height: 450px;
+  margin: auto;
+  overflow: scroll;
+  top: 50px;
+  position: relative;
+  display: flex;
+  border-top: 1px solid $border-color;
 
-  &__container {
-    background: white;
-    padding: 10px;
-    width: 400px;
-    max-height: 450px;
-    margin: auto;
-    overflow: scroll;
-    top: 50px;
-    position: relative;
-    border-radius: 5px;
-  }
-
-  &__close {
+  &__title {
+    height: 28px;
+    color: $title-color;
     font-size: 22px;
-    text-align: right;
-    margin-right: 5px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    line-height: 28px;
+    margin-top: 0;
   }
 
   &__resume {
+    flex: 1 0 0;
     padding: 10px;
-    text-align: center;
-
-    &__emoji {
-      font-size: 20px;
-    }
+    text-align: left;
+    height: 140px;
   }
 
   &__info {
-    width: 300px;
-    text-align: center;
+    flex: 1 0 0;
     margin: 0 auto;
+    position: relative;
   }
 
   &__status {
     padding: 10px 20px;
     border-radius: 20px;
-    background: #fabc13;
-    color: white;
-    text-align: center;
+    background: $status-bg-color;
+    color: $status-color;
 
     &--paid {
-      background: #00b1b3;
+      background: $success-color;
     }
   }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.invoice-info {
+  &--paid {
+    position: absolute;
+    color: $success-color;
+    border: 1px solid $success-color;
+    padding: 10px 5px;
+    background: $success-bg-color;
+    border-radius: 6px;
+    display: block;
+    width: 90%;
+    text-align: center;
+
+    .fa-check-circle {
+      font-size: 90px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  &--unpaid {
+    position: absolute;
+  }
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-10px);
   opacity: 0;
 }

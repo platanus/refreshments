@@ -1,23 +1,26 @@
 <template>
-  <transition name="fade">
-    <div class="invoice" v-if="invoice.id">
-      <div class="invoice__container">
-        <div class="invoice__close" @click="close">
-          <font-awesome-icon far icon="times"></font-awesome-icon>
-        </div>
-        <div class="invoice__resume">
-          <b>Envía {{ invoice.satoshis }} satoshis ($ {{ invoice.clp }})</b><br/>
-          <b>escaneando el QR</b><br/>
-          <span class="invoice__resume__emoji">👇</span>
-        </div>
-        <div class="invoice__info" v-if="invoice.payment_request">
-          <qrcode :value="invoice.payment_request" :options="{ size: 250 }"></qrcode>
-          <div class="btn btn--hash" @click="copyPaymentRequest">{{ invoice.payment_request }}</div>
-          <h3 class="invoice__status" :class="{ 'invoice__status--paid': status }">{{ statusVerbose }}</h3>
-        </div>
-      </div>
+  <div class="invoice">
+    <div class="invoice__resume">
+      <h3 class="invoice__title">Resumen</h3>
+      {{ invoice.satoshis || 0 }} Satoshis<br/>
+      ${{ invoice.clp || 0 }} CLP
     </div>
-  </transition>
+    <div class="invoice__info" v-if="invoice.payment_request">
+      <transition name="slide-fade">
+        <div class="invoice-info--unpaid" v-if="!status" key="unpaid">
+          <qrcode :value="invoice.payment_request" :options="{ size: 125 }"></qrcode>
+          <div class="btn btn--hash" @click="copyPaymentRequest">
+            <font-awesome-icon icon="clipboard" />
+            {{ invoice.payment_request }}
+          </div>
+        </div>
+        <div class="invoice-info--paid" v-else key="slide-fade">
+          <font-awesome-icon icon="check-circle"/>
+          Pagado!
+        </div>
+      </transition>
+    </div>
+  </div>
 </template>
 <script>
   import { mapState, mapActions } from 'vuex';
@@ -55,9 +58,15 @@
           console.log(e)
         })
       },
+      reset() {
+        if (this.status) {
+          setTimeout(() => {
+            this.close();
+          }, 5000);
+        }
+      },
     },
     mounted() {
-
       this.interval = setInterval(function() {
         if (this.invoice.id && !this.status) {
           this.updateInvoiceSettled();
@@ -65,6 +74,9 @@
           clearInterval(this.interval);
         }
       }.bind(this), 1000);
+    },
+    watch: {
+      status: 'reset'
     }
   }
 </script>

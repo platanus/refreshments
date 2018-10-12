@@ -1,33 +1,31 @@
 <template>
-  <transition name="slide-fade">
-  <div class="resume" v-if="showResume && !invoice.id">
+  <div class="resume">
     <div class="resume__container">
-      <div class="resume__close" @click="toggleResume">
-        <font-awesome-icon far icon="times"></font-awesome-icon>
+      <h3 class="resume__title">Tu Compra</h3>
+      <img class="resume__logo" src="~/assets/images/platanus_logo.svg">
+
+      <div class="resume__erase">
+        <font-awesome-icon icon="trash-alt" @click="cleanKart(); cleanInvoice();" />
       </div>
-      <h3>Tu Orden</h3>
+
       <div class="resume__product-list" key="products">
-        <div v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0">
-          <div class="resume-product__image"><img class="resume-product-image__image"  :src="product.image_url"></div>
-          <div class="resume-product__name">
-            <b>(x{{ product.amount }})</b>
-            {{ product.name }}
-          </div>
-          <div class="resume-product__total">$ {{ product.amount * product.price }}</div>
+        <div class="resume__product resume__product--title">
+          <div class="resume-product__price">#</div>
+          <div class="resume-product__name">Producto</div>
+          <div class="resume-product__total">Precio</div>
         </div>
+        <v-touch v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0" v-on:swipeleft="decrementProduct(product)" v-on:swiperight="incrementProduct(product)">
+          <div class="resume-product__price">{{ product.amount }}</div>
+          <div class="resume-product__name">{{ product.name }}</div>
+          <div class="resume-product__total">$ {{ product.price }}</div>
+        </v-touch>
       </div>
-      <div class="resume__actions">
-        <div class="resume-actions__info">
-          Subtotal<br/>
-          $ {{ totalPrice }}<br/>
-        </div>
-        <div class="btn" @click="buy">
-          Comprar
-        </div>
+      <div class="resume-total">
+        <span class="resume-total__title">Total</span>
+        <span class="resume-total__value">${{ totalPrice }}</span>
       </div>
     </div>
   </div>
-  </transition>
 </template>
 <script>
   import { mapState, mapGetters, mapActions } from 'vuex';
@@ -50,7 +48,10 @@
     methods: {
       ...mapActions([
         'toggleResume',
-        'buy'
+        'decrementProduct',
+        'incrementProduct',
+        'cleanKart',
+        'cleanInvoice'
       ]),
     }
   }

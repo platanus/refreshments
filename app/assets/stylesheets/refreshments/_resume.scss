@@ -1,28 +1,39 @@
 $border-color: #eee;
+$title-color: #383769;
+$alt-color: #ff4343;
+$default-color: #676775;
 
 .resume {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  height: 100vh;
-  width: 100vw;
-  z-index: 10;
-  border-left: 1px solid $border-color;
-  background:  rgba(0, 0, 0, .3);
+  height: calc(100% - 300px);
+  overflow: scroll;
 
-  &__close {
-    font-size: 22px;
-    text-align: right;
+  &__logo {
+    width: 40px;
+    position: relative;
+    right: 10px;
+    top: 3px;
   }
 
-  &__container {
-    background: white;
-    border-left: 1px solid $border-color;
-    width: 400px;
-    padding: 20px 10px;
-    height: 100vh;
-    position: relative;
-    left: calc(100% - 420px);
+  &__erase {
+    color: $alt-color;
+    text-align: right;
+    padding: 0 20px;
+    font-size: 18px;
+  }
+
+  &__title {
+    height: 38px;
+    color: $title-color;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1.37px;
+    line-height: 53px;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 38px;
+    margin-left: 10px;
+    display: inline-block;
+    width: calc(100% - 60px);
   }
 
   &__product-list {
@@ -31,48 +42,49 @@ $border-color: #eee;
   }
 
   &__product {
-    border-bottom: 1px solid $border-color;
     display: flex;
     padding: 5px 0;
+    text-align: left;
+    height: 28px;
+    color: $default-color;
+    font-size: 16px;
+    letter-spacing: 0.53px;
+    line-height: 28px;
   }
 
-  &-product__image {
+  &__product--title {
+    color: rgba($alt-color, 0.63);
+    text-transform: uppercase;
+  }
+
+  &-product__price {
     flex: 20% 1 1;
   }
 
-  &-product-image__image {
-    height: 50px;
-    text-align: center;
-  }
-
   &-product__name {
-    flex: 55% 1 1;
+    flex: 60% 1 1;
   }
 
   &-product__total {
-    flex: 25% 1 1;
-    font-weight: bold;
+    flex: 20% 1 1;
     font-size: 14px;
     text-align: right;
   }
 
-  &-actions__info {
-    text-align: right;
+  &-total {
+    color: $alt-color;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 24px;
+    position: relative;
+    text-align: left;
     font-weight: bold;
-    font-size: 20px;
-    margin-right: 10px;
-    text-align: right;
+    padding: 20px;
   }
-}
 
-.slide-fade-enter-active {
-  transition: all 1s;
-}
-.slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
+  &-total__value {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
 }
