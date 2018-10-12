@@ -54,15 +54,10 @@ const store = new Vuex.Store({
     },
     buy: context => {
       if (context.getters.totalAmount) {
-        const products = context.getters.productsAsArray.reduce((acc, product) => {
-          if (product.amount > 0) {
-            acc[product.id] = product.amount;
-          }
+        const products = context.getters.buyProducts;
+        const description = context.getters.buyDescription;
 
-          return acc;
-        }, {});
-
-        api.buy(products).then((response) => {
+        api.buy(products, description).then((response) => {
           context.commit('setInvoice', response.invoice);
         });
       } else {
@@ -98,6 +93,27 @@ const store = new Vuex.Store({
     totalPrice: (state, getters) => (
       getters.productsAsArray.reduce((acc, product) => acc += (product.price * product.amount), 0)
     ),
+    buyProducts: (state, getters) => {
+      const products = getters.productsAsArray.reduce((acc, product) => {
+        if (product.amount > 0) {
+          acc[product.id] = product.amount;
+        }
+
+        return acc;
+      }, {});
+
+      return products;
+    },
+    buyDescription: (state, getters) => {
+      const description = [];
+      getters.productsAsArray.forEach(product => {
+        if (product.amount > 0) {
+          description.push(`${product.amount} x ${product.name}`);
+        }
+      });
+
+      return description.join(',\n');
+    }
   },
 });
 
