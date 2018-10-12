@@ -58,6 +58,13 @@
           console.log(e)
         })
       },
+      reset() {
+        if (this.status) {
+          setTimeout(() => {
+            this.close();
+          }, 5000);
+        }
+      },
     },
     mounted() {
       this.interval = setInterval(function() {
@@ -67,6 +74,9 @@
           clearInterval(this.interval);
         }
       }.bind(this), 1000);
+    },
+    watch: {
+      status: 'reset'
     }
   }
 </script>
