@@ -6,7 +6,6 @@
       </div>
       <div class="sidebar">
         <div class="sidebar__container">
-          <img src="~/assets/images/platanus_logo.svg" style="width: 60px;">
           <app-resume></app-resume>
           <app-invoice></app-invoice>
         </div>

@@ -2,6 +2,8 @@
   <div class="resume">
     <div class="resume__container">
       <h3 class="resume__title">Tu Compra</h3>
+      <img class="resume__logo" src="~/assets/images/platanus_logo.svg">
+
       <div class="resume__erase">
         <font-awesome-icon icon="trash-alt" @click="cleanKart(); cleanInvoice();" />
       </div>
