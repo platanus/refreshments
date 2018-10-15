@@ -5977,6 +5977,10 @@ vue-loader@14.2.2:
     vue-style-loader "^4.0.1"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-progress-path@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/vue-progress-path/-/vue-progress-path-0.0.2.tgz#d780fc7a96dbc7f784eb52895aeef7a5f0af6325"
+
 vue-style-loader@^4.0.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"

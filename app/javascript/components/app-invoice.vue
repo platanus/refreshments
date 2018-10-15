@@ -1,5 +1,16 @@
 <template>
   <div class="invoice">
+    <div class="invoice__loading" v-if="loading">
+      <loading-progress
+        :indeterminate="true"
+        :counter-clockwise="true"
+        :hide-background="true"
+        size="64"
+        rotate
+        fillDuration="2"
+        rotationDuration="1"
+      />
+    </div>
     <div class="invoice__resume">
       <h3 class="invoice__title">Resumen</h3>
       {{ invoice.satoshis || 0 }} Satoshis<br/>
@@ -32,7 +43,8 @@
     computed: {
       ...mapState([
         'status',
-        'invoice'
+        'invoice',
+        'loading'
       ]),
       statusVerbose() {
         return this.status ? '¡Pagado!' : 'Esperando pago...';
@@ -44,7 +56,6 @@
         'cleanKart',
         'cleanInvoice',
         'updateInvoiceSettled',
-        'testInvoice'
       ]),
       close() {
         this.cleanInvoice();

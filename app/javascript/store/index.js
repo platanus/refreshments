@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.esm.js';
 import Vuex from 'vuex';
 
 import api from './api';
@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     products: {},
     invoice: {},
     status: false,
+    loading: 0,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -31,6 +32,9 @@ const store = new Vuex.Store({
     setInvoiceSettled: (state, payload) => {
       state.invoice.settled = payload;
       state.status = payload;
+    },
+    setLoading: (state, payload) => {
+      state.loading = payload;
     }
   },
   actions: {
@@ -57,8 +61,10 @@ const store = new Vuex.Store({
         const products = context.getters.buyProducts;
         const description = context.getters.buyDescription;
 
+        context.commit('setLoading', 1);
         api.buy(products, description).then((response) => {
           context.commit('setInvoice', response.invoice);
+          context.commit('setLoading', -1);
         });
       } else {
         context.commit('setInvoice', {});
@@ -83,6 +89,10 @@ const store = new Vuex.Store({
     },
     testInvoice: context => {
       context.commit('setInvoiceSettled', true);
+    },
+    setLoading: (context, payload) => {
+      const value = context.state.loading + payload;
+      context.commit('setLoading', value > 0 ? value : 0);
     }
   },
   getters: {
