@@ -10,6 +10,9 @@ $success-bg-color: #e0f9f6;
 
 $loading-bg: rgba(255,255,255,0.95);
 
+$primary-color: #fabc13;
+$copy-icon-color: #fff;
+
 .invoice {
   font-size: 18px;
   padding: 10px;
@@ -43,7 +46,7 @@ $loading-bg: rgba(255,255,255,0.95);
     flex: 1 0 0;
     padding: 10px;
     text-align: left;
-    height: 140px;
+    height: 160px;
   }
 
   &__info {
@@ -61,6 +64,28 @@ $loading-bg: rgba(255,255,255,0.95);
     &--paid {
       background: $success-color;
     }
+  }
+
+  &__copy {
+    width: 100%;
+    display: flex;
+  }
+
+  &__copy-value {
+    border: 1px solid $border-color;
+    flex: 0 0 100px;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 8px 10px;
+    border-radius: 8px 0 0 8px;
+  }
+
+  &__copy-icon {
+    padding: 10px;
+    background: $primary-color;
+    color: $copy-icon-color;
+    border-radius: 0px 8px 8px 0;
   }
 }
 
