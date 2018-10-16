@@ -1,7 +1,7 @@
 <template>
-  <div class="product-list__product">
+  <v-touch class="product-list__product" v-on:swipeleft="decrementProduct(product)" v-on:swiperight="incrementProduct(product)">
     <img class="product__image" :src="product.image_url"  @click="incrementProduct(product)">
-  </div>
+  </v-touch>
 </template>
 <script>
   import { mapActions } from 'vuex';
@@ -14,6 +14,7 @@
     computed: {},
     methods: {
       ...mapActions([
+        'decrementProduct',
         'incrementProduct',
       ]),
     }
