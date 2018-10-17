@@ -3,7 +3,10 @@ class SettleInvoiceJob < ApplicationJob
 
   def perform(r_hash)
     @r_hash = r_hash
-    invoice&.update!(settled: true) unless invoice&.settled
+    unless invoice.nil? || invoice&.settled
+      invoice&.update!(settled: true)
+      DoorClient.new.open_door
+    end
   end
 
   private
