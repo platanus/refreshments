@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="messages">
-      <flash-message></flash-message>
+      <flash-message transition-name="list-complete"></flash-message>
     </div>
     <div class="app">
       <div class="product-list" key="products">
