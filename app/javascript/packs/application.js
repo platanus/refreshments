@@ -8,6 +8,7 @@ import VueQrcode from '@xkeshi/vue-qrcode';
 import VueClipboard from 'vue-clipboard2';
 import VueTouch from 'vue-touch';
 import VueProgress from 'vue-progress-path';
+import VueFlashMessage from 'vue-flash-message';
 
 import App from '../app.vue';
 import store from '../store';
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueClipboard);
   Vue.use(VueTouch, { name: 'v-touch' });
   Vue.use(VueProgress);
+  Vue.use(VueFlashMessage, {
+    messageOptions: {
+      timeout: 3000,
+    }
+  });
 
   Vue.config.productionTip = false;
 
