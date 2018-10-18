@@ -4,6 +4,7 @@
            v-on:swiperight="incrementProduct(product); message('increment', product)">
     <img class="product__image" :src="product.image_url"
          @click="incrementProduct(product); message('increment', product)">
+    <span class="product__price">${{product.price}}</span>
   </v-touch>
 </template>
 <script>
