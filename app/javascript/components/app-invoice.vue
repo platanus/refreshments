@@ -73,6 +73,7 @@
       },
       reset() {
         if (this.status) {
+          this.flash('<b>Compra Exitosa.</b><br/>Se limpiará el carro para quedar disponible para la siguiente compra.', 'success', { timeout: 5000 });
           setTimeout(() => {
             this.close();
           }, 5000);
