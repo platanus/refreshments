@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600,700');
 $primary-color: #fabc13;
-
+$font-color: #fff;
 * {
   font-family: 'Poppins', sans-serif;
 }
@@ -15,7 +15,7 @@ $primary-color: #fabc13;
   background: $primary-color;
   font-weight: bold;
   font-size: 14px;
-  color: white;
+  color: $font-color;
 
   &--hash {
     word-break: break-word;

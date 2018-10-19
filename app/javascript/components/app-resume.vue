@@ -14,7 +14,9 @@
           <div class="resume-product__name">Producto</div>
           <div class="resume-product__total">Precio</div>
         </div>
-        <v-touch v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0" v-on:swipeleft="decrementProduct(product)" v-on:swiperight="incrementProduct(product)">
+        <v-touch v-for="product in products" class="resume__product" :product="product" v-if="product.amount > 0"
+                 v-on:swipeleft="decrementProduct(product); message('decrement', product)"
+                 v-on:swiperight="incrementProduct(product); message('increment', product)">
           <div class="resume-product__price">{{ product.amount }}</div>
           <div class="resume-product__name">{{ product.name }}</div>
           <div class="resume-product__total">$ {{ product.price }}</div>
@@ -29,6 +31,7 @@
 </template>
 <script>
   import { mapState, mapGetters, mapActions } from 'vuex';
+  import utils from '../utils/';
 
   export default {
     data: function () {
@@ -53,6 +56,13 @@
         'cleanKart',
         'cleanInvoice'
       ]),
+      message(action, product) {
+        const content = utils.contentMessage(action, product);
+
+        if (content.length > 0) {
+          this.flash(content, 'success');
+        }
+      }
     }
   }
 </script>
