@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   scope :actives, -> { where(active: true) }
 
   belongs_to :user
+  has_many :invoice_products
+  has_many :invoices, through: :invoice_products
 end
 
 # == Schema Information

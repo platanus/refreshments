@@ -1,5 +1,8 @@
 class Invoice < ApplicationRecord
   validates :clp, :memo, :payment_request, :r_hash, :satoshis, presence: true
+
+  has_many :invoice_products
+  has_many :products, through: :invoice_products
 end
 
 # == Schema Information
