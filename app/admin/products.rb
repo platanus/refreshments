@@ -9,7 +9,7 @@ ActiveAdmin.register Product do
       row :price
       row :active
       row :image do |ad|
-        image_tag url_for(ad.image)
+        image_tag url_for(ad.image) if ad.image.attached?
       end
       row :user
     end
