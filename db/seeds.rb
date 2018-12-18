@@ -9,24 +9,41 @@
 # Country.find_or_create_by(name: "Chile") # GOOD
 #
 
-new_admin = AdminUser.create(email: "admin@example.com", password: "123456")
+product_names = [
+  "Coca-cola",
+  "Heineken",
+  "Papas fritas",
+  "Skittles",
+  "Popcorn",
+  "Mani",
+  "Manzana",
+  "Platano",
+  "Cafe",
+]
 
-new_user = User.create(name: "example_name", email: "user@example.com", password: "123456")
+new_admin = AdminUser.create!(email: "admin@example.com", password: "123456")
 
-new_product = Product.create(
-  name: "Coca-cola",
-  active: true,
-  price: 500,
-  user: new_user,
-)
-
-new_invoice = Invoice.create(
-  satoshis: 1000,
-  clp: 500,
-  payment_request: "MyString",
-  r_hash: "MyString",
-  memo: "MyString",
-  settled: false,
-)
-
-new_product_invoice = InvoiceProduct.create(product: new_product, invoice: new_invoice)
+3.times do |i|
+  new_user = User.create!(
+    name: "example_name_#{i}",
+    email: "user_#{i}@example.com",
+    password: "123456",
+  )
+  new_invoice = Invoice.create!(
+    satoshis: 1000,
+    clp: 500,
+    payment_request: "MyString_#{i}",
+    r_hash: "MyString_#{i}",
+    memo: "MyString_#{i}",
+    settled: false,
+  )
+  3.times do |j|
+    new_product = Product.create!(
+      name: product_names[3*i+j],
+      active: true,
+      price: 500,
+      user: new_user,
+    )
+    new_invoice.invoice_products.create!(product: new_product)
+  end
+end
