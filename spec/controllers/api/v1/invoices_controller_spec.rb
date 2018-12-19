@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::InvoicesController, type: :controller do
   describe "POST #create" do
-    let(:product_a) { create(:product, name: "Coca Cola", price: 500) }
-    let(:product_b) { create(:product, name: "Sprite", price: 650) }
+    let(:user) { create(:user) }
+
+    let(:product_a) { create(:product, name: "Coca Cola", price: 500, user: user) }
+    let(:product_b) { create(:product, name: "Sprite", price: 650, user: user) }
 
     let!(:product_a_id) { product_a.id }
     let!(:product_b_id) { product_b.id }
