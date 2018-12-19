@@ -9,5 +9,6 @@ FactoryGirl.define do
       )
     end
     active true
+    association :user, factory: :user
   end
 end
