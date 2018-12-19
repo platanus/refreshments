@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 describe CreateInvoice do
-  let(:product_a) { create(:product, name: "Coca Cola", price: 500) }
-  let(:product_b) { create(:product, name: "Sprite", price: 650) }
+  let(:user) { create(:user, name: "test_user", email: "test@email.com", password: "123456")}
+
+  let(:product_a) { create(:product, name: "Coca Cola", price: 500, user: user) }
+  let(:product_b) { create(:product, name: "Sprite", price: 650, user: user) }
 
   let!(:product_a_id) { product_a.id }
   let!(:product_b_id) { product_b.id }
@@ -50,4 +52,38 @@ describe CreateInvoice do
       expect { perform }.to raise_error("Invalid satoshi amount")
     end
   end
+
+  context "with 1 product" do
+    let(:products_hash) { { product_a_id => 1 } }
+    it "creates exactly 1 invoice product with correct invoice and product" do
+      new_invoice = perform
+      expect(InvoiceProduct.count).to eq(1)
+      expect(InvoiceProduct.first.product.id).to eq(product_a.id)
+      expect(InvoiceProduct.first.invoice.id).to eq(new_invoice.id)
+    end
+  end
+
+  context "with more than 1 equal products" do
+    let(:products_hash) { { product_a_id => 3 } }
+    it "creates exactly 3 invoice products with correct invoice and product" do
+      new_invoice = perform
+      expect(InvoiceProduct.count).to eq(3)
+      InvoiceProduct.all.each do |invoice_product|
+        expect(invoice_product.product.id).to eq(product_a.id)
+        expect(invoice_product.invoice.id).to eq(new_invoice.id)
+      end
+    end
+  end
+
+  context "with more than 1 different products" do
+    let(:products_hash) { { product_a_id => 3, product_b_id => 4 } }
+    it "creates exactly 7 invoice products with correct invoice and product each" do
+      new_invoice = perform
+      expect(InvoiceProduct.count).to eq(7)
+      expect(product_a.invoice_products.count).to eq(3)
+      expect(product_b.invoice_products.count).to eq(4)
+      expect(new_invoice.invoice_products.count).to eq(7)
+    end
+  end
+
 end
