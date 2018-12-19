@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe CreateInvoice do
-  let(:user) { create(:user, name: "test_user", email: "test@email.com", password: "123456")}
+  let(:user) { create(:user) }
 
   let(:product_a) { create(:product, name: "Coca Cola", price: 500, user: user) }
   let(:product_b) { create(:product, name: "Sprite", price: 650, user: user) }
