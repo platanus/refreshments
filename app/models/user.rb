@@ -1,8 +1,12 @@
 class User < ApplicationRecord
+  validates :name, presence: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many :products
 end
 
 # == Schema Information
@@ -17,6 +21,7 @@ end
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  name                   :string           not null
 #
 # Indexes
 #

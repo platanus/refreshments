@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  permit_params :name, :price, :image, :active
+  permit_params :name, :price, :image, :active, :user_id
 
   form partial: 'form'
 
@@ -11,6 +11,7 @@ ActiveAdmin.register Product do
       row :image do |ad|
         image_tag url_for(ad.image)
       end
+      row :user
     end
   end
 end

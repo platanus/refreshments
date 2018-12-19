@@ -8,3 +8,5 @@
 # Country.create(name: "Chile") # BAD
 # Country.find_or_create_by(name: "Chile") # GOOD
 #
+
+newAdmin = AdminUser.create(email: "admin@example.com", password: "123456")
