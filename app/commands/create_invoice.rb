@@ -2,10 +2,12 @@ class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
   def perform
     validate_total_satoshis!
     invoice_response = lightning_network_client.create_invoice(@memo, invoice_total_satoshis)
-    Invoice.create!(
+    @new_invoice = Invoice.create!(
       satoshis: invoice_total_satoshis, clp: invoice_total_clp, memo: @memo,
       payment_request: invoice_response["payment_request"], r_hash: invoice_response["r_hash"]
     )
+    create_invoice_products
+    @new_invoice
   end
 
   private
@@ -32,5 +34,15 @@ class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
 
   def lightning_network_client
     @lightning_network_client ||= LightningNetworkClient.new
+  end
+
+  def create_invoice_products
+    product_list = []
+    @products_hash.each do |product_id, quantity|
+      quantity.times do
+        product_list << { product_id: product_id }
+      end
+    end
+    @new_invoice.invoice_products.create!(product_list)
   end
 end
