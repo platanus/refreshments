@@ -12,6 +12,7 @@ end
 RSpec.describe ProductsController, type: :controller do
   describe "GET #index" do
     context "unauthenticated user" do
+
       it "redirects to sign up form" do
         get :index
         expect(response).to redirect_to(new_user_session_path)
@@ -39,6 +40,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "GET #new" do
     context "unauthenticated user" do
+
       it "redirects to sign up form" do
         get :new
         expect(response).to redirect_to(new_user_session_path)
@@ -68,6 +70,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "POST #create" do
     context "unauthenticated user" do
+
       it "redirects to sign up form" do
         post :create
         expect(response).to redirect_to(new_user_session_path)
@@ -80,6 +83,7 @@ RSpec.describe ProductsController, type: :controller do
 
       context "with product name, price" do
         before { mock_post_request("test_product", 100) }
+
         it "creates a product in database" do
           expect(Product.all.count).to eq(1)
         end
@@ -95,12 +99,15 @@ RSpec.describe ProductsController, type: :controller do
 
       context "with no name" do
         before { mock_post_request(nil, 100) }
+
         it "does not create product" do
           expect(Product.all.count).to eq(0)
         end
+
         it "returns 'new' view" do
           expect(response).to render_template('products/new')
         end
+
         it "sets name error attribute to product" do
           expect(assigns(:product).errors.messages[:name]).to include("no puede estar en blanco")
         end
@@ -108,12 +115,15 @@ RSpec.describe ProductsController, type: :controller do
 
       context "with no price" do
         before { mock_post_request("test_name", nil) }
+
         it "does not create product" do
           expect(Product.all.count).to eq(0)
         end
+
         it "returns 'new' view" do
           expect(response).to render_template('products/new')
         end
+
         it "sets name error attribute to product" do
           expect(assigns(:product).errors.messages[:price]).to include("no puede estar en blanco")
         end
