@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_product, only: %i[edit show update]
 
   def index
     @products = current_user.products.all
@@ -10,14 +11,37 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = current_user.products.new(product_params)
-    return render "new" unless @product.save
-    redirect_to user_products_path
+    @product = current_user.products.new(create_params)
+    if @product.save
+      redirect_to user_products_path
+    else
+      render "new"
+    end
+  end
+
+  def update
+    if product.update_attributes(update_params)
+      redirect_to user_products_path
+    else
+      render "edit"
+    end
   end
 
   private
 
-  def product_params
+  def create_params
     params.require(:product).permit(:name, :price, :image)
+  end
+
+  def update_params
+    params.require(:product).permit(:active).merge(create_params)
+  end
+
+  def check_product
+    return not_found unless product
+  end
+
+  def product
+    @product ||= current_user.products.find_by(id: params[:id])
   end
 end

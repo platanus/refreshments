@@ -14,7 +14,6 @@ end
 RSpec.describe ProductsController, type: :controller do
   describe 'GET #index' do
     context 'unauthenticated user' do
-
       it 'redirects to sign up form' do
         get :index
         expect(response).to redirect_to(new_user_session_path)
@@ -42,7 +41,6 @@ RSpec.describe ProductsController, type: :controller do
 
   describe 'GET #new' do
     context 'unauthenticated user' do
-
       it 'redirects to sign up form' do
         get :new
         expect(response).to redirect_to(new_user_session_path)
@@ -72,7 +70,6 @@ RSpec.describe ProductsController, type: :controller do
 
   describe 'POST #create' do
     context 'unauthenticated user' do
-
       it 'redirects to sign up form' do
         post :create
         expect(response).to redirect_to(new_user_session_path)
@@ -142,6 +139,87 @@ RSpec.describe ProductsController, type: :controller do
 
         it 'uploads image correctly' do
           expect(assigns(:product).image).to be_attached
+        end
+      end
+    end
+  end
+
+  describe 'GET #edit' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        get :edit, params: { id: 5 }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create(:user) }
+      before { mock_authentication }
+
+      context 'product exists and belongs to user' do
+        let(:product) { create(:product, user: user) }
+        before { get :edit, params: { id: product.id } }
+
+        it { expect(assigns(:product)).to be_a(Product) }
+        it { expect(assigns(:product)).to have_attributes(id: product.id) }
+
+        it 'returns correct "edit" view' do
+          expect(response).to render_template('products/edit')
+        end
+      end
+
+      context 'product doesnt exists in users scope' do
+        it 'returns 404 error' do
+          expect { get(:edit, params: { id: 5 }) }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        patch :update, params: { id: 5 }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create(:user) }
+      before { mock_authentication }
+
+      context 'product exists and belongs to user' do
+        let(:product) { create(:product, user: user) }
+        before do
+          patch :update, params: {
+            id: product.id,
+            product: {
+              name: 'new_test_name',
+              price: 500,
+              active: false
+            }
+          }
+        end
+
+        it { expect(assigns(:product)).to be_a(Product) }
+        it { expect(assigns(:product)).to have_attributes(id: product.id) }
+
+        it 'changes name correctly' do
+          expect(product.reload).to have_attributes(name: 'new_test_name')
+        end
+
+        it 'changes price correctly' do
+          expect(product.reload).to have_attributes(price: 500)
+        end
+
+        it 'changes active correctly' do
+          expect(product.reload).to have_attributes(active: false)
+        end
+      end
+
+      context 'product doesnt exists in users scope' do
+        it 'returns 404 error' do
+          expect { patch(:update, params: { id: 5 }) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
