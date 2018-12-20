@@ -17,4 +17,8 @@ Rails.application.routes.draw do
     get 'suppliers/sign_up', to: 'devise/registrations#new'
     get 'suppliers/sign_in', to: 'devise/sessions#new'
   end
+
+  resource :user do
+    resources :products
+  end
 end

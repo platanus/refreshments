@@ -39,6 +39,8 @@ end
 
 group :test do
   gem 'rspec_junit_formatter', '0.2.2'
+  gem 'rspec-collection_matchers'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers', require: false
 end
 
