@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :check_product, only: %i[edit show update]
 
   def index
-    @products = current_user.products.all
+    @products = current_user.products.includes(:invoice_products)
   end
 
   def new
