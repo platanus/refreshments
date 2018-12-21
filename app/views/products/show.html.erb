@@ -50,6 +50,14 @@
 		<tr>
 			<td>
 				<h3>
+					IMAGEN:
+				</h3>
+				<%= @product.image.attached? ? image_tag(url_for(@product.image)) : "Sin imagen" %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
 					ACCIONES:
 				</h3>
 				<%= link_to "Editar", edit_user_product_path(@product) %>

@@ -4,9 +4,13 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+    :recoverable, :rememberable, :validatable
 
   has_many :products
+
+  def total_sales
+    Product.joins(:invoice_products).where(user_id: id).sum(:price)
+  end
 end
 
 # == Schema Information

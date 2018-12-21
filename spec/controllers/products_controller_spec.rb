@@ -239,16 +239,15 @@ RSpec.describe ProductsController, type: :controller do
       let!(:product_b) { create(:product, name: 'product_b', user: user) }
       before do
         mock_authentication
-        delete :destroy, params: { id: product_a.id }
       end
 
       it 'deletes correct product' do
+        delete :destroy, params: { id: product_a.id }
         expect(Product.find_by(id: product_a.id)).to be(nil)
       end
 
-      it 'deletes ony one product' do
-        delete :destroy, params: { id: product_a.id }
-        expect(Product.all.count).to be(1)
+      it 'deletes only one product' do
+        expect { delete :destroy, params: { id: product_a.id } }.to change(Product, :count).by(-1)
       end
     end
   end

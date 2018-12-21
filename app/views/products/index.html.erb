@@ -1,5 +1,6 @@
 <div id="products-index-table">
 	<h1> Mis Productos </h1>
+	<h3> Total de ventas: <%= current_user.total_sales %> </h3>
 	<%= link_to "Agregar producto", new_user_product_path %>
 	<table>
 		<thead>
