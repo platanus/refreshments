@@ -19,6 +19,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def show
+    @sales = product.invoice_products.count
+  end
+
   def update
     if product.update_attributes(update_params)
       redirect_to user_products_path

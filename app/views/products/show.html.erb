@@ -1,1 +1,60 @@
-<%= @product.name %>
+<table>
+	<thead>
+		<tr>
+			<th>
+				<h1> Detalle del producto </h1>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<h3>
+					NAME:
+				</h3>
+				<%= @product.name %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
+					PRECIO:
+				</h3>
+				<%= @product.price %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
+					ACTIVE:
+				</h3>
+				<%= @product.active %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
+					VENTAS (UN):
+				</h3>
+				<%= @sales %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
+					VENTAS (CLP):
+				</h3>
+				<%= @sales * @product.price %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>
+					ACCIONES:
+				</h3>
+				<%= link_to "Editar", edit_user_product_path(@product) %>
+				<%= link_to "Eliminar", user_product_path(@product), data: {:confirm => 'Are you sure?'}, :method => :delete %>
+			</td>
+		</tr>
+	</tbody>
+</table>
