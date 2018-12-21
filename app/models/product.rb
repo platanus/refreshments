@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   validates :name, :price, presence: true
+  validates :image, attached: true
 
   has_one_attached :image
   scope :actives, -> { where(active: true) }

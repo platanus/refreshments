@@ -78,10 +78,16 @@ RSpec.describe ProductsController, type: :controller do
 
     context 'authenticated user' do
       let(:user) { create(:user) }
+      let(:image) do
+        fixture_file_upload(
+          Rails.root.join('spec', 'support', 'assets', 'beverage.jpeg'),
+          'image/jpg'
+        )
+      end
       before { mock_authentication }
 
-      context 'with product name, price' do
-        before { mock_post_request('test_product', 100, nil) }
+      context 'with product name, price and image' do
+        before { mock_post_request('test_product', 100, image) }
 
         it 'creates a product in database' do
           expect(Product.all.count).to eq(1)
@@ -94,10 +100,14 @@ RSpec.describe ProductsController, type: :controller do
         it 'creates product with correct price' do
           expect(assigns(:product)).to have_attributes(price: 100)
         end
+
+        it 'uploads image correctly' do
+          expect(assigns(:product).image).to be_attached
+        end
       end
 
       context 'with no name' do
-        before { mock_post_request(nil, 100, nil) }
+        before { mock_post_request(nil, 100, image) }
 
         it 'does not create product' do
           expect(Product.all.count).to eq(0)
@@ -113,7 +123,7 @@ RSpec.describe ProductsController, type: :controller do
       end
 
       context 'with no price' do
-        before { mock_post_request('test_name', nil, nil) }
+        before { mock_post_request('test_name', nil, image) }
 
         it 'does not create product' do
           expect(Product.all.count).to eq(0)
@@ -128,17 +138,19 @@ RSpec.describe ProductsController, type: :controller do
         end
       end
 
-      context 'with image' do
-        let(:image) do
-          fixture_file_upload(
-            Rails.root.join('spec', 'support', 'assets', 'beverage.jpeg'),
-            'image/jpg'
-          )
-        end
-        before { mock_post_request('test_name', 100, image) }
+      context 'with no image' do
+        before { mock_post_request('test_name', 100, nil) }
 
-        it 'uploads image correctly' do
-          expect(assigns(:product).image).to be_attached
+        it 'does not create product' do
+          expect(Product.all.count).to eq(0)
+        end
+
+        it 'returns "new" view' do
+          expect(response).to render_template('products/new')
+        end
+
+        it 'sets image error attribute to product' do
+          expect(assigns(:product).errors.messages[:image]).to include('no puede estar en blanco')
         end
       end
     end
@@ -196,7 +208,11 @@ RSpec.describe ProductsController, type: :controller do
             product: {
               name: 'new_test_name',
               price: 500,
-              active: false
+              active: false,
+              image: fixture_file_upload(
+                Rails.root.join('spec', 'support', 'assets', 'cookies.jpg'), '
+                image/jpg'
+              )
             }
           }
         end
@@ -214,6 +230,11 @@ RSpec.describe ProductsController, type: :controller do
 
         it 'changes active correctly' do
           expect(product.reload).to have_attributes(active: false)
+        end
+
+        it 'changes image correctly' do
+          old_image = product.image.attachment
+          expect(old_image).to_not eq(product.reload.image.attachment)
         end
       end
 
