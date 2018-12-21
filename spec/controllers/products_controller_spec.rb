@@ -224,4 +224,32 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        delete :destroy, params: { id: 5 }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create(:user) }
+      let!(:product_a) { create(:product, name: 'product_a', user: user) }
+      let!(:product_b) { create(:product, name: 'product_b', user: user) }
+      before do
+        mock_authentication
+        delete :destroy, params: { id: product_a.id }
+      end
+
+      it 'deletes correct product' do
+        expect(Product.find_by(id: product_a.id)).to be(nil)
+      end
+
+      it 'deletes ony one product' do
+        delete :destroy, params: { id: product_a.id }
+        expect(Product.all.count).to be(1)
+      end
+    end
+  end
 end

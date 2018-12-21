@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_product, only: %i[edit show update]
+  before_action :check_product, only: %i[edit show update destroy]
 
   def index
     @products = current_user.products.includes(:invoice_products)
@@ -25,6 +25,11 @@ class ProductsController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def destroy
+    product.destroy!
+    redirect_to user_products_path
   end
 
   private
