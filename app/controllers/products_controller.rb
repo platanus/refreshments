@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_product, only: %i[edit show update]
+  before_action :check_product, only: %i[edit show update destroy]
 
   def index
-    @products = current_user.products.all
+    @products = current_user.products.includes(:invoice_products)
   end
 
   def new
@@ -19,12 +19,21 @@ class ProductsController < ApplicationController
     end
   end
 
+  def show
+    @sales = product.invoice_products.count
+  end
+
   def update
     if product.update_attributes(update_params)
       redirect_to user_products_path
     else
       render "edit"
     end
+  end
+
+  def destroy
+    product.destroy!
+    redirect_to user_products_path
   end
 
   private

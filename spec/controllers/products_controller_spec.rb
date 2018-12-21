@@ -224,4 +224,61 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        delete :destroy, params: { id: 5 }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create(:user) }
+      let!(:product_a) { create(:product, name: 'product_a', user: user) }
+      let!(:product_b) { create(:product, name: 'product_b', user: user) }
+      before do
+        mock_authentication
+      end
+
+      it 'deletes correct product' do
+        delete :destroy, params: { id: product_a.id }
+        expect(Product.find_by(id: product_a.id)).to be(nil)
+      end
+
+      it 'deletes only one product' do
+        expect { delete :destroy, params: { id: product_a.id } }.to change(Product, :count).by(-1)
+      end
+    end
+  end
+
+  describe 'GET #show' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        get :show, params: { id: 5 }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create(:user) }
+      let(:product) { create(:product, name: 'product_a', user: user) }
+      before do
+        mock_authentication
+        get :show, params: { id: product.id }
+      end
+
+      it 'shows correct product' do
+        expect(assigns(:product).id).to be(product.id)
+      end
+
+      it 'returns correct "show" view' do
+        expect(response).to render_template('products/show')
+      end
+
+      it 'sets sales variable' do
+        expect(assigns(:sales)).to_not be(nil)
+      end
+    end
+  end
 end

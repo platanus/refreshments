@@ -1,1 +1,33 @@
-<%= @products.pluck(:name) %>
+<div id="products-index-table">
+	<h1> Mis Productos </h1>
+	<h3> Total de ventas: <%= current_user.total_sales %> </h3>
+	<%= link_to "Agregar producto", new_user_product_path %>
+	<table>
+		<thead>
+	    <tr>
+	      <th> Nombre </th>
+	      <th> Precio </th>
+	      <th> Active </th>
+	      <th> Ventas (UN) </th>
+	      <th> Ventas (CLP) </th>
+	      <th> Acciones </th>
+	    </tr>
+		</thead>
+		<tbody>
+			<% @products.each do |product| %>
+				<tr>
+					<td> <%= product.name %> </td>
+					<td> <%= product.price %> </td>
+					<td> <%= product.active %> </td>
+					<td> <%= product.invoice_products.count %> </td>
+					<td> <%= product.invoice_products.count * product.price %> </td>
+					<td class="btn-group">
+						<%= link_to "Ver", user_product_path(product) %>
+					  <%= link_to "Editar", edit_user_product_path(product) %>
+					  <%= link_to "Eliminar", user_product_path(product), data: {:confirm => 'Are you sure?'}, :method => :delete %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
