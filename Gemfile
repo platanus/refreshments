@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'active_skin'
+gem 'active_storage_validations'
 gem 'activeadmin', github: 'activeadmin'
 gem 'activeadmin_addons'
 gem "aws-sdk-s3"
@@ -38,9 +39,9 @@ group :production do
 end
 
 group :test do
-  gem 'rspec_junit_formatter', '0.2.2'
-  gem 'rspec-collection_matchers'
   gem 'rails-controller-testing'
+  gem 'rspec-collection_matchers'
+  gem 'rspec_junit_formatter', '0.2.2'
   gem 'shoulda-matchers', require: false
 end
 
