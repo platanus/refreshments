@@ -10,7 +10,7 @@ class Withdrawal < ApplicationRecord
     end
   end
 
-  validates :amount, presence: true
+  validates :amount, :btc_address, presence: true
 
   belongs_to :user
 end
@@ -19,12 +19,13 @@ end
 #
 # Table name: withdrawals
 #
-#  id         :bigint(8)        not null, primary key
-#  user_id    :bigint(8)        not null
-#  amount     :bigint(8)
-#  aasm_state :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint(8)        not null, primary key
+#  user_id     :bigint(8)        not null
+#  amount      :integer
+#  aasm_state  :string
+#  btc_address :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 # Indexes
 #

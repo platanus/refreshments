@@ -107,8 +107,9 @@ ActiveRecord::Schema.define(version: 2018_12_24_120350) do
 
   create_table "withdrawals", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "amount"
+    t.integer "amount"
     t.string "aasm_state"
+    t.string "btc_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_withdrawals_on_user_id"
