@@ -18,8 +18,13 @@ $panelHeaderBck: #002744;
 
 @import "active_skin";
 
+$pending-color: #FF9900;
+$confirmed-color: #08A510;
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
-//   .status_tag { background: #6090DB; }
+  .status_tag {
+  	&.pending { background: $pending-color; }
+  	&.confirmed { background: $confirmed-color; }
+ }

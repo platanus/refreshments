@@ -7,6 +7,7 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable
 
   has_many :products
+  has_many :withdrawals
 
   def total_sales
     Product.joins(:invoice_products).where(user_id: id).sum(:price)
