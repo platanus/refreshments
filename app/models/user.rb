@@ -7,10 +7,21 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable
 
   has_many :products
+  has_many :invoices, through: :products
   has_many :withdrawals
 
   def total_sales
-    Product.joins(:invoice_products).where(user_id: id).sum(:price)
+    Product.where(user_id: id)
+           .joins(invoice_products: :invoice)
+           .sum('floor(price * (satoshis::numeric / clp))::integer')
+  end
+
+  def total_withdrawals
+    withdrawals.sum(:amount)
+  end
+
+  def withdrawable_amount
+    total_sales - total_withdrawals
   end
 end
 
