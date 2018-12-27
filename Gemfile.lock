@@ -48,6 +48,8 @@ GEM
       activemodel (>= 3.2)
       concurrent-ruby (~> 1.0)
     active_skin (0.0.12)
+    active_storage_validations (0.5.2)
+      rails (~> 5.2.0)
     activeadmin_addons (1.6.0)
       active_material
       railties
@@ -429,6 +431,7 @@ DEPENDENCIES
   aasm
   active_model_serializers (~> 0.9.3)
   active_skin
+  active_storage_validations
   activeadmin!
   activeadmin_addons
   annotate

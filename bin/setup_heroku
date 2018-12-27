@@ -2,19 +2,19 @@
 
 # Setup heroku application remotes
 if heroku auth:whoami &> /dev/null; then
-  if heroku apps:info --app pl-pl-refreshments-staging &> /dev/null; then
-    git remote add staging git@heroku.com:pl-pl-refreshments-staging.git || true
+  if heroku apps:info --app pl-refreshments-staging &> /dev/null; then
+    git remote add staging git@heroku.com:pl-refreshments-staging.git || true
     git config heroku.remote staging
-    echo 'You are a collaborator on the "pl-pl-refreshments-staging" Heroku app'
+    echo 'You are a collaborator on the "pl-refreshments-staging" Heroku app'
   else
-    echo 'Ask for access to the "pl-pl-refreshments-staging" Heroku app'
+    echo 'Ask for access to the "pl-refreshments-staging" Heroku app'
   fi
 
-  if heroku apps:info --app pl-pl-refreshments-production &> /dev/null; then
-    git remote add production git@heroku.com:pl-pl-refreshments-production.git || true
-    echo 'You are a collaborator on the "pl-pl-refreshments-production" Heroku app'
+  if heroku apps:info --app pl-refreshments-production &> /dev/null; then
+    git remote add production git@heroku.com:pl-refreshments-production.git || true
+    echo 'You are a collaborator on the "pl-refreshments-production" Heroku app'
   else
-    echo 'Ask for access to the "pl-pl-refreshments-production" Heroku app'
+    echo 'Ask for access to the "pl-refreshments-production" Heroku app'
   fi
 else
   echo 'You need to login to heroku. Run "heroku login"'
