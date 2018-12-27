@@ -1,17 +1,12 @@
 require 'rails_helper'
 
-def mock_authentication
-  allow(controller).to receive(:current_user).and_return(user)
-  allow(request.env['warden']).to receive(:authenticate!).and_return(user)
-end
-
-def mock_post_request(name, price, image)
-  params = { product: { name: name, price: price } }
-  params[:product][:image] = image unless image.nil?
-  post :create, params: params
-end
-
 RSpec.describe ProductsController, type: :controller do
+  def mock_post_request(name, price, image)
+    params = { product: { name: name, price: price } }
+    params[:product][:image] = image unless image.nil?
+    post :create, params: params
+  end
+
   describe 'GET #index' do
     context 'unauthenticated user' do
       it 'redirects to sign up form' do

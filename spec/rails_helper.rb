@@ -61,3 +61,21 @@ end
 FactoryGirl::SyntaxRunner.class_eval do
   include ActionDispatch::TestProcess
 end
+
+def mock_authentication
+  allow(controller).to receive(:current_user).and_return(user)
+  allow(request.env['warden']).to receive(:authenticate!).and_return(user)
+end
+
+def create_user_with_product(product_price)
+  user = create(:user)
+  create(:product, user: user, price: product_price)
+  user
+end
+
+def create_user_with_invoice(product_price, invoice_clp, satoshis)
+  user = create_user_with_product(product_price)
+  invoice = create(:invoice, clp: invoice_clp, satoshis: satoshis)
+  create(:invoice_product, product: user.products.first, invoice: invoice)
+  user
+end
