@@ -13,6 +13,7 @@ class User < ApplicationRecord
   def total_sales
     Product.where(user_id: id)
            .joins(invoice_products: :invoice)
+           .where('invoices.settled=true')
            .sum('floor(price * (satoshis::numeric / clp))::integer')
   end
 

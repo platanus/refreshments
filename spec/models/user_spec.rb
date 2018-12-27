@@ -13,6 +13,19 @@ RSpec.describe User, type: :model do
       it { expect(user.total_sales).to be(0) }
     end
 
+    context "user has only unsettled sales" do
+      let(:user) { create_user_with_product(100) }
+
+      before do
+        5.times do |i|
+          invoice = create(:invoice, clp: 100, satoshis: 100 * (i + 1), settled: false)
+          create(:invoice_product, product: user.products.first, invoice: invoice)
+        end
+      end
+
+      it { expect(user.total_sales).to be(0) }
+    end
+
     context "user has 1 sale of 1 product" do
       let(:user) { create_user_with_invoice(100, 100, 500) }
       it { expect(user.total_sales).to be(500) }

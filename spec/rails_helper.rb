@@ -73,9 +73,9 @@ def create_user_with_product(product_price)
   user
 end
 
-def create_user_with_invoice(product_price, invoice_clp, satoshis)
+def create_user_with_invoice(product_price, invoice_clp, satoshis, settled = true)
   user = create_user_with_product(product_price)
-  invoice = create(:invoice, clp: invoice_clp, satoshis: satoshis)
+  invoice = create(:invoice, clp: invoice_clp, satoshis: satoshis, settled: settled)
   create(:invoice_product, product: user.products.first, invoice: invoice)
   user
 end

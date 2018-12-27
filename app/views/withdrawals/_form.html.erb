@@ -1,0 +1,15 @@
+<div class="modal-header">
+	<h4> Detalles del retiro </h4>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+</div>
+<%= semantic_form_for [:user, @withdrawal], url: user_withdrawals_validate_path, remote: true do |f| %>
+  <div class="modal-body">
+    <%= f.inputs do %>
+    	<%= f.input :amount, label: 'Monto', input_html: { readonly: true, value: current_user.withdrawable_amount } %>
+    	<%= f.input :btc_address, label: 'Direccion BTC' %>
+  	<% end  %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Hacer retiro", class: "btn btn-primary btn-lg btn-block" %>
+  </div>
+<% end %>

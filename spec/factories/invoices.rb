@@ -5,6 +5,6 @@ FactoryGirl.define do
     payment_request "MyString"
     r_hash "MyString"
     memo "MyString"
-    settled false
+    settled true
   end
 end
