@@ -1,0 +1,200 @@
+$registration-page-background: #e1e9ff;
+$registration-form-background: #fff;
+$registration-form-title: #383769;
+$registration-form-label: #383769;
+$registration-form-input-border: #acabfb;
+$registration-form-input-background: #f9f9ff;
+$registration-form-input-shadow: #f2f5ff;
+$registration-form-input-font: #5356dc;
+$registration-form-submit-button-text: #fff;
+$registration-form-submit-button-background: #5356dc;
+$registration-error-font: #f00;
+$registration-error-background: rgba($registration-error-font, .1);
+
+$registration-form-width: 368px;
+
+.registration-page {
+  background-color: $registration-page-background;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  &__registration-form-container {
+    width: 1120px;
+    min-height: 100%;
+    border-radius: 0 0 2px 2px;
+    margin: 0 auto;
+    display: flex;
+  }
+
+}
+
+.registration-form-container {
+  flex-direction: column;
+  align-items: center;
+  background-color: $registration-form-background;
+
+  &__registration-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: $registration-form-title;
+    letter-spacing: 1px;
+    line-height: 48px;
+    height: 48px;
+    margin: 64px auto 0;
+    text-align: center;
+  }
+
+  &__registration-form {
+    margin-top: 40px;
+    margin-bottom: 24px;
+    width: $registration-form-width;
+  }
+
+  &__sign-in-link,
+  &__sign-in-link:visited {
+    text-decoration: none;
+    border-bottom: 1px dotted $registration-form-input-font;
+    color: $registration-form-input-font;
+    height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: .6px;
+    line-height: 22px;
+    text-align: center;
+    margin-bottom: 75px;
+  }
+
+}
+
+.registration-form {
+  &__field {
+    margin-bottom: 33px;
+  }
+
+  &__checkbox-field {
+    margin-bottom: 33px;
+    display: flex;
+    justify-content: left;
+    align-content: center;
+  }
+
+  &__label {
+    display: block;
+    font-size: 14px;
+    height: 24px;
+    width: 100%;
+    color: $registration-form-label;
+    letter-spacing: .6px;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  &__checkbox-label {
+    position: relative;
+    height: 24px;
+    width: 96px;
+    color: $registration-form-input-font;
+    font-size: 14px;
+    letter-spacing: .6px;
+    line-height: 24px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      height: 24px;
+      width: 24px;
+      border: 1px solid $registration-form-input-font;
+      border-radius: 6px;
+      box-shadow: 0 0 6px 0 $registration-form-input-shadow;
+      background-color: $registration-form-background;
+      position: absolute;
+      left: -40px;
+      top: -1px;
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      height: 4px;
+      width: 12px;
+      border-left: 2px solid;
+      border-bottom: 2px solid;
+      transform: rotate(-45deg);
+      position: absolute;
+      color: $registration-form-input-font;
+      left: -34px;
+      top: 7px;
+    }
+
+  }
+
+  &__input {
+    display: block;
+    height: 48px;
+    width: 100%;
+    border: 1px solid $registration-form-input-border;
+    border-radius: 8px;
+    background-color: $registration-form-input-background;
+    box-shadow: 0 0 6px 0 $registration-form-input-shadow;
+    color: $registration-form-input-font;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: .4px;
+    margin: 5px auto auto;
+    padding: 0 13px;
+    box-sizing: border-box;
+  }
+
+  &__checkbox-input {
+    opacity: 0;
+    height: 24px;
+    width: 24px;
+    margin-right: 16px;
+  }
+
+  &__submit-button {
+    margin-top: 5px;
+    width: 100%;
+    height: 48px;
+    color: $registration-form-submit-button-text;
+    background-color: $registration-form-submit-button-background;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 6px;
+    line-height: 22px;
+    letter-spacing: .6px;
+    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+}
+
+.registration-form__checkbox-field .registration-form__checkbox-input + .registration-form__checkbox-label::after {
+  content: none;
+}
+
+.registration-form__checkbox-field .registration-form__checkbox-input:checked + .registration-form__checkbox-label::after {
+  content: '';
+}
+
+.registration__flash-message {
+  border: 1px solid;
+  border-radius: 4px;
+  margin-top: 30px;
+  padding: 10px 8px;
+  width: $registration-form-width;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+
+  &--error {
+    border-color: $registration-error-font;
+    color: $registration-error-font;
+    background-color: $registration-error-background;
+  }
+
+}
+
+
