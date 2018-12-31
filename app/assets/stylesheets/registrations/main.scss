@@ -1,0 +1,118 @@
+$registration-page-background: #E1E9FF;
+$registration-form-background: #FFFFFF;
+$registration-form-title: #383769;
+$registration-form-label: #383769;
+$registration-form-input-border: #ACABFB;
+$registration-form-input-background: #F9F9FF;
+$registration-form-input-shadow: #F2F5FF;
+$registration-form-input-font: #5356DC;
+$registration-form-submit-button-text: white;
+$registration-form-submit-button-background: #5356DC;
+
+.registration-page {
+	background-color: $registration-page-background;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+
+	&__registration-form-container {
+		width: 1120px;
+		min-height: 100%;
+		border-radius: 0 0 2px 2px;
+		margin: 0px auto;
+		display: flex;
+	}
+
+}
+
+.registration-form-container {
+	flex-direction: column;
+	align-items: center;
+	background-color: $registration-form-background;
+
+	&__registration-title {
+		font-size: 32px;
+		font-weight: bold;
+		color: $registration-form-title;
+		letter-spacing: 1px;
+		line-height: 48px;
+		height: 48px;
+		width: 273px;
+		margin: 64px 424px 0px;
+		text-align: center;
+	}
+
+	&__registration-form {
+		margin-top: 40px;
+		margin-bottom: 24px;
+		width: 368px;
+	}
+
+	&__sign-in-link,
+	&__sign-in-link:visited {
+		text-decoration: none;
+		border-bottom: 1px dotted $registration-form-input-font;
+		color: $registration-form-input-font;
+		height: 22px;
+		width: 133px;
+		font-size: 14px;
+		font-weight: bold;
+		letter-spacing: 0.6px;
+		line-height: 22px;
+		text-align: center;
+		margin-bottom: 75px;
+	}
+
+}
+
+.registration-form {
+
+	&__field {
+		margin-bottom: 33px;
+	}
+
+	&__label {
+		display: block;
+		font-size: 14px;
+		height: 24px;
+		width: 100%;
+		color: $registration-form-label;
+		letter-spacing: 0.6px;
+		line-height: 24px;
+		text-align: left;
+	}
+
+	&__input {
+		display: block;
+		height: 48px;
+		width: 368px;
+		border: 1px solid $registration-form-input-border;
+		border-radius: 8px;
+		background-color: $registration-form-input-background;
+		box-shadow: 0 0 6px 0 $registration-form-input-shadow;
+		color: $registration-form-input-font;
+		font-size: 16px;
+		line-height: 28px;
+		letter-spacing: 0.4px;
+		margin: 5px auto auto;
+		padding: 0px 13px;
+		box-sizing: border-box;
+	}
+
+	&__submit-button {
+		margin-top: 5px;
+		width: 368px;
+		height: 48px;
+		color: $registration-form-submit-button-text;
+		background-color: $registration-form-submit-button-background;
+		font-weight: bold;
+		font-size: 14px;
+		border-radius: 6px;
+		line-height: 22px;
+		letter-spacing: 0.6px;
+		text-align: center;
+		padding: 0px;
+		box-sizing: border-box;
+	}
+
+}

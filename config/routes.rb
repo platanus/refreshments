@@ -20,5 +20,8 @@ Rails.application.routes.draw do
 
   resource :user do
     resources :products
+    resources :withdrawals
   end
+
+  post 'user/withdrawals/validate', to: 'withdrawals#validate'
 end
