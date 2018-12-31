@@ -11,6 +11,21 @@ class Withdrawal < ApplicationRecord
   end
 
   validates :amount, :btc_address, presence: true
+  validates :amount, numericality: { greater_than: 0, only_integer: true }
+  validate :amount_cant_be_greater_than_user_withdrawable_amount
+  validate :address_is_valid_btc_address
+
+  def amount_cant_be_greater_than_user_withdrawable_amount
+    if amount && amount > user.withdrawable_amount
+      errors.add(:amount, "Amount can't be greater than user balance")
+    end
+  end
+
+  def address_is_valid_btc_address
+    if !/^[13][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
+      errors.add(:btc_address, 'BTC address must be a valid one')
+    end
+  end
 
   belongs_to :user
 end
