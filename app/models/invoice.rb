@@ -10,7 +10,7 @@ end
 # Table name: invoices
 #
 #  id              :bigint(8)        not null, primary key
-#  satoshis        :integer
+#  amount          :integer          not null
 #  clp             :integer
 #  payment_request :string
 #  r_hash          :string
