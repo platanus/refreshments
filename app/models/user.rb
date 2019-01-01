@@ -14,7 +14,7 @@ class User < ApplicationRecord
     Product.where(user_id: id)
            .joins(invoice_products: :invoice)
            .where('invoices.settled=true')
-           .sum('floor(price * (satoshis::numeric / clp))::integer')
+           .sum('floor(price * (amount::numeric / clp))::integer')
   end
 
   def total_withdrawals

@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
 
       before do
         5.times do |i|
-          invoice = create(:invoice, clp: 100, satoshis: 100 * (i + 1), settled: false)
+          invoice = create(:invoice, clp: 100, amount: 100 * (i + 1), settled: false)
           create(:invoice_product, product: user.products.first, invoice: invoice)
         end
       end
@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
 
       before do
         5.times do |i|
-          invoice = create(:invoice, clp: 100, satoshis: 100 * (i + 1))
+          invoice = create(:invoice, clp: 100, amount: 100 * (i + 1))
           create(:invoice_product, product: user.products.first, invoice: invoice)
         end
       end
@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
       let(:user) { create(:user) }
 
       before do
-        invoice = create(:invoice, clp: 1500, satoshis: 2500)
+        invoice = create(:invoice, clp: 1500, amount: 2500)
         5.times do |i|
           product = create(:product, user: user, price: 100 * (i + 1))
           create(:invoice_product, product: product, invoice: invoice)
@@ -65,7 +65,7 @@ RSpec.describe User, type: :model do
         5.times do |i|
           product_price = 100 * (i + 1)
           product = create(:product, user: user, price: product_price)
-          invoice = create(:invoice, clp: product_price, satoshis: 500)
+          invoice = create(:invoice, clp: product_price, amount: 500)
           create(:invoice_product, product: product, invoice: invoice)
         end
       end
@@ -80,8 +80,8 @@ RSpec.describe User, type: :model do
       let!(:product_b) { create(:product, user: user_a, price: 200) }
       let!(:product_c) { create(:product, user: user_b, price: 300) }
       let!(:product_d) { create(:product, user: user_b, price: 400) }
-      let!(:invoice_a) { create(:invoice, clp: 400, satoshis: 900) }
-      let!(:invoice_b) { create(:invoice, clp: 600, satoshis: 1100) }
+      let!(:invoice_a) { create(:invoice, clp: 400, amount: 900) }
+      let!(:invoice_b) { create(:invoice, clp: 600, amount: 1100) }
       let!(:invoice_product_a) { create(:invoice_product, product: product_a, invoice: invoice_a) }
       let!(:invoice_product_b) { create(:invoice_product, product: product_b, invoice: invoice_b) }
       let!(:invoice_product_c) { create(:invoice_product, product: product_c, invoice: invoice_a) }
@@ -128,7 +128,7 @@ RSpec.describe User, type: :model do
       before do
         5.times do
           product = create(:product, user: user, price: 100)
-          invoice = create(:invoice, clp: 100, satoshis: 1000)
+          invoice = create(:invoice, clp: 100, amount: 1000)
           create(:invoice_product, product: product, invoice: invoice)
           create(:withdrawal, amount: 500, user: user)
         end

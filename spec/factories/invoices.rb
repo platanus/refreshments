@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :invoice do
-    satoshis 1
+    amount 1
     clp 1
     payment_request "MyString"
     r_hash "MyString"

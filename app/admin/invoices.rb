@@ -1,9 +1,9 @@
 ActiveAdmin.register Invoice do
-  permit_params :satoshis, :clp, :settled, :r_hash, :memo, :payment_request
+  permit_params :amount, :clp, :settled, :r_hash, :memo, :payment_request
 
   index do
     id_column
-    column :satoshis
+    column :amount
     column :clp
     column :created_at
     column :updated_at
@@ -23,7 +23,7 @@ ActiveAdmin.register Invoice do
   form do |f|
     f.inputs f.object.new_record? ? 'Crear' : 'Editar' do
       if f.object.new_record?
-        f.input :satoshis
+        f.input :amount
         f.input :clp
         f.input :payment_request
         f.input :r_hash
