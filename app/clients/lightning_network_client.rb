@@ -12,10 +12,10 @@ class LightningNetworkClient
     self.class.get("/invoice/#{r_hash}", headers: headers, verify: false)
   end
 
-  def create_invoice(memo, satoshis)
+  def create_invoice(memo, amount)
     self.class.post(
       "/invoices",
-      body: { memo: memo, value: satoshis }.to_json,
+      body: { memo: memo, value: amount }.to_json,
       headers: headers,
       verify: false
     )

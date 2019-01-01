@@ -3,7 +3,7 @@ class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
     validate_total_satoshis!
     invoice_response = lightning_network_client.create_invoice(@memo, invoice_total_satoshis)
     @new_invoice = Invoice.create!(
-      satoshis: invoice_total_satoshis, clp: invoice_total_clp, memo: @memo,
+      amount: invoice_total_satoshis, clp: invoice_total_clp, memo: @memo,
       payment_request: invoice_response["payment_request"], r_hash: invoice_response["r_hash"]
     )
     create_invoice_products
