@@ -11,6 +11,45 @@ RSpec.describe WithdrawalsController, type: :controller do
     post action, params: params, xhr: true
   end
 
+  describe 'GET #index' do
+    context 'unauthenticated user' do
+      it 'redirects to sign up form' do
+        get :index
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'authenticated user' do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+        mock_authentication
+      end
+
+      it 'assigns list with user withdrawals' do
+        get :index
+        expect(assigns(:withdrawals)).to have(3).items
+      end
+
+      it 'assigns total pending sum' do
+        get :index
+        expect(assigns(:total_pending)).to be_an(Integer)
+      end
+
+      it 'assigns total confirmed sum' do
+        get :index
+        expect(assigns(:total_confirmed)).to be_an(Integer)
+      end
+
+      it 'returns correct "index" view' do
+        get :index
+        expect(response).to render_template('withdrawals/index')
+      end
+    end
+  end
+
   describe 'GET #new' do
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do

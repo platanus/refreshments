@@ -114,6 +114,65 @@ RSpec.describe User, type: :model do
 
       it { expect(user.total_withdrawals).to be(2500) }
     end
+
+    context "user has 3 withdrawals with different states" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_withdrawals).to be(1000) }
+    end
+  end
+
+  describe "#total_pending_withdrawals" do
+    context "user has no pending withdrawals" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_pending_withdrawals).to be(0) }
+    end
+
+    context "user has pending withdrawals" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_pending_withdrawals).to be(1000) }
+    end
+  end
+
+  describe "#total_confirmed_withdrawals" do
+    context "user has no confirmed withdrawals" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_confirmed_withdrawals).to be(0) }
+    end
+
+    context "user has confirmed withdrawals" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_confirmed_withdrawals).to be(1000) }
+    end
   end
 
   describe "#withdrawable_amount" do

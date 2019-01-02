@@ -117,5 +117,10 @@ RSpec.describe Withdrawal, type: :model do
       withdrawal.confirm
       expect(withdrawal.aasm.current_state).to eq(:confirmed)
     end
+
+    it 'changes state to "rejected" correctly' do
+      withdrawal.reject
+      expect(withdrawal.aasm.current_state).to eq(:rejected)
+    end
   end
 end
