@@ -1,0 +1,28 @@
+<div id="products-index-table">
+	<h1> Mis Retiros </h1>
+	<h3> Total retirado confirmado: <%= @total_confirmed %> </h3>
+	<h3> Total retirado pendiente: <%= @total_pending %> </h3>
+
+	<table>
+		<thead>
+	    <tr>
+	      <th> Cantidad </th>
+	      <th> Estado </th>
+	      <th> Dirección BTC </th>
+	      <th> Actualizado en </th>
+	      <th> Solicitado en </th>
+	    </tr>
+		</thead>
+		<tbody>
+			<% @withdrawals.each do |withdrawal| %>
+				<tr>
+					<td> <%= withdrawal.amount %> </td>
+					<td> <%= withdrawal.aasm.current_state.capitalize %> </td>
+					<td> <%= withdrawal.btc_address %> </td>
+					<td> <%= withdrawal.updated_at.strftime("%d/%m/%Y %H:%M") %> </td>
+					<td> <%= withdrawal.created_at.strftime("%d/%m/%Y %H:%M") %> </td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

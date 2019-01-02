@@ -21,6 +21,14 @@ class User < ApplicationRecord
     withdrawals.where.not(aasm_state: :rejected).sum(:amount)
   end
 
+  def total_pending_withdrawals
+    withdrawals.where(aasm_state: :pending).sum(:amount)
+  end
+
+  def total_confirmed_withdrawals
+    withdrawals.where(aasm_state: :confirmed).sum(:amount)
+  end
+
   def withdrawable_amount
     total_sales - total_withdrawals
   end
