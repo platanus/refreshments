@@ -1,3 +1,3 @@
 class InvoiceSerializer < ActiveModel::Serializer
-  attributes :id, :satoshis, :clp, :payment_request, :r_hash, :memo, :settled
+  attributes :id, :amount, :clp, :payment_request, :r_hash, :memo, :settled
 end

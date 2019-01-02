@@ -6,7 +6,7 @@ RSpec.describe Invoice, type: :model do
     it { should validate_presence_of(:memo) }
     it { should validate_presence_of(:payment_request) }
     it { should validate_presence_of(:r_hash) }
-    it { should validate_presence_of(:satoshis) }
+    it { should validate_presence_of(:amount) }
     it { should have_many(:invoice_products) }
     it { should have_many(:products) }
   end
