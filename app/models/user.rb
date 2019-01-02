@@ -18,7 +18,7 @@ class User < ApplicationRecord
   end
 
   def total_withdrawals
-    withdrawals.sum(:amount)
+    withdrawals.where.not(aasm_state: :rejected).sum(:amount)
   end
 
   def withdrawable_amount

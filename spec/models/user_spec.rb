@@ -99,7 +99,7 @@ RSpec.describe User, type: :model do
       it { expect(user.total_withdrawals).to be(0) }
     end
 
-    context "user has 1 withdrawal" do
+    context "user has 1 pending withdrawal" do
       let(:user) { create_user_with_invoice(100, 100, 5000) }
       before { create(:withdrawal, amount: 500, user: user) }
 
@@ -113,6 +113,17 @@ RSpec.describe User, type: :model do
       end
 
       it { expect(user.total_withdrawals).to be(2500) }
+    end
+
+    context "user has 3 withdrawals with different states" do
+      let(:user) { create_user_with_invoice(100, 100, 5000) }
+      before do
+        create(:withdrawal, amount: 500, user: user)
+        create(:withdrawal, amount: 500, user: user).confirm!
+        create(:withdrawal, amount: 500, user: user).reject!
+      end
+
+      it { expect(user.total_withdrawals).to be(1000) }
     end
   end
 
