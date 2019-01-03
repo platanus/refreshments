@@ -79,3 +79,10 @@ def create_user_with_invoice(product_price, invoice_clp, amount, settled = true)
   create(:invoice_product, product: user.products.first, invoice: invoice)
   user
 end
+
+def create_withdrawal_without_after_commit_callback
+  withdrawal = build(:withdrawal, amount: 50000, user: user)
+  allow(withdrawal).to receive(:add_job_to_withdrawal_requests_worker).and_return(true)
+  withdrawal.save!
+  withdrawal
+end
