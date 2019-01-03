@@ -3,6 +3,8 @@
 	<h3> Total de ventas: <%= current_user.total_sales %> </h3>
 	<h4> Monto disponible para retiro: <%= current_user.withdrawable_amount %> </h4>
 
+	<div class="alert alert-success" style="display:none"> </div>
+
 	<%= link_to "Hacer retiro", new_user_withdrawal_path, {
 		remote: true,
 		'data-toggle' => "modal",
