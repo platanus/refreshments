@@ -85,6 +85,35 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "#total_withdrawal" do
+    let(:user) { user_with_invoice }
+    context "user has no withdrawals" do
+      it { expect(user.total_withdrawals).to be(0) }
+    end
+
+    context "user has 1 pending withdrawal" do
+      before { create_withdrawal_without_after_commit_callback }
+
+      it { expect(user.total_withdrawals).to be(50000) }
+    end
+
+    context "user has 1 confirm withdrawal" do
+      before { create_withdrawal_without_after_commit_callback.confirm! }
+
+      it { expect(user.total_withdrawals).to be(50000) }
+    end
+
+    context "user has 3 withdrawals with different states" do
+      before do
+        create_withdrawal_without_after_commit_callback
+        create_withdrawal_without_after_commit_callback.confirm!
+        create_withdrawal_without_after_commit_callback.reject!
+      end
+
+      it { expect(user.total_withdrawals).to be(100000) }
+    end
+  end
+
   describe "#total_pending_withdrawals" do
     let(:user) { user_with_invoice }
 

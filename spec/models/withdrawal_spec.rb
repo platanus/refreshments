@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Withdrawal, type: :model do
   def stub_withdrawal_requests_worker
-    worker = instance_double('WithdrawalRequestsWorker')
+    worker = class_double('WithdrawalRequestsWorker')
     allow(worker).to receive(:perform_async)
     worker
   end
