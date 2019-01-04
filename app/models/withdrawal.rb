@@ -1,4 +1,7 @@
 class Withdrawal < ApplicationRecord
+  MIN_BUDA_AMOUNT = 9999
+  SATOSHIS_TO_BTC = 10**-8
+
   include AASM
 
   aasm do
@@ -15,7 +18,7 @@ class Withdrawal < ApplicationRecord
   end
 
   validates :amount, :btc_address, presence: true
-  validates :amount, numericality: { greater_than: 9999, only_integer: true }
+  validates :amount, numericality: { greater_than: MIN_BUDA_AMOUNT, only_integer: true }
   validate :amount_cant_be_greater_than_user_withdrawable_amount, on: :create
   validate :address_is_valid_btc_address
 
@@ -40,7 +43,7 @@ class Withdrawal < ApplicationRecord
   end
 
   def btc_amount
-    (amount * (10**-8)).to_f
+    (amount * SATOSHIS_TO_BTC).to_f
   end
 
   private
