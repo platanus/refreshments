@@ -4,8 +4,7 @@ class WithdrawalRequestsWorker
   CREATE_SUCCESS_CODE = 201
 
   def perform(withdrawal_id)
-    @withdrawal = Withdrawal.find(withdrawal_id)
-    return unless @withdrawal
+    @withdrawal = Withdrawal.find_by!(id: withdrawal_id)
     @response = CreateBTCWithdrawal.for(withdrawal: @withdrawal)
     handle_response
   end

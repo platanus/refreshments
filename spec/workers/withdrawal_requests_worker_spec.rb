@@ -26,8 +26,8 @@ RSpec.describe WithdrawalRequestsWorker, type: :worker do
   end
 
   def initialize_withdrawal_class(withdrawal)
-    allow(Withdrawal).to receive(:find) do |withdrawal_id|
-      withdrawal_id == 1 ? withdrawal : nil
+    allow(Withdrawal).to receive(:find_by!) do |id:|
+      id == 1 ? withdrawal : nil
     end
   end
 
@@ -39,9 +39,13 @@ RSpec.describe WithdrawalRequestsWorker, type: :worker do
     user = initialize_user(withdrawable_amount)
     withdrawal = initialie_withdrawal(user, amount)
     response = initialize_response(code, errors)
-    initialize_withdrawal_class(withdrawal)
     initialize_create_btc_withdrawal_command(response)
     withdrawal
+  end
+
+  def mock_with_valid_withdrawal_id
+    initialize_withdrawal_class(withdrawal)
+    WithdrawalRequestsWorker.new.perform(1)
   end
 
   describe 'standard job creation' do
@@ -56,14 +60,15 @@ RSpec.describe WithdrawalRequestsWorker, type: :worker do
   describe 'invalid withdrawal id' do
     let!(:withdrawal) { initialize_context(nil, nil, nil, nil) }
 
-    it 'does not throw error with invalid id' do
-      WithdrawalRequestsWorker.new.perform(-1)
+    it 'throws error with invalid id' do
+      expect { WithdrawalRequestsWorker.new.perform(-1) }
+        .to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
   describe 'with invalid Buda response code' do
     let!(:withdrawal) { initialize_context(10, 9, 400, nil) }
-    before { WithdrawalRequestsWorker.new.perform(1) }
+    before { mock_with_valid_withdrawal_id }
 
     it 'rejects withdrawal' do
       expect(withdrawal).to have_received(:reject!)
@@ -72,7 +77,7 @@ RSpec.describe WithdrawalRequestsWorker, type: :worker do
 
   describe 'with errors in Buda response' do
     let!(:withdrawal) { initialize_context(10, 9, 400, ["some error"]) }
-    before { WithdrawalRequestsWorker.new.perform(1) }
+    before { mock_with_valid_withdrawal_id }
 
     it 'rejects withdrawal' do
       expect(withdrawal).to have_received(:reject!)
@@ -81,7 +86,7 @@ RSpec.describe WithdrawalRequestsWorker, type: :worker do
 
   describe 'with buda success' do
     let!(:withdrawal) { initialize_context(10, 9, 201, []) }
-    before { WithdrawalRequestsWorker.new.perform(1) }
+    before { mock_with_valid_withdrawal_id }
 
     it 'confirms withdrawal' do
       expect(withdrawal).to have_received(:confirm!)

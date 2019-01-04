@@ -70,19 +70,19 @@ class BudaClient
       case http_method
 
       when 'GET'
-        logger.debug 'HTTP METHOD NOT IMPLEMENTED'
+        raise NotImplementedError
 
       when 'POST'
         post_request(path, body, headers)
 
       when 'PATCH'
-        logger.debug 'HTTP METHOD NOT IMPLEMENTED'
+        raise NotImplementedError
 
       when 'PUT'
-        logger.debug 'HTTP METHOD NOT IMPLEMENTED'
+        raise NotImplementedError
 
       when 'DELETE'
-        logger.debug 'HTTP METHOD NOT IMPLEMENTED'
+        raise NotImplementedError
 
       end
     end
