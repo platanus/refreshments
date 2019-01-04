@@ -30,7 +30,7 @@ class Withdrawal < ApplicationRecord
   end
 
   def address_is_valid_btc_address
-    if !/^[13][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
+    if !/^[13mn][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
       errors.add(:btc_address, 'BTC address must be a valid one')
     end
   end
