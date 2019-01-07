@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     raise ActiveRecord::RecordNotFound, 'Not Found'
   end
 
+  def after_sign_in_path_for(_resource)
+    user_products_path
+  end
+
   protected
 
   def configure_permitted_parameters
