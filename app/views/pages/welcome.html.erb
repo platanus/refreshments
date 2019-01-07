@@ -4,7 +4,7 @@
     <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
   <%- end -%>
 
-	<div class="welcome-page__options-container options-container">
+	<div class="options-container welcome-page__options-container">
 		<%= link_to 'Regístrate para vender!',
 			new_user_registration_path,
 			class: 'options-container__option-button options-container__option-button--register',

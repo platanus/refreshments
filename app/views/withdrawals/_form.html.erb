@@ -1,15 +1,24 @@
 <div class="modal-header">
-	<h4> Detalles del retiro </h4>
+	<h4 class="modal-header__title"> Detalles del retiro </h4>
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
 </div>
-<%= semantic_form_for [:user, @withdrawal], url: user_withdrawals_validate_path, remote: true do |f| %>
+<%= form_for [:user, @withdrawal], url: user_withdrawals_validate_path, remote: true do |f| %>
   <div class="modal-body">
-    <%= f.inputs do %>
-    	<%= f.input :amount, label: 'Monto', input_html: { readonly: true, value: current_user.withdrawable_amount } %>
-    	<%= f.input :btc_address, label: 'Direccion BTC' %>
-  	<% end  %>
+
+    <%= render "shared/errors", resource: @withdrawal, extra_classes: 'modal-body__alert' %>
+
+    <div class="modal-body__field">
+      <%= f.label :amount, 'Monto', { class: 'modal-body__label' } %>
+      <%= f.text_field :amount, { class: 'modal-body__input', readonly: true, value: current_user.withdrawable_amount } %>
+    </div>
+
+    <div class="modal-body__field">
+      <%= f.label :btc_address, 'Dirección BTC', { class: 'modal-body__label' } %>
+      <%= f.text_field :btc_address, { class: 'modal-body__input' }%>
+    </div>
+
   </div>
   <div class="modal-footer">
-    <%= f.submit "Hacer retiro", class: "btn btn-primary btn-lg btn-block" %>
+    <%= f.submit "Hacer retiro", class: 'modal-footer__button' %>
   </div>
 <% end %>

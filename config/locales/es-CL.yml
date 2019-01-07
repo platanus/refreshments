@@ -1,2 +1,14 @@
 es-CL:
-  hello: "Hola mundo"
+  activerecord:
+    errors:
+      models:
+        withdrawal:
+          attributes:
+            amount:
+              cant_exceed_withdrawable_amount: 'no puede exceder la cantidad disponible para retiro'
+            btc_address:
+              must_be_a_valid_address: 'debe ser una dirección valida'
+    attributes:
+      withdrawal:
+        btc_address: 'Dirección BTC'
+        amount: 'Monto'
