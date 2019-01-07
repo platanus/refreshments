@@ -1,10 +1,20 @@
 <div class="main-page welcome-page">
+
+	<%- flash.each do |_, msg| -%>
+    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+  <%- end -%>
+
 	<div class="welcome-page__options-container options-container">
-		<a href=<%="#{new_user_registration_path}"%> class="options-container__option-button options-container__option-button--register">
-			Regístrate para vender!
-		</a>
-		<a href=<%="#{buy_path}"%> class="options-container__option-button options-container__option-button--buy">
-			Ve el catálogo para comprar!
-		</a>
+		<%= link_to 'Regístrate para vender!',
+			new_user_registration_path,
+			class: 'options-container__option-button options-container__option-button--register',
+			data: { turbolinks: false }
+		%>
+		<%= link_to 'Ve el catálogo para comprar!',
+			buy_path,
+			class: 'options-container__option-button options-container__option-button--buy',
+			data: { turbolinks: false }
+		%>
 	</div>
+
 </div>

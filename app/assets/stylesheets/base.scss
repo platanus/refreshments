@@ -1,5 +1,12 @@
+$main-page-background: #e1e9ff;
+
 .main-page {
   width: 100%;
   height: 100%;
   overflow: auto;
+  background-color: $main-page-background;
+}
+
+.alert {
+  text-align: center;
 }

@@ -1,12 +1,9 @@
-$welcome-page-background: #e1e9ff;
 $register-option-button-background: #5356dc;
 $register-option-button-font: #fff;
 $buy-option-button-background: #fff;
 $buy-option-button-font: #5356dc;
 
 .welcome-page {
-  background-color: $welcome-page-background;
-
   &__options-container {
     margin-top: 20%;
   }

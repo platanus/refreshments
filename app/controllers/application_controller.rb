@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     user_products_path
   end
 
+  def after_sign_out_path_for(_resource)
+    root_path
+  end
+
   protected
 
   def configure_permitted_parameters
