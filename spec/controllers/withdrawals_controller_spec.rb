@@ -11,7 +11,17 @@ RSpec.describe WithdrawalsController, type: :controller do
     post action, params: params, xhr: true
   end
 
+  def create_withdrawals_with_every_state
+    create_withdrawal_without_after_commit_callback
+    create_withdrawal_without_after_commit_callback.confirm!
+    create_withdrawal_without_after_commit_callback.reject!
+  end
+
+  let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
+
   describe 'GET #index' do
+    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+
     context 'unauthenticated user' do
       it 'redirects to sign up form' do
         get :index
@@ -20,11 +30,8 @@ RSpec.describe WithdrawalsController, type: :controller do
     end
 
     context 'authenticated user' do
-      let(:user) { create_user_with_invoice(100, 100, 5000) }
       before do
-        create(:withdrawal, amount: 500, user: user)
-        create(:withdrawal, amount: 500, user: user).confirm!
-        create(:withdrawal, amount: 500, user: user).reject!
+        create_withdrawals_with_every_state
         mock_authentication
       end
 
@@ -51,6 +58,8 @@ RSpec.describe WithdrawalsController, type: :controller do
   end
 
   describe 'GET #new' do
+    let(:user) { create(:user) }
+
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do
         get :new, xhr: true
@@ -59,7 +68,6 @@ RSpec.describe WithdrawalsController, type: :controller do
     end
 
     context 'authenticated user' do
-      let(:user) { create(:user) }
       before { mock_authentication }
 
       it 'builds new withdrawal' do
@@ -86,6 +94,13 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #create' do
     let(:action) { :create }
+    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+    before do
+      allow_any_instance_of(Withdrawal)
+        .to receive(:add_job_to_withdrawal_requests_worker)
+        .and_return(true)
+    end
+
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do
         post action, xhr: true
@@ -94,19 +109,17 @@ RSpec.describe WithdrawalsController, type: :controller do
     end
 
     context 'authenticated user' do
-      let(:user) { create_user_with_invoice(100, 100, 5000) }
-      let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
       before { mock_authentication }
 
       context 'with amount and valid btc address' do
-        before { mock_post_request(100, btc_address, action) }
+        before { mock_post_request(10000, btc_address, action) }
 
         it 'creates a withdrawal in database' do
           expect(Withdrawal.all.count).to eq(1)
         end
 
         it 'creates withdrawal with correct amount' do
-          expect(assigns(:withdrawal)).to have_attributes(amount: 100)
+          expect(assigns(:withdrawal)).to have_attributes(amount: 10000)
         end
 
         it 'creates withdrawal with correct btc_address' do
@@ -143,7 +156,7 @@ RSpec.describe WithdrawalsController, type: :controller do
       end
 
       context 'with invalid btc_addres' do
-        before { mock_post_request(100, nil, action) }
+        before { mock_post_request(10000, nil, action) }
 
         it 'does not create withdrawal' do
           expect(Withdrawal.all.count).to eq(0)
@@ -166,6 +179,8 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #validate' do
     let(:action) { :validate }
+    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do
         post action, xhr: true
@@ -174,12 +189,10 @@ RSpec.describe WithdrawalsController, type: :controller do
     end
 
     context 'authenticated user' do
-      let(:user) { create_user_with_invoice(100, 100, 5000) }
-      let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
       before { mock_authentication }
 
       context 'with amount and valid btc address' do
-        before { mock_post_request(100, btc_address, action) }
+        before { mock_post_request(10000, btc_address, action) }
 
         it 'response is a JS file' do
           expect(response.content_type).to eq('text/javascript')
@@ -207,7 +220,7 @@ RSpec.describe WithdrawalsController, type: :controller do
       end
 
       context 'with invalid btc_addres' do
-        before { mock_post_request(100, nil, action) }
+        before { mock_post_request(10000, nil, action) }
 
         it 'returns "new" view' do
           expect(response).to render_template('withdrawals/new')

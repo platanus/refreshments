@@ -1,4 +1,7 @@
 class Withdrawal < ApplicationRecord
+  MIN_BUDA_AMOUNT = 9999
+  SATOSHIS_TO_BTC = 10**-8
+
   include AASM
 
   aasm do
@@ -15,11 +18,13 @@ class Withdrawal < ApplicationRecord
   end
 
   validates :amount, :btc_address, presence: true
-  validates :amount, numericality: { greater_than: 0, only_integer: true }
+  validates :amount, numericality: { greater_than: MIN_BUDA_AMOUNT, only_integer: true }
   validate :amount_cant_be_greater_than_user_withdrawable_amount, on: :create
   validate :address_is_valid_btc_address
 
   belongs_to :user
+
+  after_create_commit :add_job_to_withdrawal_requests_worker
 
   def amount_cant_be_greater_than_user_withdrawable_amount
     if amount && amount > user.withdrawable_amount
@@ -28,9 +33,23 @@ class Withdrawal < ApplicationRecord
   end
 
   def address_is_valid_btc_address
-    if !/^[13][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
+    if !/^[13mn][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
       errors.add(:btc_address, 'BTC address must be a valid one')
     end
+  end
+
+  def add_job_to_withdrawal_requests_worker
+    withdrawal_request_worker.perform_async(id)
+  end
+
+  def btc_amount
+    (amount * SATOSHIS_TO_BTC).to_f
+  end
+
+  private
+
+  def withdrawal_request_worker
+    @withdrawal_request_worker ||= WithdrawalRequestsWorker
   end
 end
 
