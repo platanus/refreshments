@@ -74,6 +74,7 @@ $products-index-table-actions-background: #acabfb;
   &__table-action {
     width: 100px;
     background-color: $products-index-table-actions-background;
+    border: 0;
   }
 
   &__message {
