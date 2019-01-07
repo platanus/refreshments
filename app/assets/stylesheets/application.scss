@@ -13,11 +13,13 @@
  *= require_self
  */
 
+@import 'base';
 @import 'bootstrap';
 @import 'pages';
 @import 'products';
 @import 'refreshments';
 @import 'registrations';
+@import 'welcome';
 @import 'withdrawals';
 
 html,

@@ -10,14 +10,10 @@ $registration-form-submit-button-text: #fff;
 $registration-form-submit-button-background: #5356dc;
 $registration-error-font: #f00;
 $registration-error-background: rgba($registration-error-font, .1);
-
 $registration-form-width: 368px;
 
 .registration-page {
   background-color: $registration-page-background;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
 
   &__registration-form-container {
     width: 1120px;
