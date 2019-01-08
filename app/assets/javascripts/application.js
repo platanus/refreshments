@@ -16,3 +16,13 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(() => {
+  const imageInput = $('.product-form__input--image');
+  const imageLabel = $('.product-form__label--image');
+  if (imageInput && imageLabel) {
+    imageInput.change(event => {
+      imageLabel.text(event.target.value.split('\\').pop());
+    });
+  }
+});

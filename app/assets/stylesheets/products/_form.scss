@@ -1,0 +1,110 @@
+$product-form-background: #fff;
+$product-form-button-font: #fff;
+$product-form-button-background: #5356dc;
+$product-form-main-font-color: #383769;
+$product-form-input-border: #acabfb;
+$product-form-input-background: #f9f9ff;
+$product-form-input-font-color: #5356dc;
+$product-form-file-input-font-size: 12px;
+$product-form-file-input-background: #f9f9ff;
+$product-form-file-input-border: #5356dc;
+$product-form-file-input-font-color: #5356dc;
+$product-form-file-input-width: 80%;
+$product-form-input-border-width: 1px;
+
+.product-form {
+  background-color: $product-form-background;
+  width: 50%;
+  margin: 70px auto 0;
+  padding: 50px 30px;
+  border-radius: 15px;
+  text-align: center;
+
+  &__title {
+    text-align: center;
+    color: $product-form-main-font-color;
+    margin-bottom: 30px;
+  }
+
+  &__field {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto 30px;
+  }
+
+  &__label {
+    margin: 0;
+    padding: 5px;
+    color: $product-form-main-font-color;
+
+    &--image {
+      margin: 0;
+      padding: 8px;
+      border: $product-form-input-border-width solid $product-form-file-input-border;
+      background-color: $product-form-file-input-background;
+      color: $product-form-file-input-font-color;
+      font-size: $product-form-file-input-font-size;
+      position: relative;
+      box-sizing: border-box;
+      width: $product-form-file-input-width;
+
+      &::after {
+        content: 'Explorar';
+        border: $product-form-input-border-width solid $product-form-file-input-border;
+        border-left-style: hidden;
+        padding: 8px;
+        font-size: $product-form-file-input-font-size;
+        position: absolute;
+        top: -#{$product-form-input-border-width};
+        left: calc(100% - #{$product-form-input-border-width});
+        box-sizing: border-box;
+        width: 25%;
+      }
+    }
+  }
+
+  &__input {
+    margin: 0;
+    padding: 5px;
+    text-align: right;
+    border: $product-form-input-border-width solid $product-form-input-border;
+    border-radius: 8px;
+    background-color: $product-form-input-background;
+    color: $product-form-input-font-color;
+    box-sizing: border-box;
+
+    &--image {
+      height: 1px;
+      width: 1px;
+      padding: 0;
+      border: 0;
+      position: absolute;
+      white-space: nowrap;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+  }
+
+  &__button {
+    width: 60%;
+    color: $product-form-button-font;
+    background-color: $product-form-button-background;
+    padding: 8px 0;
+    border-radius: 10px;
+
+    &::hover {
+      cursor: pointer;
+    }
+  }
+
+}
+
+.product-form__input--image + .product-form__label--image:hover {
+  cursor: pointer;
+}
+
+.product-form__input--image:focus + .product-form__label--image {
+  outline: -webkit-focus-ring-color auto 5px;
+}
