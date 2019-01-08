@@ -1,66 +1,65 @@
 <div class="main-page products-index">
-  <div id="products-index-table-container" class="products-index__table-container">
+	<div id="products-index-table-container" class="products-index__table-container">
 
-    <%- flash.each do |_, msg| -%>
-    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
-    <%- end -%>
+		<%- flash.each do |_, msg| -%>
+	    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+	  <%- end -%>
 
-    <div class="products-index__header">
-      <h1 class="products-index__title"> Mis Productos </h1>
+		<div class="products-index__header">
+			<h1 class="products-index__title"> Mis Productos </h1>
 
-      <div class="products-index__header-actions">
-        <% if @withdrawable_amount > 0 %>
-          <%= link_to "Hacer retiro", new_user_withdrawal_path, {
-            remote: true,
-            'data-toggle' => "modal",
-            'data-target' => "#modal-holder",
-            class: 'products-index__action products-index__action--withdraw'
-          } %>
-        <% end %>
+			<div class="products-index__header-actions">
+				<% if @withdrawable_amount > 0 %>
+					<%= link_to "Hacer retiro", new_user_withdrawal_path, {
+						remote: true,
+						'data-toggle' => "modal",
+						'data-target' => "#modal-holder",
+						class: 'products-index__action products-index__action--withdraw'
+					} %>
+				<% end %>
 
-        <%= link_to "Mis Retiros", user_withdrawals_path, class: 'products-index__action' %>
+				<%= link_to "Mis Retiros", user_withdrawals_path, class: 'products-index__action' %>
 
-        <%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action' %>
+				<%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action' %>
 
-        <%= link_to "Log out", destroy_user_session_path,
-        method: :delete,
-        class: 'products-index__action products-index__action--logout'
-        %>
+				<%= link_to "Log out", destroy_user_session_path,
+					method: :delete,
+					class: 'products-index__action products-index__action--logout'
+				%>
+			</div>
+		</div>
 
-      </div>
-    </div>
+		<div id="modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+	  		<div class="modal-content">
+	  		</div>
+	  	</div>
+		</div>
 
-    <div id="modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-      </div>
-    </div>
+		<h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> </h4>
+		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> </h4>
 
-    <h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> </h4>
-    <h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> </h4>
+		<% if @products.length > 0 %>
+			<table class="products-index__table">
+				<thead>
+			    <tr>
+			      <th class="products-index__table-header"> Nombre </th>
+			      <th class="products-index__table-header"> Precio </th>
+			      <th class="products-index__table-header"> Active </th>
+			      <th class="products-index__table-header"> Ventas (UN) </th>
+			      <th class="products-index__table-header"> Ventas (CLP) </th>
+			      <th class="products-index__table-header"> Acciones </th>
+			    </tr>
+				</thead>
+				<tbody>
+					<% @products.each do |product| %>
+						<%= render "row", product: product %>
+					<% end %>
+				</tbody>
+			</table>
+		<% else %>
+			<p class="products-index__message">	No tienes productos para mostrar :( </p>
+		<% end %>
 
-    <% if @products.length > 0 %>
-    <table class="products-index__table">
-      <thead>
-        <tr>
-          <th class="products-index__table-header"> Nombre </th>
-          <th class="products-index__table-header"> Precio </th>
-          <th class="products-index__table-header"> Active </th>
-          <th class="products-index__table-header"> Ventas (UN) </th>
-          <th class="products-index__table-header"> Ventas (CLP) </th>
-          <th class="products-index__table-header"> Acciones </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @products.each do |product| %>
-        <%= render "row", product: product %>
-        <% end %>
-      </tbody>
-    </table>
-    <% else %>
-    <p class="products-index__message"> No tienes productos para mostrar :( </p>
-    <% end %>
-
-  </div>
+	</div>
 </div>
