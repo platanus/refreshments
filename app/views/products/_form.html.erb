@@ -19,7 +19,7 @@
 	      <%= f.label :image, 'Elije una foto', { class: 'product-form__label product-form__label--image' } %>
 	    </div>
 
-		  <%= f.submit "Agregar producto", class: "product-form__button" %>
+		  <%= f.submit "#{@product.new_record? ? 'Agregar' : 'Editar'} producto", class: 'product-form__button' %>
 
 		<% end  %>
 	</div>
