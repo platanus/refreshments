@@ -1,0 +1,54 @@
+$register-option-button-background: #5356dc;
+$register-option-button-font: #fff;
+$buy-option-button-background: #fff;
+$buy-option-button-font: #5356dc;
+
+.welcome-page {
+  &__options-container {
+    margin-top: 20%;
+  }
+
+}
+
+.options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__option-button {
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 18px;
+
+    &:nth-child(1) {
+      margin-right: 50px;
+    }
+
+    &--register {
+      background-color: $register-option-button-background;
+      color: $register-option-button-font;
+
+      &:hover {
+        color: $register-option-button-font;
+      }
+
+    }
+
+    &--buy {
+      background-color: $buy-option-button-background;
+      color: $buy-option-button-font;
+
+      &:hover {
+        color: $buy-option-button-font;
+      }
+
+    }
+
+  }
+
+  &__option-button,
+  &__option-button:visited {
+    text-decoration: none;
+  }
+
+}

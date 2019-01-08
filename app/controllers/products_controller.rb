@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
   before_action :check_product, only: %i[edit show update destroy]
 
   def index
+    @withdrawable_amount = current_user.withdrawable_amount
     @products = current_user.products.includes(:invoice_products)
   end
 

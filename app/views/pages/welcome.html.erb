@@ -1,1 +1,20 @@
-<div id="app">Holis!</div>
+<div class="main-page welcome-page">
+
+	<%- flash.each do |_, msg| -%>
+    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+  <%- end -%>
+
+	<div class="options-container welcome-page__options-container">
+		<%= link_to 'Regístrate para vender!',
+			new_user_registration_path,
+			class: 'options-container__option-button options-container__option-button--register',
+			data: { turbolinks: false }
+		%>
+		<%= link_to 'Ve el catálogo para comprar!',
+			buy_path,
+			class: 'options-container__option-button options-container__option-button--buy',
+			data: { turbolinks: false }
+		%>
+	</div>
+
+</div>

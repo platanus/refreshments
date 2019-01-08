@@ -28,13 +28,13 @@ class Withdrawal < ApplicationRecord
 
   def amount_cant_be_greater_than_user_withdrawable_amount
     if amount && amount > user.withdrawable_amount
-      errors.add(:amount, "Amount can't be greater than user balance")
+      errors.add(:amount, :cant_exceed_withdrawable_amount)
     end
   end
 
   def address_is_valid_btc_address
     if !/^[13mn][a-km-zA-HJ-NP-Z1-9]{25,33}$/.match(btc_address)
-      errors.add(:btc_address, 'BTC address must be a valid one')
+      errors.add(:btc_address, :must_be_a_valid_address)
     end
   end
 

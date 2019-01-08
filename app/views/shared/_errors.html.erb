@@ -1,0 +1,5 @@
+<% if resource.errors.any? %>
+  <% resource.first_error_per_attr.each do |message| %>
+    <div class="<%= "alert alert-danger #{extra_classes}" %>"> <%= message %> </div>
+  <% end %>
+<% end %>

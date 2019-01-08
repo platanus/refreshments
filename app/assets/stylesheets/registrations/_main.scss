@@ -1,4 +1,3 @@
-$registration-page-background: #e1e9ff;
 $registration-form-background: #fff;
 $registration-form-title: #383769;
 $registration-form-label: #383769;
@@ -8,17 +7,9 @@ $registration-form-input-shadow: #f2f5ff;
 $registration-form-input-font: #5356dc;
 $registration-form-submit-button-text: #fff;
 $registration-form-submit-button-background: #5356dc;
-$registration-error-font: #f00;
-$registration-error-background: rgba($registration-error-font, .1);
-
 $registration-form-width: 368px;
 
 .registration-page {
-  background-color: $registration-page-background;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-
   &__registration-form-container {
     width: 1120px;
     min-height: 100%;
@@ -178,23 +169,3 @@ $registration-form-width: 368px;
 .registration-form__checkbox-field .registration-form__checkbox-input:checked + .registration-form__checkbox-label::after {
   content: '';
 }
-
-.registration__flash-message {
-  border: 1px solid;
-  border-radius: 4px;
-  margin-top: 30px;
-  padding: 10px 8px;
-  width: $registration-form-width;
-  box-sizing: border-box;
-  font-size: 16px;
-  text-align: center;
-
-  &--error {
-    border-color: $registration-error-font;
-    color: $registration-error-font;
-    background-color: $registration-error-background;
-  }
-
-}
-
-

@@ -35,7 +35,8 @@ RSpec.describe Withdrawal, type: :model do
       withdrawal.valid?
       errors = withdrawal.errors.messages
       expect(errors.length).to eq(1)
-      expect(errors[:amount]).to include("Amount can't be greater than user balance")
+      expect(errors[:amount]).to include(I18n.t(:cant_exceed_withdrawable_amount,
+        scope: [:activerecord, :errors, :models, :withdrawal, :attributes, :amount]))
     end
 
     it 'should not create instance in database' do

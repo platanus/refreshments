@@ -1,0 +1,83 @@
+$products-index-action-button-background: lighten(#383769, 15%);
+$products-index-action-button-font: #fff;
+$products-index-logout-action-button-background: #a8a8a8;
+$products-index-main-font-color: #383769;
+$products-index-table-actions-background: #acabfb;
+
+.products-index {
+  &__table-container {
+    margin: 30px 50px;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    color: $products-index-main-font-color;
+    margin: 0;
+  }
+
+  &__total-sales {
+    color: $products-index-main-font-color;
+  }
+
+  &__withdrawable-amount {
+    color: $products-index-main-font-color;
+  }
+
+  &__action {
+    background-color: $products-index-action-button-background;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    &--logout {
+      background-color: $products-index-logout-action-button-background;
+    }
+
+  }
+
+  &__action,
+  &__action:visited,
+  &__action:hover {
+    text-decoration: none;
+    color: $products-index-action-button-font;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+    margin-top: 40px;
+    color: $products-index-main-font-color;
+  }
+
+  &__table-header {
+    &:last-child {
+      width: 30%;
+    }
+  }
+
+  &__table-actions {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  &__table-action {
+    width: 100px;
+    background-color: $products-index-table-actions-background;
+  }
+
+  &__message {
+    text-align: center;
+  }
+
+}

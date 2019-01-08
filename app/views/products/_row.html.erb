@@ -4,9 +4,13 @@
 	<td> <%= product.active %> </td>
 	<td> <%= product.invoice_products.count %> </td>
 	<td> <%= product.invoice_products.count * product.price %> </td>
-	<td class="btn-group">
-		<%= link_to "Ver", user_product_path(product) %>
-	  <%= link_to "Editar", edit_user_product_path(product) %>
-	  <%= link_to "Eliminar", user_product_path(product), data: {:confirm => 'Are you sure?'}, :method => :delete %>
+	<td class="products-index__table-actions">
+		<%= link_to "Ver", user_product_path(product), class: 'products-index__action products-index__table-action'%>
+	  <%= link_to "Editar", edit_user_product_path(product), class: 'products-index__action products-index__table-action' %>
+	  <%= link_to "Eliminar", user_product_path(product),
+	  	data: {:confirm => 'Are you sure?'},
+	  	:method => :delete,
+	  	class: 'products-index__action products-index__table-action'
+	  %>
 	</td>
 </tr>
