@@ -1,8 +1,13 @@
 class Invoice < ApplicationRecord
   validates :clp, :memo, :payment_request, :r_hash, :amount, presence: true
+  validates :clp, :amount, numericality: { greater_than: 0 }
 
   has_many :invoice_products
   has_many :products, through: :invoice_products
+
+  def satoshi_clp_ratio
+    amount.to_f / clp
+  end
 end
 
 # == Schema Information
