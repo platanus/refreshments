@@ -59,7 +59,7 @@ $products-index-table-actions-background: #acabfb;
   }
 
   &__table-header {
-    &:last-child {
+    &--fixed-width {
       width: 30%;
     }
   }

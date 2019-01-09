@@ -1,0 +1,67 @@
+$withdrawals-index-action-button-background: lighten(#383769, 15%);
+$withdrawals-index-action-button-font: #fff;
+$withdrawals-index-logout-action-button-background: #a8a8a8;
+$withdrawals-index-main-font-color: #383769;
+$withdrawals-index-table-actions-background: #acabfb;
+
+.withdrawals-index {
+  &__table-container {
+    margin: 30px 50px;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    color: $withdrawals-index-main-font-color;
+    margin: 0;
+  }
+
+  &__total-withdrawals {
+    color: $withdrawals-index-main-font-color;
+  }
+
+  &__action {
+    background-color: $withdrawals-index-action-button-background;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    &--logout {
+      background-color: $withdrawals-index-logout-action-button-background;
+    }
+
+  }
+
+  &__action,
+  &__action:visited,
+  &__action:hover {
+    text-decoration: none;
+    color: $withdrawals-index-action-button-font;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+    margin-top: 40px;
+    color: $withdrawals-index-main-font-color;
+  }
+
+  &__table-header {
+    &--fixed-width {
+      width: 40%;
+    }
+  }
+
+  &__message {
+    text-align: center;
+  }
+
+}

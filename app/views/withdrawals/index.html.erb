@@ -1,28 +1,52 @@
-<div>
-	<h1> Mis Retiros </h1>
-	<h3> Total retirado confirmado: <%= @total_confirmed %> </h3>
-	<h3> Total retirado pendiente: <%= @total_pending %> </h3>
+<div class="main-page withdrawals-index">
+	<div class="withdrawals-index__table-container">
 
-	<table>
-		<thead>
-	    <tr>
-	      <th> Cantidad </th>
-	      <th> Estado </th>
-	      <th> Dirección BTC </th>
-	      <th> Actualizado en </th>
-	      <th> Solicitado en </th>
-	    </tr>
-		</thead>
-		<tbody>
-			<% @withdrawals.each do |withdrawal| %>
-				<tr>
-					<td> <%= withdrawal.amount %> </td>
-					<td> <%= withdrawal.aasm.current_state.capitalize %> </td>
-					<td> <%= withdrawal.btc_address %> </td>
-					<td> <%= withdrawal.updated_at.strftime("%d/%m/%Y %H:%M") %> </td>
-					<td> <%= withdrawal.created_at.strftime("%d/%m/%Y %H:%M") %> </td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+		<div class="withdrawals-index__header">
+			<h1 class="withdrawals-index__title"> Mis Retiros </h1>
+
+			<div class="withdrawals-index__header-actions">
+				<%= link_to "Mis Productos", user_products_path, class: 'withdrawals-index__action' %>
+
+				<%= link_to "Log out", destroy_user_session_path,
+					method: :delete,
+					class: 'withdrawals-index__action withdrawals-index__action--logout'
+				%>
+			</div>
+		</div>
+
+		<h4 class="withdrawals-index__total-withdrawals withdrawals-index__total-withdrawals--confirmed">
+			Total retirado confirmado: <%= @total_confirmed %>
+		</h4>
+		<h4 class="withdrawals-index__total-withdrawals withdrawals-index__total-withdrawals--pending">
+			Total retirado pendiente: <%= @total_pending %>
+		</h4>
+
+		<% if @withdrawals.length > 0 %>
+			<table class="withdrawals-index__table">
+				<thead>
+			    <tr>
+			      <th class="withdrawals-index__table-header"> Cantidad </th>
+			      <th class="withdrawals-index__table-header"> Estado </th>
+			      <th class="withdrawals-index__table-header withdrawals-index__table-header--fixed-width"> Dirección BTC </th>
+			      <th class="withdrawals-index__table-header"> Actualizado en </th>
+			      <th class="withdrawals-index__table-header"> Solicitado en </th>
+			    </tr>
+				</thead>
+				<tbody>
+					<% @withdrawals.each do |withdrawal| %>
+						<tr>
+							<td> <%= withdrawal.amount %> </td>
+							<td> <%= withdrawal.aasm.current_state.capitalize %> </td>
+							<td> <%= withdrawal.btc_address %> </td>
+							<td> <%= withdrawal.updated_at.strftime("%d/%m/%Y %H:%M") %> </td>
+							<td> <%= withdrawal.created_at.strftime("%d/%m/%Y %H:%M") %> </td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		<% else %>
+			<p class="withdrawals-index__message">	No tienes retiros para mostrar :( </p>
+		<% end %>
+
+	</div>
 </div>
