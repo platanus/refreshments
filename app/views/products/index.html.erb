@@ -57,6 +57,30 @@
 					<% end %>
 				</tbody>
 			</table>
+			<% @products.each do |product| %>
+				<div
+					id="<%= "image-modal-holder-#{product.id}" %>"
+					class="modal hide fade"
+					role="dialog"
+					aria-labelledby="basicModal"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4> Imagen del Producto </h4>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+							</div>
+							<div class="modal-body">
+								<%= product.image.attached? ?
+									image_tag(url_for(product.image), class: 'image-modal__image') :
+									'El producto no tiene imagen'
+								%>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
 		<% else %>
 			<p class="products-index__message">	No tienes productos para mostrar :( </p>
 		<% end %>
