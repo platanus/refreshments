@@ -36,18 +36,18 @@
 			</div>
 		</div>
 
-		<h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> </h4>
-		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> </h4>
+		<h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> (Satoshis) </h4>
+		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> (Satoshis) </h4>
 
 		<% if @products.length > 0 %>
 			<table class="products-index__table">
 				<thead>
 			    <tr>
 			      <th class="products-index__table-header"> Nombre </th>
-			      <th class="products-index__table-header"> Precio </th>
+			      <th class="products-index__table-header"> Precio (CLP) </th>
 			      <th class="products-index__table-header"> Active </th>
 			      <th class="products-index__table-header"> Ventas (UN) </th>
-			      <th class="products-index__table-header"> Ventas (CLP) </th>
+			      <th class="products-index__table-header"> Ventas (Satoshis) </th>
 			      <th class="products-index__table-header products-index__table-header--fixed-width"> Acciones </th>
 			    </tr>
 				</thead>

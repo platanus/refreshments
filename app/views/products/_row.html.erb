@@ -3,7 +3,7 @@
 	<td> <%= product.price %> </td>
 	<td> <%= product.active %> </td>
 	<td> <%= product.invoice_products.count %> </td>
-	<td> <%= product.invoice_products.count * product.price %> </td>
+	<td> <%= product.invoice_products.sum(:product_price) %> </td>
 	<td class="products-index__table-actions">
 		<button
 			type="button"
