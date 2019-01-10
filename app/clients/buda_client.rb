@@ -62,7 +62,7 @@ class BudaClient
     {
       type: type,
       amount: amount
-    }.to_json
+    }
   end
 
   def send_buda_request(http_method, path, body, headers = nil)
