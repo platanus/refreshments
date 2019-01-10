@@ -27,7 +27,7 @@
 
 				<%= link_to "Mis Retiros", user_withdrawals_path, class: 'products-index__action' %>
 
-				<%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action' %>
+				<%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action', data: { turbolinks: false } %>
 
 				<%= link_to "Log out", destroy_user_session_path,
 					method: :delete,
