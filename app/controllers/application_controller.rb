@@ -7,11 +7,19 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    user_products_path
+    if resource.class == AdminUser
+      admin_dashboard_path
+    else
+      user_products_path
+    end
   end
 
   def after_sign_out_path_for(_resource)
-    root_path
+    if resource.class == AdminUser
+      admin_root_path
+    else
+      root_path
+    end
   end
 
   protected
