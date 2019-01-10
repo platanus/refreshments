@@ -20,5 +20,7 @@ module PlRefreshments
     config.active_job.queue_adapter = :sidekiq
     config.assets.paths << Rails.root.join('node_modules')
     config.load_defaults 5.1
+
+    config.action_view.field_error_proc = Proc.new { |html_tag, _instance| html_tag.html_safe }
   end
 end
