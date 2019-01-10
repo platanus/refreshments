@@ -10,6 +10,7 @@ $product-form-file-input-background: #f9f9ff;
 $product-form-file-input-border: #5356dc;
 $product-form-file-input-font-color: #5356dc;
 $product-form-file-input-width: 80%;
+$product-form-content-witdth: 70%;
 $product-form-input-border-width: 1px;
 
 .product-form {
@@ -30,7 +31,7 @@ $product-form-input-border-width: 1px;
     padding: 5px;
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    width: $product-form-content-witdth;
     margin: 0 auto 30px;
   }
 
@@ -94,9 +95,15 @@ $product-form-input-border-width: 1px;
     padding: 8px 0;
     border-radius: 10px;
 
-    &::hover {
+    &:hover {
       cursor: pointer;
     }
+  }
+
+  &__alert {
+    width: $product-form-content-witdth;
+    margin: 0 auto 20px;
+    font-size: 12px;
   }
 
 }
