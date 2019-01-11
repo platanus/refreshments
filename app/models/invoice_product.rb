@@ -4,6 +4,8 @@ class InvoiceProduct < ApplicationRecord
   belongs_to :product
   belongs_to :invoice
 
+  scope :settled, -> { joins(:invoice).merge(Invoice.settled) }
+
   before_validation { fix_product_price }
 
   def fix_product_price

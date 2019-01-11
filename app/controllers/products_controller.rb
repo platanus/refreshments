@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     @withdrawable_amount = current_user.withdrawable_amount
-    @products = current_user.products.includes(:invoice_products)
+    @products = current_user.products_with_sales
   end
 
   def new

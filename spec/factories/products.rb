@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :product do
-    price 1_000
+    price 1000
     name "Coca Cola"
     image do
       fixture_file_upload(

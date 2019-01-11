@@ -5,6 +5,8 @@ class Invoice < ApplicationRecord
   has_many :invoice_products
   has_many :products, through: :invoice_products
 
+  scope :settled, -> { where(settled: true) }
+
   def satoshi_clp_ratio
     amount.to_f / clp
   end

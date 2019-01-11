@@ -24,7 +24,12 @@ RSpec.describe ProductsController, type: :controller do
 
       it 'assigns list with user products' do
         get :index
-        expect(assigns(:products)).to have(3).items
+        expect(assigns(:products).length).to eq(3)
+      end
+
+      it 'assigns user withdrawable amount' do
+        get :index
+        expect(assigns(:withdrawable_amount)).to be_an(Integer)
       end
 
       it 'returns correct "index" view' do
