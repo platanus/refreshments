@@ -24,7 +24,7 @@ RSpec.describe BudaClient do
       expect(HTTParty)
         .to have_received(:post)
         .with(
-          'https://stg.buda.com/api/v2/currencies/btc/withdrawals',
+          "expected_base_url/currencies/btc/withdrawals",
           headers: 'headers',
           body: 'body'
         )

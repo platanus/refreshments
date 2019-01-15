@@ -180,4 +180,132 @@ RSpec.describe User, type: :model do
       it { expect(user.withdrawable_amount).to be(250000) }
     end
   end
+
+  describe '#products_with_sales' do
+    let(:products_with_sales) { user.products_with_sales }
+
+    context 'user with 1 product and 0 invoices' do
+      let(:user) { create_user_with_product(1000) }
+
+      it 'returns product in spite of not having any invoices' do
+        expect(products_with_sales.length).to eq(1)
+      end
+
+      it 'sets correct total_count' do
+        expect(products_with_sales.first.total_count).to eq(0)
+      end
+
+      it 'sets correct total_satoshi' do
+        expect(products_with_sales.first.total_satoshi).to eq(0)
+      end
+
+      it 'has every necessary product attribute' do
+        expect(products_with_sales.first)
+          .to have_attributes(name: "Coca Cola", price: 1000, active: true)
+      end
+    end
+
+    context 'user with 1 product and 1 unsettled invoice' do
+      let(:user) { create_user_with_invoice(1000, 1000, 100000, false) }
+
+      it 'returns product in spite of not having any settled invoices' do
+        expect(products_with_sales.length).to eq(1)
+      end
+
+      it 'sets correct total_count' do
+        expect(products_with_sales.first.total_count).to eq(0)
+      end
+
+      it 'sets correct total_satoshi' do
+        expect(products_with_sales.first.total_satoshi).to eq(0)
+      end
+
+      it 'has every necessary product attribute' do
+        expect(products_with_sales.first)
+          .to have_attributes(name: "Coca Cola", price: 1000, active: true)
+      end
+    end
+
+    context 'user with 1 product and 1 settled invoice' do
+      let(:user) { create_user_with_invoice(1000, 1000, 100000) }
+
+      it 'returns array with 1 element' do
+        expect(products_with_sales.length).to eq(1)
+      end
+
+      it 'has attribute total_satoshi with correct value' do
+        expect(products_with_sales.first.total_satoshi).to eq(100000)
+      end
+
+      it 'has attribute total_count with correct value' do
+        expect(products_with_sales.first.total_count).to eq(1)
+      end
+
+      it 'has every necessary product attribute' do
+        expect(products_with_sales.first)
+          .to have_attributes(name: "Coca Cola", price: 1000, active: true)
+      end
+    end
+
+    context 'user with 1 products with 1 settled and 1 unsettled invoices' do
+      let(:user) { create_user_with_product(1000) }
+      let(:invoice_a) { create(:invoice, clp: 1000, amount: 100000) }
+      let(:invoice_b) { create(:invoice, clp: 2000, amount: 200000, settled: false) }
+      before do
+        create(:invoice_product, invoice: invoice_a, product: user.products.first)
+        create(:invoice_product, invoice: invoice_b, product: user.products.first)
+      end
+
+      it 'returns array with 1 element' do
+        expect(products_with_sales.length).to eq(1)
+      end
+
+      it 'has attribute total_satoshi with correct value' do
+        expect(products_with_sales.first.total_satoshi).to eq(100000)
+      end
+
+      it 'has attribute total_count with correct value' do
+        expect(products_with_sales.first.total_count).to eq(1)
+      end
+    end
+
+    context 'user with 1 product and 2 settled invoices' do
+      let(:user) { create_user_with_product(1000) }
+      let(:invoice_a) { create(:invoice, clp: 1000, amount: 100000) }
+      let(:invoice_b) { create(:invoice, clp: 1000, amount: 200000) }
+      before do
+        create(:invoice_product, invoice: invoice_a, product: user.products.first)
+        create(:invoice_product, invoice: invoice_b, product: user.products.first)
+      end
+
+      it 'returns array with 1 element' do
+        expect(products_with_sales.length).to eq(1)
+      end
+
+      it 'has attribute total_satoshi with correct value' do
+        expect(products_with_sales.first.total_satoshi).to eq(300000)
+      end
+
+      it 'has attribute total_count with correct value' do
+        expect(products_with_sales.first.total_count).to eq(2)
+      end
+    end
+
+    context 'user with 3 products: 1 with no invoice, 1 unsettled and 1 settled' do
+      let(:user) { create(:user) }
+      let(:product_a) { create(:product, price: 1000, user: user) }
+      let(:product_b) { create(:product, price: 2000, user: user) }
+      let!(:product_c) { create(:product, price: 3000, user: user) }
+      let(:invoice_a) { create(:invoice, clp: 1000, amount: 100000) }
+      let(:invoice_b) { create(:invoice, clp: 2000, amount: 200000, settled: false) }
+      before do
+        create(:invoice_product, invoice: invoice_a, product: product_a)
+        create(:invoice_product, invoice: invoice_b, product: product_b)
+      end
+
+      it 'considers the three products' do
+        expect(products_with_sales.length).to eq(3)
+      end
+    end
+  end
 end

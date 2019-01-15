@@ -7,6 +7,7 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable
 
   has_many :products
+  has_many :invoice_products, through: :products
   has_many :invoices, through: :products
   has_many :withdrawals
 
@@ -31,6 +32,20 @@ class User < ApplicationRecord
 
   def withdrawable_amount
     total_sales - total_withdrawals
+  end
+
+  def products_with_sales
+    products
+      .joins(
+        "LEFT OUTER JOIN (#{InvoiceProduct.settled.to_sql}) AS settled_invoice_products " \
+        "ON settled_invoice_products.product_id = products.id"
+      )
+      .group('products.id')
+      .select(
+        'products.*',
+        'COUNT(settled_invoice_products.id) AS total_count',
+        'COALESCE(SUM(settled_invoice_products.product_price), 0) AS total_satoshi'
+      )
   end
 end
 
