@@ -56,13 +56,14 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'dotenv-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'guard-rspec', require: false
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-nc', require: false
   gem 'rspec-rails'
+  gem 'rubocop-rspec'
 end
 
 group :production, :development, :test do

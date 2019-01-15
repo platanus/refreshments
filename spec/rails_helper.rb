@@ -47,7 +47,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
 end
 
@@ -58,31 +58,11 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-FactoryGirl::SyntaxRunner.class_eval do
+FactoryBot::SyntaxRunner.class_eval do
   include ActionDispatch::TestProcess
 end
 
 def mock_authentication
   allow(controller).to receive(:current_user).and_return(user)
   allow(request.env['warden']).to receive(:authenticate!).and_return(user)
-end
-
-def create_user_with_product(product_price)
-  user = create(:user)
-  create(:product, user: user, price: product_price)
-  user
-end
-
-def create_user_with_invoice(product_price, invoice_clp, amount, settled = true)
-  user = create_user_with_product(product_price)
-  invoice = create(:invoice, clp: invoice_clp, amount: amount, settled: settled)
-  create(:invoice_product, product: user.products.first, invoice: invoice)
-  user
-end
-
-def create_withdrawal_without_after_commit_callback
-  withdrawal = build(:withdrawal, amount: 50000, user: user)
-  allow(withdrawal).to receive(:add_job_to_withdrawal_requests_worker).and_return(true)
-  withdrawal.save!
-  withdrawal
 end

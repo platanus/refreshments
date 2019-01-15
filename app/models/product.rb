@@ -1,12 +1,12 @@
 class Product < ApplicationRecord
-  validates :name, :price, presence: true
+  validates :name, presence: true
   validates :image, attached: true
 
   has_one_attached :image
-  scope :actives, -> { where(active: true) }
 
-  belongs_to :user
-  has_many :invoice_products
+  has_many :user_products
+  has_many :users, through: :user_products
+  has_many :invoice_products, through: :user_products
   has_many :invoices, through: :invoice_products
 end
 
@@ -15,18 +15,7 @@ end
 # Table name: products
 #
 #  id         :bigint(8)        not null, primary key
-#  price      :integer
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  active     :boolean          default(TRUE)
-#  user_id    :bigint(8)
-#
-# Indexes
-#
-#  index_products_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
 #
