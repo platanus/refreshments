@@ -26,7 +26,9 @@ FactoryBot.define do
 
         after(:create) do |user, evaluator|
           user.user_products.each do |user_product|
-            create(:invoice_product, user_product: user_product, invoice_settled: evaluator.invoice_settled)
+            create(:invoice_product,
+              user_product: user_product,
+              invoice_settled: evaluator.invoice_settled)
           end
         end
       end

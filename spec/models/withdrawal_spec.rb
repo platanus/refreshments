@@ -56,7 +56,9 @@ RSpec.describe Withdrawal, type: :model do
     context "incorrect first character" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: 'AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: 'AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -72,7 +74,9 @@ RSpec.describe Withdrawal, type: :model do
     context "too long" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i5g')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i5g')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -80,7 +84,9 @@ RSpec.describe Withdrawal, type: :model do
     context "has a 'I'" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: '1AGNa15ZQXAZUgFIqJ2i7Z2DPU2J6hW62i')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: '1AGNa15ZQXAZUgFIqJ2i7Z2DPU2J6hW62i')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -88,7 +94,9 @@ RSpec.describe Withdrawal, type: :model do
     context "has a 'l'" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: '1AGNa15ZQXAZUgFlqJ2i7Z2DPU2J6hW62i')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: '1AGNa15ZQXAZUgFlqJ2i7Z2DPU2J6hW62i')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -96,7 +104,9 @@ RSpec.describe Withdrawal, type: :model do
     context "has a 'O'" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: '1AGNa15ZQOZUgF1qJ2i7Z2DPU2J6hW62i')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: '1AGNa15ZQOZUgF1qJ2i7Z2DPU2J6hW62i')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -104,7 +114,9 @@ RSpec.describe Withdrawal, type: :model do
     context "has a '0'" do
       it 'should raise validation error' do
         expect do
-          create(:withdrawal, user: user_with_invoice, btc_address: '1AGNa15ZQ0AZUgF1qJ2i7Z2DPU2J6hW62i')
+          create(:withdrawal,
+            user: user_with_invoice,
+            btc_address: '1AGNa15ZQ0AZUgF1qJ2i7Z2DPU2J6hW62i')
         end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
