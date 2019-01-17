@@ -11,16 +11,23 @@ RSpec.describe WithdrawalsController, type: :controller do
     post action, params: params, xhr: true
   end
 
+  def create_withdrawal_without_callback
+    withdrawal = build(:withdrawal, user: user)
+    allow(withdrawal).to receive(:add_job_to_withdrawal_requests_worker).and_return(true)
+    withdrawal.save!
+    withdrawal
+  end
+
   def create_withdrawals_with_every_state
-    create_withdrawal_without_after_commit_callback
-    create_withdrawal_without_after_commit_callback.confirm!
-    create_withdrawal_without_after_commit_callback.reject!
+    create_withdrawal_without_callback
+    create_withdrawal_without_callback.confirm!
+    create_withdrawal_without_callback.reject!
   end
 
   let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
 
   describe 'GET #index' do
-    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+    let(:user) { create(:user_with_invoice) }
 
     context 'unauthenticated user' do
       it 'redirects to sign up form' do
@@ -94,7 +101,7 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #create' do
     let(:action) { :create }
-    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+    let(:user) { create(:user_with_invoice) }
     before do
       allow_any_instance_of(Withdrawal)
         .to receive(:add_job_to_withdrawal_requests_worker)
@@ -179,7 +186,7 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #validate' do
     let(:action) { :validate }
-    let(:user) { create_user_with_invoice(10000, 10000, 500000) }
+    let(:user) { create(:user_with_invoice) }
 
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do
