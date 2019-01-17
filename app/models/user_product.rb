@@ -8,6 +8,14 @@ class UserProduct < ApplicationRecord
   belongs_to :product
   has_many :invoice_products
   has_many :invoices, through: :invoice_products
+
+  validate :prevent_change_of_product, on: :update
+
+  def prevent_change_of_product
+    if product_id_changed?
+      errors.add :product_id, :cant_change_product_reference
+    end
+  end
 end
 
 # == Schema Information
