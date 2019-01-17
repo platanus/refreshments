@@ -35,12 +35,20 @@ class UserProductsController < ApplicationController
 
   private
 
+  def user_product_basic_params
+    params.require(:user_product).permit(:price, :stock)
+  end
+
   def create_params
-    params.require(:user_product).permit(:price, :stock, :product_id)
+    params
+      .require(:user_product).permit(:product_id)
+      .merge(user_product_basic_params)
   end
 
   def update_params
-    params.require(:user_product).permit(:active).merge(create_params)
+    params
+      .require(:user_product).permit(:active)
+      .merge(user_product_basic_params)
   end
 
   def check_user_product

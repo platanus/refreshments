@@ -6,13 +6,15 @@
 
 			<%= render "shared/errors", resource: @user_product, extra_classes: 'product-form__alert' %>
 
-		  <div class="product-form__field">
-	      <%= f.label :product_id, 'Producto', { class: 'product-form__label' } %>
-	      <%= f.collection_select :product_id,
-	      	Product.all, :id, :name,
-	      	{},
-	      	{ class: 'product-form__input product-form__input--select', error: false } %>
-	    </div>
+			<% if @user_product.new_record? %>
+				<div class="product-form__field">
+		      <%= f.label :product_id, 'Producto', { class: 'product-form__label' } %>
+		      <%= f.collection_select :product_id,
+		      	Product.all, :id, :name,
+		      	{},
+		      	{ class: 'product-form__input product-form__input--select', error: false } %>
+		    </div>
+			<% end %>
 
 	    <div class="product-form__field">
 	      <%= f.label :price, 'Precio', { class: 'product-form__label' } %>

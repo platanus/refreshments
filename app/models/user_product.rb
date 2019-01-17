@@ -8,6 +8,8 @@ class UserProduct < ApplicationRecord
   belongs_to :product
   has_many :invoice_products
   has_many :invoices, through: :invoice_products
+
+  attr_readonly :product_id
 end
 
 # == Schema Information
