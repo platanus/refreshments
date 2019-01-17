@@ -6,7 +6,7 @@ class InvoiceProduct < ApplicationRecord
 
   scope :settled, -> { joins(:invoice).merge(Invoice.settled) }
 
-  before_validation { fix_product_price }
+  before_validation :fix_product_price, on: :create
 
   def fix_product_price
     return if user_product.nil? || invoice.nil?
