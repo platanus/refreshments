@@ -1,0 +1,10 @@
+<%= semantic_form_for [:admin, @user_product], builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :user, as: :select, collection: User.all.pluck(:email, :id) %>
+    <%= f.input :product, as: :select, collection: Product.all.pluck(:name, :id) %>
+    <%= f.input :price %>
+    <%= f.input :active %>
+    <%= f.input :stock %>
+    <%= f.actions %>
+  <% end  %>
+<% end  %>

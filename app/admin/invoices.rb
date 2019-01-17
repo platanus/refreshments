@@ -12,11 +12,19 @@ ActiveAdmin.register Invoice do
   end
 
   sidebar "Sold products", only: [:show] do
-    table_for invoice.products.order('name ASC') do
-      column "Product" do |product|
-        link_to product.name, [:admin, product]
+    sold_products = invoice
+                    .invoice_products
+                    .includes(user_product: :product)
+                    .order('products.name ASC')
+    table_for sold_products do
+      column "Producto" do |invoice_product|
+        user_product = invoice_product.user_product
+        product = user_product.product
+        link_to product.name, [:admin, user_product]
       end
-      column :price
+      column "Precio" do |invoice_product|
+        invoice_product.user_product.price
+      end
     end
   end
 
