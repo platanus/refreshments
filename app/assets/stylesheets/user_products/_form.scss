@@ -69,12 +69,14 @@ $product-form-input-border-width: 1px;
   &__input {
     margin: 0;
     padding: 5px;
+    height: 36px;
     text-align: right;
     border: $product-form-input-border-width solid $product-form-input-border;
     border-radius: 8px;
     background-color: $product-form-input-background;
     color: $product-form-input-font-color;
     box-sizing: border-box;
+    width: 190px;
 
     &--image {
       height: 1px;
@@ -85,6 +87,11 @@ $product-form-input-border-width: 1px;
       white-space: nowrap;
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
+    }
+
+    &--select {
+      direction: rtl;
+      padding: 10px;
     }
   }
 
