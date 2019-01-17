@@ -1,6 +1,6 @@
 class UserProduct < ApplicationRecord
   validates :price, :stock, presence: true
-  validates :price, :stock, numericality: { greater_than: 0 }
+  validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
 
   scope :actives, -> { where(active: true) }
 

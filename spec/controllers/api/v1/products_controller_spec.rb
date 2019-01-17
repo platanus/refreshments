@@ -2,9 +2,8 @@ require 'rails_helper'
 
 describe Api::V1::ProductsController, type: :controller do
   describe "GET #index" do
-    let(:user) { create(:user) }
-    let!(:product) { create(:product, active: false, user: user) }
-    before { create_list(:product, 10, user: user) }
+    let(:user) { create(:user_with_product, product_count: 10) }
+    before { create(:user_product, user: user, active: false) }
 
     it "returns http success" do
       get :index

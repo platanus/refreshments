@@ -8,6 +8,18 @@ class Product < ApplicationRecord
   has_many :users, through: :user_products
   has_many :invoice_products, through: :user_products
   has_many :invoices, through: :invoice_products
+
+  def self.products_with_price
+    all
+      .joins(:user_products)
+      .where('user_products.stock > 0')
+      .where('user_products.active = true')
+      .group('products.id')
+      .select(
+        'products.*',
+        'MIN(user_products.price) AS price'
+      )
+  end
 end
 
 # == Schema Information
