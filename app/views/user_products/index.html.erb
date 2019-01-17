@@ -39,27 +39,27 @@
 		<h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> (Satoshis) </h4>
 		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> (Satoshis) </h4>
 
-		<% if @products.length > 0 %>
+		<% if @user_products.length > 0 %>
 			<table class="products-index__table">
 				<thead>
 			    <tr>
 			      <th class="products-index__table-header"> Nombre </th>
 			      <th class="products-index__table-header"> Precio (CLP) </th>
-			      <th class="products-index__table-header"> Active </th>
+			      <th class="products-index__table-header"> Stock </th>
 			      <th class="products-index__table-header"> Ventas (UN) </th>
 			      <th class="products-index__table-header"> Ventas (Satoshis) </th>
 			      <th class="products-index__table-header products-index__table-header--fixed-width"> Acciones </th>
 			    </tr>
 				</thead>
 				<tbody>
-					<% @products.each do |product| %>
-						<%= render "row", product: product %>
+					<% @user_products.each do |user_product| %>
+						<%= render "row", user_product: user_product %>
 					<% end %>
 				</tbody>
 			</table>
-			<% @products.each do |product| %>
+			<% @user_products.each do |user_product| %>
 				<div
-					id="<%= "image-modal-holder-#{product.id}" %>"
+					id="<%= "image-modal-holder-#{user_product.id}" %>"
 					class="modal hide fade"
 					role="dialog"
 					aria-labelledby="basicModal"
@@ -72,8 +72,8 @@
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
 							</div>
 							<div class="modal-body">
-								<%= product.image.attached? ?
-									image_tag(url_for(product.image), class: 'image-modal__image') :
+								<%= user_product.product.image.attached? ?
+									image_tag(url_for(user_product.product.image), class: 'image-modal__image') :
 									'El producto no tiene imagen'
 								%>
 							</div>
