@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   resource :user do
-    resources :products
+    resources :user_products, path: '/products', as: 'products'
     resources :withdrawals
   end
 
