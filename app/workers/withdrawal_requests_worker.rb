@@ -11,8 +11,10 @@ class WithdrawalRequestsWorker
 
   def handle_response
     return @withdrawal.reject! if @response.code != CREATE_SUCCESS_CODE
+
     @request_errors = JSON.parse(@response.body)['withdrawal']['errors']
-    return @withdrawal.reject! if @request_errors && @request_errors.any?
+    return @withdrawal.reject! if @request_errors&.any?
+
     @withdrawal.confirm!
   end
 end

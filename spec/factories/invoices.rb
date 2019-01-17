@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :invoice do
-    amount 1
-    clp 1
-    payment_request "MyString"
-    r_hash "MyString"
-    memo "MyString"
-    settled true
+    amount { 100000 }
+    clp { 1000 }
+    payment_request { 'MyString' }
+    r_hash { 'MyString' }
+    memo { 'MyString' }
+    settled { true }
   end
 end

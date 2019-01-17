@@ -3,19 +3,19 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
-  has_many :products
-  has_many :invoice_products, through: :products
-  has_many :invoices, through: :products
+  has_many :user_products
+  has_many :products, through: :user_products
+  has_many :invoice_products, through: :user_products
+  has_many :invoices, through: :invoice_products
   has_many :withdrawals
 
   def total_sales
-    Product.where(user_id: id)
-           .joins(invoice_products: :invoice)
-           .where('invoices.settled=true')
-           .sum('invoice_products.product_price')
+    UserProduct.where(user_id: id)
+               .joins(invoice_products: :invoice)
+               .where('invoices.settled=true')
+               .sum('invoice_products.product_price')
   end
 
   def total_withdrawals
@@ -35,14 +35,16 @@ class User < ApplicationRecord
   end
 
   def products_with_sales
-    products
+    user_products
       .joins(
         "LEFT OUTER JOIN (#{InvoiceProduct.settled.to_sql}) AS settled_invoice_products " \
-        "ON settled_invoice_products.product_id = products.id"
+        "ON settled_invoice_products.user_product_id = user_products.id"
       )
-      .group('products.id')
+      .joins(:product)
+      .group('user_products.id')
       .select(
-        'products.*',
+        'user_products.*',
+        'MAX(products.name) as product_name',
         'COUNT(settled_invoice_products.id) AS total_count',
         'COALESCE(SUM(settled_invoice_products.product_price), 0) AS total_satoshi'
       )
