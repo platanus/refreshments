@@ -123,4 +123,33 @@ describe CreateInvoice do
       expect { perform }.to raise_error('Invalid satoshi amount')
     end
   end
+
+  context 'with error when creating invoice products' do
+    before do
+      allow(CreateInvoiceProducts)
+        .to receive(:for) do
+          3.times { create(:invoice_product) }
+          raise ActiveRecord::RecordInvalid
+        end
+    end
+
+    it 'raises corresponding error and does not create new invoice' do
+      expect { perform }.to raise_error(ActiveRecord::RecordInvalid)
+      expect(Invoice.all.count).to eq(0)
+      expect(InvoiceProduct.all.count).to eq(0)
+    end
+  end
+
+  context 'with error when getting products hash' do
+    before do
+      allow(GetPricesHash)
+        .to receive(:for)
+        .and_raise('Error when getting prices hash')
+    end
+
+    it 'raises corresponding error and does not create new invoice' do
+      expect { perform }.to raise_error('Error when getting prices hash')
+      expect(Invoice.all.count).to eq(0)
+    end
+  end
 end
