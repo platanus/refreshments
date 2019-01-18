@@ -1,30 +1,40 @@
 require 'rails_helper'
 
 describe CreateInvoice do
-  let(:user) { create(:user) }
+  let(:product_a) { create(:product) }
+  let(:product_b) { create(:product) }
 
-  let(:product_a) { create(:product, name: "Coca Cola", price: 500, user: user) }
-  let(:product_b) { create(:product, name: "Sprite", price: 650, user: user) }
+  let(:lightning_network_client) do
+    mocked_lightning_client = double
+    allow(mocked_lightning_client)
+      .to receive(:create_invoice)
+      .and_return(
+        'r_hash' => 'r_hash',
+        'payment_request' => 'payment_request',
+        'add_index' => 'add_index'
+      )
+    mocked_lightning_client
+  end
 
-  let!(:product_a_id) { product_a.id }
-  let!(:product_b_id) { product_b.id }
+  let(:memo) { 'Memo' }
 
-  let(:lightning_network_client) { double }
+  let(:products_hash) do
+    {
+      product_a.id => { 'amount' => 3, 'price' => 1000 },
+      product_b.id => { 'amount' => 2, 'price' => 1000 }
+    }
+  end
 
-  let(:memo) { "Memo" }
-  let(:products_hash) { { product_a_id => 1, product_b_id => 1 } }
+  let(:prices_hash) { { product_a.id => 1000, product_b.id => 1000 } }
 
   def perform
     described_class.for(memo: memo, products_hash: products_hash)
   end
 
   def mock_lightning_network_client
-    allow_any_instance_of(described_class).to receive(:lightning_network_client)
+    allow_any_instance_of(described_class)
+      .to receive(:lightning_network_client)
       .and_return(lightning_network_client)
-    allow(lightning_network_client).to receive(:create_invoice)
-      .and_return(
-        "r_hash" => "r_hash", "payment_request" => "payment_request", "add_index" => "add_index"
-      )
   end
 
   def mock_price_on_satoshis
@@ -33,81 +43,84 @@ describe CreateInvoice do
     end
   end
 
+  def mock_prices_hash
+    allow(GetPricesHash)
+      .to receive(:for)
+      .and_return(prices_hash)
+  end
+
+  def mock_create_invoice_products
+    allow(CreateInvoiceProducts)
+      .to receive(:for)
+      .and_return(true)
+  end
+
   before do
     mock_lightning_network_client
     mock_price_on_satoshis
+    mock_prices_hash
+    mock_create_invoice_products
   end
 
   it { expect(perform).to be_a(Invoice) }
 
-  it "calls GetPriceOnSatoshis with correct clp_price" do
-    expect(GetPriceOnSatoshis).to receive(:for).with(clp_price: 1_150)
+  it 'creates a new Invoice in data base' do
+    expect { perform }.to change { Invoice.all.count }.by(1)
+  end
+
+  it 'creates a new Invoice with correct amount' do
+    expect(perform.amount).to eq(50_000_000)
+  end
+
+  it 'creates a new Invoice with correct clp' do
+    expect(perform.clp).to eq(5_000)
+  end
+
+  it 'creates a new Invoice with correct memo' do
+    expect(perform.memo).to eq(memo)
+  end
+
+  it 'creates a new Invoice with correct r_hash' do
+    expect(perform.r_hash).to eq('r_hash')
+  end
+
+  it 'creates a new Invoice with correct payment request' do
+    expect(perform.payment_request).to eq('payment_request')
+  end
+
+  it 'calls GetPriceOnSatoshis with correct clp_price' do
     perform
+    expect(GetPriceOnSatoshis)
+      .to have_received(:for)
+      .with(clp_price: 5_000)
   end
 
-  context "with 0 satoshis" do
-    let(:products_hash) { { product_a_id.to_i + product_b_id.to_i => 1 } }
-
-    it "raises satoshi amount error" do
-      expect { perform }.to raise_error("Invalid satoshi amount")
-    end
+  it 'calls CreateInvoiceProducts with correct params' do
+    invoice = perform
+    expect(CreateInvoiceProducts)
+      .to have_received(:for)
+      .with(invoice: invoice, prices_hash: prices_hash, products_hash: products_hash)
   end
 
-  context "with 1 product" do
-    let(:products_hash) { { product_a_id => 1 } }
-
-    it "creates exactly 1 invoice product" do
-      perform
-      expect(InvoiceProduct.count).to eq(1)
-    end
-
-    it "creates the invoice product with correct product" do
-      perform
-      expect(InvoiceProduct.first.product.id).to eq(product_a.id)
-    end
-
-    it "creates the invoice product with correct invoice" do
-      new_invoice = perform
-      expect(InvoiceProduct.first.invoice.id).to eq(new_invoice.id)
-    end
+  it 'calls LightningNetworkClient.create_invoice with correct params' do
+    perform
+    expect(lightning_network_client)
+      .to have_received(:create_invoice)
+      .with(memo, 50_000_000)
   end
 
-  context "with more than 1 equal products" do
-    let(:products_hash) { { product_a_id => 3 } }
-
-    it "creates exactly 3 invoice products " do
-      perform
-      expect(InvoiceProduct.count).to eq(3)
-    end
-
-    it "creates the invoice products with correct product" do
-      perform
-      expect(InvoiceProduct.all.map(&:product_id).uniq).to eq([product_a.id])
-    end
-
-    it "creates the invoice products with correct invoice" do
-      new_invoice = perform
-      expect(InvoiceProduct.all.map(&:invoice_id).uniq).to eq([new_invoice.id])
-    end
+  it 'calls GetPricesHash with correct params' do
+    perform
+    expect(GetPricesHash)
+      .to have_received(:for)
+      .with(products_hash)
   end
 
-  context "with more than 1 different products" do
-    let(:products_hash) { { product_a_id => 3, product_b_id => 4 } }
+  context 'with 0 satoshis' do
+    let(:prices_hash) { { product_a.id => 0, product_b.id => 0 } }
 
-    it "creates exactly 7 invoice products" do
-      perform
-      expect(InvoiceProduct.count).to eq(7)
-    end
-
-    it "creates correct ammount of invoice products for each product" do
-      perform
-      expect(product_a.invoice_products.count).to eq(3)
-      expect(product_b.invoice_products.count).to eq(4)
-    end
-
-    it "creates correct ammount of invoice products for invoice" do
-      new_invoice = perform
-      expect(new_invoice.invoice_products.count).to eq(7)
+    it 'raises satoshi amount error' do
+      expect { perform }.to raise_error('Invalid satoshi amount')
     end
   end
 end
