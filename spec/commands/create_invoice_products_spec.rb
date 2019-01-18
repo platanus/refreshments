@@ -7,7 +7,6 @@ describe CreateInvoiceProducts do
   let(:product_a) { user_product_a.product }
   let(:product_b) { user_product_b.product }
   let(:prices_hash) { { product_a.id => 1000, product_b.id => 1000 } }
-  before { perform }
 
   def perform
     described_class.for(
@@ -21,6 +20,7 @@ describe CreateInvoiceProducts do
     let(:invoice) { create(:invoice) }
     let(:products_hash) { { product_a.id => { 'amount' => 1, 'price' => 1000 } } }
     let(:invoice_product) { invoice.invoice_products.first }
+    before { perform }
 
     it 'creates correct amount of invoice products' do
       expect(InvoiceProduct.all.count).to eq(1)
@@ -38,6 +38,7 @@ describe CreateInvoiceProducts do
   context 'with more than 1 equal products' do
     let(:invoice) { create(:invoice, clp: 3000, amount: 300000) }
     let(:products_hash) { { product_a.id => { 'amount' => 3, 'price' => 1000 } } }
+    before { perform }
 
     it 'creates correct amount of invoice products' do
       expect(InvoiceProduct.all.count).to eq(3)
@@ -60,6 +61,7 @@ describe CreateInvoiceProducts do
         product_b.id => { 'amount' => 2, 'price' => 1000 }
       }
     end
+    before { perform }
 
     it 'creates correct amount of invoice products' do
       expect(InvoiceProduct.count).to eq(5)
@@ -97,6 +99,16 @@ describe CreateInvoiceProducts do
       it 'raises error' do
         expect { perform }.to raise_error(NoMethodError)
       end
+    end
+  end
+
+  context 'with no stock' do
+    let(:invoice) { create(:invoice) }
+    let(:products_hash) { { product_a.id => { 'amount' => 4, 'price' => 1000 } } }
+    before { user_product_a.update(stock: 3) }
+
+    it 'does not create any of the invoice products' do
+      expect { perform }.to raise_exception(ActiveRecord::RecordInvalid)
     end
   end
 end
