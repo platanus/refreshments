@@ -106,7 +106,10 @@ const store = new Vuex.Store({
     buyProducts: (state, getters) => {
       const products = getters.productsAsArray.reduce((acc, product) => {
         if (product.amount > 0) {
-          acc[product.id] = product.amount;
+          acc[product.id] = {
+            amount: product.amount,
+            price: product.price,
+          }
         }
 
         return acc;
