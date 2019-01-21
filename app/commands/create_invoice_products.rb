@@ -11,7 +11,7 @@ class CreateInvoiceProducts < PowerTypes::Command.new(:invoice, :prices_hash, :p
 
   def invoice_products_data
     @products_hash.each do |product_id, data|
-      add_product(product_id, data['amount'])
+      add_product(product_id.to_i, data['amount'])
     end
     invoice_products
   end

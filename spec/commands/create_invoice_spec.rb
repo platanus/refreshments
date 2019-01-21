@@ -20,8 +20,8 @@ describe CreateInvoice do
 
   let(:products_hash) do
     {
-      product_a.id => { 'amount' => 3, 'price' => 1000 },
-      product_b.id => { 'amount' => 2, 'price' => 1000 }
+      product_a.id.to_s => { 'amount' => 3, 'price' => 1000 },
+      product_b.id.to_s => { 'amount' => 2, 'price' => 1000 }
     }
   end
 
@@ -113,7 +113,7 @@ describe CreateInvoice do
     perform
     expect(GetPricesHash)
       .to have_received(:for)
-      .with(products_hash)
+      .with(products_hash: products_hash)
   end
 
   context 'with 0 satoshis' do

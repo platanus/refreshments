@@ -27,7 +27,7 @@ class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
   end
 
   def prices_hash
-    @prices_hash ||= GetPricesHash.for(@products_hash)
+    @prices_hash ||= GetPricesHash.for(products_hash: @products_hash)
   end
 
   def lightning_network_client
