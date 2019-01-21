@@ -12,7 +12,7 @@ class GetPricesHash < PowerTypes::Command.new(:products_hash)
 
   def check_prices!
     @products_hash.each do |id, data|
-      if data['price'] != prices_hash[id]
+      if data['price'] != prices_hash[id.to_i]
         raise 'Prices in request are no longer available'
       end
     end
