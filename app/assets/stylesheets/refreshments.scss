@@ -1,6 +1,6 @@
 //*= require 'vue-progress-path/dist/vue-progress-path'
-//*= require 'vue-flash-message/dist/vue-flash-message.min'
 
+@import 'vue-flash-message/dist/vue-flash-message.min';
 @import 'refreshments/theme';
 @import 'refreshments/product';
 @import 'refreshments/resume';
@@ -14,7 +14,7 @@ $bg-color: #fff;
   min-height: calc(100vh - 56px);
   background: $bg-color;
   max-width: 100%;
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   text-align: center;
   display: flex;
 }
