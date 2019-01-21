@@ -15,6 +15,7 @@ class WithdrawalsController < ApplicationController
     build_withdrawal
     validate_withdrawal
     return if performed?
+
     render 'confirm'
   end
 
@@ -22,6 +23,7 @@ class WithdrawalsController < ApplicationController
     build_withdrawal
     validate_withdrawal
     return if performed?
+
     @withdrawal.save
     render 'create'
   end

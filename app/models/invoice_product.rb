@@ -6,7 +6,9 @@ class InvoiceProduct < ApplicationRecord
 
   scope :settled, -> { joins(:invoice).merge(Invoice.settled) }
 
-  before_validation { fix_product_price }
+  before_validation :fix_product_price, on: :create
+
+  after_create :discount_stock
 
   def fix_product_price
     return if user_product.nil? || invoice.nil?
@@ -18,6 +20,11 @@ class InvoiceProduct < ApplicationRecord
 
   def product_price_initial_calc
     user_product.price * invoice.satoshi_clp_ratio
+  end
+
+  def discount_stock
+    user_product.stock -= 1
+    user_product.save!
   end
 end
 

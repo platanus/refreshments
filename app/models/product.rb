@@ -8,6 +8,16 @@ class Product < ApplicationRecord
   has_many :users, through: :user_products
   has_many :invoice_products, through: :user_products
   has_many :invoices, through: :invoice_products
+
+  scope :with_price, -> {
+    joins(:user_products)
+      .merge(UserProduct.for_sale)
+      .group('products.id')
+      .select(
+        'products.*',
+        'MIN(user_products.price) AS price'
+      )
+  }
 end
 
 # == Schema Information
