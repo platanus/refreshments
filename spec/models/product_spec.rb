@@ -10,8 +10,8 @@ RSpec.describe Product, type: :model do
     it { should have_many(:invoices) }
   end
 
-  describe 'Product#products_with_price' do
-    let(:result) { Product.products_with_price }
+  describe 'Product#with_price scope' do
+    let(:result) { Product.with_price }
 
     context 'product by one users' do
       let(:user) { create(:user_with_product) }

@@ -28,4 +28,44 @@ RSpec.describe UserProduct, type: :model do
           [:activerecord, :errors, :models, :user_product, :attributes, :product_id]))
     end
   end
+
+  describe 'actives scope' do
+    let!(:user_product_a) { create(:user_product, active: false) }
+    let!(:user_product_b) { create(:user_product) }
+
+    it 'only returns one active user product' do
+      expect(UserProduct.actives).to have_attributes(length: 1)
+    end
+
+    it 'returns correct user product' do
+      expect(UserProduct.actives.first.id).to eq(user_product_b.id)
+    end
+  end
+
+  describe 'with_stock scope' do
+    let!(:user_product_a) { create(:user_product, stock: 0) }
+    let!(:user_product_b) { create(:user_product) }
+
+    it 'only returns one user product with stock' do
+      expect(UserProduct.with_stock).to have_attributes(length: 1)
+    end
+
+    it 'returns correct user product' do
+      expect(UserProduct.with_stock.first.id).to eq(user_product_b.id)
+    end
+  end
+
+  describe 'for_sale scope' do
+    let!(:user_product_a) { create(:user_product, stock: 0) }
+    let!(:user_product_b) { create(:user_product, active: false) }
+    let!(:user_product_c) { create(:user_product) }
+
+    it 'only returns one user product with stock' do
+      expect(UserProduct.for_sale).to have_attributes(length: 1)
+    end
+
+    it 'returns correct user product' do
+      expect(UserProduct.for_sale.first.id).to eq(user_product_c.id)
+    end
+  end
 end

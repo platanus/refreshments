@@ -20,7 +20,7 @@ class GetPricesHash < PowerTypes::Command.new(:products_hash)
 
   def prices_hash
     @prices_hash ||= Product
-                     .products_with_price
+                     .with_price
                      .where(id: @products_hash.keys)
                      .reduce({}) { |acc, prod| acc.update(prod.id => prod.price) }
   end

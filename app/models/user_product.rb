@@ -3,6 +3,9 @@ class UserProduct < ApplicationRecord
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
 
   scope :actives, -> { where(active: true) }
+  scope :with_stock, -> { where('stock > 0') }
+
+  scope :for_sale, -> { actives.with_stock }
 
   belongs_to :user
   belongs_to :product
