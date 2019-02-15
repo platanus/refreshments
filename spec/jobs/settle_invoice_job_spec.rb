@@ -21,10 +21,15 @@ describe SettleInvoiceJob, type: :job do
 
   context "with Invoice" do
     let(:invoice) { create(:invoice, r_hash: r_hash, settled: false) }
+    let(:invoice_product_a) { create(:invoice_product, invoice: invoice) }
 
     it "settles invoice & opens door" do
       expect_any_instance_of(DoorClient).to receive(:open_door)
       expect { perform }.to change { invoice.reload.settled }.from(false).to(true)
+    end
+
+    it 'reduces stock of invoice products' do
+      expect { perform }.to change { invoice_product_a.user_product.reload.stock }.by(-1)
     end
   end
 
