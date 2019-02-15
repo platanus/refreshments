@@ -39,21 +39,4 @@ RSpec.describe InvoiceProduct, type: :model do
       expect(invoice_product.product_price).to eq(user_product.price * MOCKED_SATOSHI_CLP_RATIO)
     end
   end
-
-  describe '#discount_stock' do
-    it 'substracts 1 unit from user product stock' do
-      expect { create_invoice_products(1) }.to change { user_product.stock }.by(-1)
-    end
-
-    it 'creates 3 invoice products and stock reaches 0' do
-      create_invoice_products(3)
-      expect(user_product.stock).to eq(0)
-    end
-
-    it 'raises error due to no stock' do
-      expect { create_invoice_products(4) }.to raise_error(ActiveRecord::RecordInvalid)
-      expect(UserProduct.first.stock).to eq(0)
-      expect(InvoiceProduct.all.count).to eq(3)
-    end
-  end
 end

@@ -108,7 +108,8 @@ describe CreateInvoiceProducts do
     before { user_product_a.update(stock: 3) }
 
     it 'does not create any of the invoice products' do
-      expect { perform }.to raise_exception(ActiveRecord::RecordInvalid)
+      expect { perform }.to raise_error("Product doesn't have stock")
+      expect(InvoiceProduct.all.count).to be(0)
     end
   end
 end
