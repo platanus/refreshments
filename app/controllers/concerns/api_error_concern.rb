@@ -8,21 +8,25 @@ module ApiErrorConcern
       respond_api_error(:internal_server_error, message: "server_error",
                                                 type: exception.class.to_s,
                                                 detail: exception.message)
+      Raven.capture_exception(exc)
     end
 
     rescue_from "ActiveRecord::RecordNotFound" do |exception|
       respond_api_error(:not_found, message: "record_not_found",
                                     detail: exception.message)
+      Raven.capture_exception(exc)
     end
 
     rescue_from "ActiveModel::ForbiddenAttributesError" do |exception|
       respond_api_error(:bad_request, message: "protected_attributes",
                                       detail: exception.message)
+      Raven.capture_exception(exc)
     end
 
     rescue_from "ActiveRecord::RecordInvalid" do |exception|
       respond_api_error(:bad_request, message: "invalid_attributes",
                                       errors: exception.record.errors)
+      Raven.capture_exception(exc)
     end
   end
 
