@@ -92,5 +92,7 @@ class BudaClient
     params = { body: body }
     params[:headers] = headers unless headers.nil?
     HTTParty.post(path, params)
+  rescue => exc
+    raise BudaClientError::NetworkError, exc
   end
 end
