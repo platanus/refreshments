@@ -16,10 +16,9 @@ $copy-icon-color: #fff;
 .invoice {
   font-size: 18px;
   padding: 10px;
-  max-height: 450px;
+  height: 250px;
   margin: auto;
   overflow: scroll;
-  top: 50px;
   position: relative;
   display: flex;
   border-top: 1px solid $border-color;
