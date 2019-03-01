@@ -3,6 +3,9 @@ require 'openssl'
 
 class BudaClient
   BASE_URI = ENV.fetch('BUDA_BASE_URI')
+  API_SECRET = ENV.fetch('BUDA_API_SECRET')
+  API_KEY = ENV.fetch('BUDA_API_KEY')
+
   @@class_lock = Mutex.new
 
   def quotation(market_id:, type:, amount:)
@@ -35,14 +38,19 @@ class BudaClient
     end
   end
 
-  def headers(request_type, path, payload = nil)
+  def request_signature(request_type, path, payload = nil)
     nonce = generate_nonce
-    encrypted_signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha384'),
-      ENV.fetch('BUDA_API_SECRET'), signature(request_type, path, nonce, payload))
+    OpenSSL::HMAC.hexdigest(
+      OpenSSL::Digest.new('sha384'),
+      API_SECRET, signature(request_type, path, nonce, payload)
+    )
+  end
+
+  def headers(request_type, path, payload = nil)
     {
-      'X-SBTC-APIKEY' => ENV.fetch('BUDA_API_KEY'),
+      'X-SBTC-APIKEY' => API_KEY,
       'X-SBTC-NONCE' => nonce,
-      'X-SBTC-SIGNATURE' => encrypted_signature,
+      'X-SBTC-SIGNATURE' => request_signature(request_type, path, payload),
       'Content-Type' => 'application/json'
     }
   end
@@ -92,5 +100,7 @@ class BudaClient
     params = { body: body }
     params[:headers] = headers unless headers.nil?
     HTTParty.post(path, params)
+  rescue => exc
+    raise BudaClientError::NetworkError, exc
   end
 end
