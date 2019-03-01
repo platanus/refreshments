@@ -1,19 +1,20 @@
 class LightningNetworkClient
   include HTTParty
-  LN_BASE_URL = ENV.fetch("LN_BASE_URL")
+  LN_BASE_URL = ENV.fetch('LN_BASE_URL')
+  INVOICE_MACAROON = ENV.fetch('INVOICE_MACAROON')
 
   base_uri LN_BASE_URL
 
   def invoices
-    self.class.get("/invoices", headers: headers, verify: false)
+    check_success self.class.get("/invoices", headers: headers, verify: false)
   end
 
   def invoice(r_hash)
-    self.class.get("/invoice/#{r_hash}", headers: headers, verify: false)
+    check_success self.class.get("/invoice/#{r_hash}", headers: headers, verify: false)
   end
 
   def create_invoice(memo, amount)
-    self.class.post(
+    check_success self.class.post(
       "/invoices",
       body: { memo: memo, value: amount }.to_json,
       headers: headers,
@@ -24,14 +25,12 @@ class LightningNetworkClient
   private
 
   def headers
-    { "Grpc-Metadata-macaroon": macaroon_data }
+    { "Grpc-Metadata-macaroon": INVOICE_MACAROON }
   end
 
-  def macaroon_data
-    @macaroon_data ||= ENV.fetch("INVOICE_MACAROON")
-  end
+  def check_success(response)
+    raise LightningNetworkClientError::ClientError, response unless response.success?
 
-  def config
-    @config ||= LightningNodeConfig.last
+    response
   end
 end

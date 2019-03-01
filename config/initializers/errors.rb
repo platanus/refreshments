@@ -4,6 +4,5 @@ module BudaClientError
 end
 
 module LightningNetworkClientError
-  class PaymentError < StandardError; end
   class ClientError < StandardError; end
 end
