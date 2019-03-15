@@ -49,7 +49,7 @@ class BudaClient
   def headers(request_type, path, payload = nil)
     {
       'X-SBTC-APIKEY' => API_KEY,
-      'X-SBTC-NONCE' => nonce,
+      'X-SBTC-NONCE' => generate_nonce,
       'X-SBTC-SIGNATURE' => request_signature(request_type, path, payload),
       'Content-Type' => 'application/json'
     }

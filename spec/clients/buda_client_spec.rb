@@ -1,33 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe BudaClient do
-  def initialize_httparty
-    allow(HTTParty).to receive(:post)
+  let(:buda_client) { BudaClient.new }
+
+  before do
+    stub_const('BudaClient::BASE_URI', 'stubbed_base_uri')
+    stub_const('BudaClient::API_SECRET', 'stubbed_api_secret')
+    stub_const('BudaClient::API_KEY', 'stubbed_api_key')
   end
 
-  def initialize_buda_client
-    buda_client = BudaClient.new
-    allow(buda_client).to receive(:create_withdrawal_request_body).and_return('body')
-    allow(buda_client).to receive(:headers).and_return('headers')
-    buda_client.generate_withdrawal(10, 'address', true)
-  end
+  describe '#generate_withdrawal' do
+    def valid_body?(raw_body)
+      parsed_body = JSON.parse(raw_body)
+      [
+        parsed_body['amount'] == 10,
+        parsed_body['withdrawal_data']['target_address'] == 'address'
+      ].all?
+    end
 
-  def initialize_context
-    initialize_httparty
-    initialize_buda_client
-  end
+    def valid_headers?(headers)
+      [
+        headers['X-SBTC-APIKEY'] == 'stubbed_api_key',
+        headers['X-SBTC-NONCE'].present?,
+        headers['X-SBTC-SIGNATURE'].present?
+      ].all?
+    end
 
-  context 'generate withdrawall call' do
-    before { initialize_context }
-
-    it 'calls HTTParty with right params' do
-      expect(HTTParty)
-        .to have_received(:post)
+    it 'calls the API with correct params' do
+      expect(HTTParty).to receive(:post)
         .with(
-          "expected_base_url/currencies/btc/withdrawals",
-          headers: 'headers',
-          body: 'body'
+          satisfy { |url|  url == 'stubbed_base_uri/currencies/btc/withdrawals' },
+          satisfy { |req| valid_body?(req[:body]) && valid_headers?(req[:headers]) }
         )
+
+      buda_client.generate_withdrawal(10, 'address', true)
     end
   end
 end
