@@ -2,8 +2,16 @@
   <div class="invoice">
     <div class="invoice__resume">
       <h3 class="invoice__title">Resumen</h3>
-      {{ invoice.amount || 0 }} Satoshis<br/>
-      ${{ invoice.clp || 0 }} CLP
+      <div
+        class="invoice__price"
+        v-bind:class="{ 'invoice__price--loading': loading}">
+          {{ invoice.amount || 0 }} Satoshis
+      </div>
+      <div
+        class="invoice__price"
+        v-bind:class="{ 'invoice__price--loading': loading}">
+          ${{ invoice.clp || 0 }} CLP
+      </div>
       <div class="invoice__copy" @click="copyPaymentRequest" v-if="invoice.payment_request">
         <div class="invoice__copy-value">{{ invoice.payment_request }}</div>
         <span class="invoice__copy-icon">

@@ -46,6 +46,13 @@ $copy-icon-color: #fff;
     position: relative;
   }
 
+  &__price {
+    &--loading {
+      color: transparent;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+  }
+
   &__status {
     padding: 10px 20px;
     border-radius: 20px;
