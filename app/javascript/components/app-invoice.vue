@@ -11,10 +11,21 @@
         </span>
       </div>
     </div>
-    <div class="invoice__info" v-if="invoice.payment_request">
-      <transition name="slide-fade">
-        <div class="invoice-info--unpaid" v-if="!status" key="unpaid">
-          <qrcode :value="invoice.payment_request" :options="{ size: 160 }"></qrcode>
+
+    <div class="invoice__info">
+      <loading v-if="loading" />
+      <transition
+        name="slide-fade"
+        v-else
+      >
+        <div
+          v-if="!status"
+          key="unpaid"
+        >
+          <qrcode
+            :value="invoice.payment_request"
+            :options="{ size: 160 }"
+          />
         </div>
         <div class="invoice-info--paid" v-else key="slide-fade">
           <font-awesome-icon icon="check-circle"/>
@@ -26,8 +37,12 @@
 </template>
 <script>
   import { mapState, mapActions } from 'vuex';
+  import loading from './loading.vue';
 
   export default {
+    components: {
+      loading,
+    },
     data: function () {
       return {}
     },
