@@ -43,6 +43,7 @@
           <qrcode
             :value="invoice.payment_request"
             :options="{ size: 160 }"
+            v-if="totalPrice > 0"
           />
         </div>
         <div
@@ -59,7 +60,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import loading from './loading.vue';
 
 export default {
@@ -75,6 +76,9 @@ export default {
       'invoice',
       'loading',
     ]),
+    ...mapGetters({
+      'totalPrice': 'totalPrice',
+    }),
     statusVerbose() {
       return this.status ? '¡Pagado!' : 'Esperando pago...';
     },
