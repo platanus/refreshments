@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     products: {},
     invoice: {},
     status: false,
-    loading: 0,
+    loading: false,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -61,10 +61,11 @@ const store = new Vuex.Store({
         const products = context.getters.buyProducts;
         const description = context.getters.buyDescription;
 
-        context.commit('setLoading', 1);
+        context.commit('setLoading', true);
+
         api.buy(products, description).then((response) => {
           context.commit('setInvoice', response.invoice);
-          context.commit('setLoading', -1);
+          context.commit('setLoading', false);
         });
       } else {
         context.commit('setInvoice', {});
@@ -91,8 +92,7 @@ const store = new Vuex.Store({
       context.commit('setInvoiceSettled', true);
     },
     setLoading: (context, payload) => {
-      const value = context.state.loading + payload;
-      context.commit('setLoading', value > 0 ? value : 0);
+      context.commit('setLoading', payload);
     }
   },
   getters: {

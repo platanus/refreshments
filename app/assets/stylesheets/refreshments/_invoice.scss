@@ -23,14 +23,6 @@ $copy-icon-color: #fff;
   display: flex;
   border-top: 1px solid $border-color;
 
-  &__loading {
-    position: absolute;
-    background-color: $loading-bg;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-
   &__title {
     height: 28px;
     color: $title-color;
@@ -50,8 +42,15 @@ $copy-icon-color: #fff;
 
   &__info {
     flex: 1 0 0;
-    margin: 0 auto;
+    margin: auto;
     position: relative;
+  }
+
+  &__price {
+    &--loading {
+      color: transparent;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
   }
 
   &__status {
@@ -105,10 +104,6 @@ $copy-icon-color: #fff;
       display: block;
       margin: 0 auto;
     }
-  }
-
-  &--unpaid {
-    position: absolute;
   }
 }
 
