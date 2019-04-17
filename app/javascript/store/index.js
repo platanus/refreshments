@@ -68,6 +68,7 @@ const store = new Vuex.Store({
           context.commit('setLoading', false);
         });
       } else {
+        context.commit('setLoading', false);
         context.commit('setInvoice', {});
       }
     },
@@ -78,6 +79,7 @@ const store = new Vuex.Store({
       context.getters.productsAsArray.forEach(product => {
         context.commit('setProduct', { ...product, amount: 0 });
       });
+      context.commit('setLoading', false);
     },
     cleanInvoice: context => {
       context.commit('setInvoice', {});
