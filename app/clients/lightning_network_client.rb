@@ -1,9 +1,10 @@
 class LightningNetworkClient
   include HTTParty
-  LN_BASE_URL = ENV.fetch('LN_BASE_URL')
-  INVOICE_MACAROON = ENV.fetch('INVOICE_MACAROON')
+  LND_HOST = ENV.fetch('LND_HOST')
+  LND_PORT = ENV.fetch('LND_PORT')
+  INVOICE_MACAROON = ENV.fetch('LND_INVOICE_MACAROON')
 
-  base_uri LN_BASE_URL
+  base_uri "https://#{LND_HOST}:#{LND_PORT}/v1"
 
   def invoices
     check_success self.class.get("/invoices", headers: headers, verify: false)
@@ -25,7 +26,7 @@ class LightningNetworkClient
   private
 
   def headers
-    { "Grpc-Metadata-macaroon": INVOICE_MACAROON }
+    { "Grpc-Metadata-macaroon": INVOICE_MACAROON } if INVOICE_MACAROON.present?
   end
 
   def check_success(response)

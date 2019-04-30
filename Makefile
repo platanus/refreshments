@@ -45,3 +45,10 @@ services-logs:
 services-port:
 	@set -o pipefail; \
 	docker-compose $(DOCKER_COMPOSE_ARGS) port ${SERVICE} ${PORT} 2> /dev/null | cut -d':' -f2 || echo ${PORT}
+
+# Lightning
+lnd-create:
+	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons create
+
+lnd-unlock:
+	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons unlock

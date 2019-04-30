@@ -18,6 +18,22 @@ services:
     volumes:
       - redis_data:/data
 
+  lnd:
+    image: lightningnetwork/lnd-alpine
+    volumes:
+      - lnd_data:/root/.lnd
+    ports:
+      - 8080
+    entrypoint: lnd
+    command:
+      - --no-macaroons
+      - --bitcoin.active
+      - --restlisten=0.0.0.0:8080
+      - --bitcoin.testnet
+      - --bitcoin.node=neutrino
+      - --neutrino.connect=faucet.lightning.community
+
 volumes:
   pg_data:
   redis_data:
+  lnd_data:
