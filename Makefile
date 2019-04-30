@@ -68,3 +68,6 @@ lnd-create:
 
 lnd-unlock:
 	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons unlock
+
+lnd-pubkey:
+	@docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons getinfo | jq '.identity_pubkey'

@@ -62,6 +62,24 @@ Just make sure you have docker installed and run:
 
     bin/cibuild
 
+## Open and fund channels
+
+Visit the faucet to get free tentnet BTC:
+http://faucet.lightning.community
+
+Copy the faucet node address and open a connection:
+```
+make services-exec-lnd
+lncli --no-macaroons connect <faucet_pubkey_url>
+```
+
+Go back to faucet website and open a channel by providing:
+* Target node: your identity_pubkey from **make lnd-pubkey** command.
+* Channel ammount: 100000
+* Initial balance: 50000
+*
+After 3 confirmations this transaction will be mined. Check it on
+https://testnet.smartbit.com.au/tx/{your_tx_id_from_faucet}
 
 ## Style Guides
 
