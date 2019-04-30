@@ -32,6 +32,12 @@ services-ps:
 
 services-up:
 	docker-compose $(DOCKER_COMPOSE_ARGS) up -d
+	@echo To create a new wallet:
+	@echo "  ${BOLD}make lnd-create${NORMAL}"
+	@echo ""
+	@echo To unlock the wallet:
+	@echo "  ${BOLD}make lnd-unlock${NORMAL}"
+	@echo ""
 
 services-stop:
 	docker-compose $(DOCKER_COMPOSE_ARGS) stop
@@ -45,6 +51,16 @@ services-logs:
 services-port:
 	@set -o pipefail; \
 	docker-compose $(DOCKER_COMPOSE_ARGS) port ${SERVICE} ${PORT} 2> /dev/null | cut -d':' -f2 || echo ${PORT}
+
+services-exec-lnd:
+	@echo "Always use the ${BOLD}--no-macaroons${NORMAL} flag"
+	@echo "For example ${BOLD}lncli --no-macaroon getinfo${NORMAL}"
+	@echo ""
+	@echo For help:
+	@echo "${BOLD}lncli --help${NORMAL}"
+	@echo ""
+	@docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd sh
+
 
 # Lightning
 lnd-create:
