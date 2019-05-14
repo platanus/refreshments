@@ -1,6 +1,11 @@
 class LedgerLine < ApplicationRecord
   belongs_to :ledger_account
   belongs_to :accountable, polymorphic: true
+
+  scope :before_date, ->(date) { where("date < ?", date) }
+  scope :after_date, ->(date) { where("date >= ?", date) }
+  scope :sorted, -> { order(date: :asc, id: :desc) }
+  scope :sorted_desc, -> { order(date: :desc, id: :desc) }
 end
 
 # == Schema Information
