@@ -1,5 +1,6 @@
 class LedgerAccount < ApplicationRecord
   belongs_to :accountable, polymorphic: true
+  has_many :ledger_lines
 end
 
 # == Schema Information
