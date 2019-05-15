@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_130933) do
+ActiveRecord::Schema.define(version: 2019_05_06_195023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,29 @@ ActiveRecord::Schema.define(version: 2019_01_15_130933) do
     t.boolean "settled", default: false
   end
 
+  create_table "ledger_accounts", force: :cascade do |t|
+    t.string "category"
+    t.string "accountable_type"
+    t.bigint "accountable_id"
+    t.integer "balance", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accountable_type", "accountable_id"], name: "index_ledger_accounts_on_accountable_type_and_accountable_id"
+  end
+
+  create_table "ledger_lines", force: :cascade do |t|
+    t.bigint "ledger_account_id"
+    t.string "accountable_type"
+    t.bigint "accountable_id"
+    t.date "date"
+    t.integer "amount"
+    t.integer "balance", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accountable_type", "accountable_id"], name: "index_ledger_lines_on_accountable_type_and_accountable_id"
+    t.index ["ledger_account_id"], name: "index_ledger_lines_on_ledger_account_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -114,6 +137,12 @@ ActiveRecord::Schema.define(version: 2019_01_15_130933) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wallets", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "withdrawals", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "amount"
@@ -124,4 +153,5 @@ ActiveRecord::Schema.define(version: 2019_01_15_130933) do
     t.index ["user_id"], name: "index_withdrawals_on_user_id"
   end
 
+  add_foreign_key "ledger_lines", "ledger_accounts"
 end
