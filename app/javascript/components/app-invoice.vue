@@ -19,7 +19,7 @@
       <div
         class="invoice__copy"
         @click="copyPaymentRequest"
-        v-if="invoice.payment_request"
+        v-if="showCopy"
       >
         <div class="invoice__copy-value">
           {{ invoice.payment_request }}
@@ -81,6 +81,12 @@ export default {
     }),
     statusVerbose() {
       return this.status ? '¡Pagado!' : 'Esperando pago...';
+    },
+    showCopy() {
+      const minScreenWidth = 1000;
+      const isTablet = /(android)/i.test(navigator.userAgent) && screen.width > minScreenWidth;
+
+      return (this.invoice.payment_request && !isTablet);
     },
   },
   methods: {
