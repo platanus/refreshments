@@ -19,7 +19,7 @@
       <div
         class="invoice__copy"
         @click="copyPaymentRequest"
-        v-if="invoice.payment_request"
+        v-if="showCopy"
       >
         <div class="invoice__copy-value">
           {{ invoice.payment_request }}
@@ -63,6 +63,8 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import loading from './loading.vue';
 
+const LENOVO_TAB_4_WIDTH = 1000;
+
 export default {
   components: {
     loading,
@@ -81,6 +83,11 @@ export default {
     }),
     statusVerbose() {
       return this.status ? '¡Pagado!' : 'Esperando pago...';
+    },
+    showCopy() {
+      const isTablet = /(android)/i.test(navigator.userAgent) && screen.width > LENOVO_TAB_4_WIDTH;
+
+      return (this.invoice.payment_request && !isTablet);
     },
   },
   methods: {
