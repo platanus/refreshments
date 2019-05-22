@@ -1,4 +1,5 @@
 class Invoice < ApplicationRecord
+  include PowerTypes::Observable
   validates :clp, :memo, :payment_request, :r_hash, :amount, presence: true
   validates :clp, :amount, numericality: { greater_than: 0 }
 

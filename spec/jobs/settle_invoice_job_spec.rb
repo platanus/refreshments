@@ -23,6 +23,10 @@ describe SettleInvoiceJob, type: :job do
     let(:invoice) { create(:invoice, r_hash: r_hash, settled: false) }
     let(:invoice_product_a) { create(:invoice_product, invoice: invoice) }
 
+    before do
+      allow(RegisterInvoicePayment).to receive(:for).and_return(true)
+    end
+
     it "settles invoice & opens door" do
       expect_any_instance_of(DoorClient).to receive(:open_door)
       expect { perform }.to change { invoice.reload.settled }.from(false).to(true)
