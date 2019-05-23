@@ -5,8 +5,18 @@ describe RegisterWithdrawalPayment do
     described_class.for(*_args)
   end
 
+  before do
+    PowerTypes::Observable.observable_disabled = true
+  end
+
+  after do
+    if PowerTypes::Observable.observable_disabled?
+      PowerTypes::Observable.observable_disabled = false
+    end
+  end
+
   context "when a withdrawal is confirmed" do
-    let(:platanus) { create(:wallet) }
+    let!(:platanus) { create(:wallet) }
     let(:user_with_invoice) { create(:user_with_invoice) }
     let(:lightning_account) do
       create(:ledger_account, accountable: platanus, category: 'Wallet')
