@@ -8,6 +8,11 @@ export default {
       amount -= 2;
     }
 
+    if (action === 'maxStock') {
+      title = 'Stock máximo';
+      amount -= 1;
+    }
+
     return amount >= 0 ? `${title} ${product.name} <b>(${amount})</b>` : '';
   },
 };
