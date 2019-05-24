@@ -8,13 +8,13 @@ test:
   - "$CIRCLE_TEST_REPORTS/rspec:$HOME/.rspec_reports"
   environment:
     RACK_ENV: test
-    POSTGRESQL_USER: postgres
-    POSTGRESQL_HOST: postgresql
-    POSTGRESQL_PORT: '5432'
+    DB_USERNAME: postgres
+    DB_HOST: postgresql
+    DB_PORT: '5432'
   links:
   - postgresql
 postgresql:
-  image: postgres:9.4.5
+  image: postgres:10.6
   environment:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: ''
