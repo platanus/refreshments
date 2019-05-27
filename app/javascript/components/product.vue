@@ -38,8 +38,8 @@ export default {
     message(action, product) {
       const content = utils.contentMessage(action, product);
 
-      if (content.length > 0) {
-        this.flash(content, 'success');
+      if (content.message.length > 0) {
+        this.flash(content.message, content.status);
       }
     },
     userProductPrice(product) {

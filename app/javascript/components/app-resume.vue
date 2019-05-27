@@ -10,7 +10,7 @@
       <div class="resume__erase">
         <font-awesome-icon
           icon="trash-alt"
-          @click="cleanKart(); cleanInvoice();"
+          @click="cleanCart(); cleanInvoice();"
         />
       </div>
 
@@ -70,7 +70,7 @@ export default {
       'toggleResume',
       'decrementProduct',
       'incrementProduct',
-      'cleanKart',
+      'cleanCart',
       'cleanInvoice',
     ]),
     message(action, product) {
