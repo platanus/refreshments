@@ -12,7 +12,7 @@ class GetPricesHash < PowerTypes::Command.new(:products_hash)
 
   def check_prices!
     @products_hash.each do |id, data|
-      if data['price'] != prices_hash[id.to_i]
+      if product_price(data) != prices_hash[id.to_i]
         raise 'Prices in request are no longer available'
       end
     end
@@ -23,5 +23,10 @@ class GetPricesHash < PowerTypes::Command.new(:products_hash)
                      .with_price
                      .where(id: @products_hash.keys)
                      .reduce({}) { |acc, prod| acc.update(prod.id => prod.price) }
+  end
+
+  def product_price(product)
+    sorted_user_products = product[:user_products].sort_by { :price }
+    sorted_user_products.first[:price]
   end
 end
