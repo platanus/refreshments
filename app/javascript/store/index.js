@@ -102,7 +102,7 @@ const store = new Vuex.Store({
     toggleResume: context => {
       context.commit('toggleResume');
     },
-    cleanKart: context => {
+    cleanCart: context => {
       context.getters.productsAsArray.forEach(product => {
         context.commit('setProduct', { ...product, amount: 0 });
       });
@@ -126,11 +126,13 @@ const store = new Vuex.Store({
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
+    onSaleProducts: (state, getters) => (getters.productsAsArray
+      .filter(product => product.user_products.length > 0)),
     totalAmount: (state, getters) => (
-      getters.productsAsArray.reduce((acc, product) => acc + product.amount, 0)
+      getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),
     totalPrice: (state, getters) => (
-      getters.productsAsArray.reduce((acc, product) => acc + product.user_products
+      getters.onSaleProducts.reduce((acc, product) => acc + product.user_products
         .sort((a, b) => (a.price - b.price))[0].price * product.amount, 0)
     ),
     buyProducts: (state, getters) => {
