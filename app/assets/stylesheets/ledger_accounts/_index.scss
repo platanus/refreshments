@@ -1,0 +1,67 @@
+$balance-index-action-button-background: lighten(#383769, 15%);
+$balance-index-action-button-font: #fff;
+$balance-index-logout-action-button-background: #a8a8a8;
+$balance-index-main-font-color: #383769;
+$balance-index-table-actions-background: #acabfb;
+
+.balance-index {
+  &__table-container {
+    margin: 30px 50px;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    color: $balance-index-main-font-color;
+    margin: 0;
+  }
+
+  &__total-balance {
+    color: $balance-index-main-font-color;
+  }
+
+  &__action {
+    background-color: $balance-index-action-button-background;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    &--logout {
+      background-color: $balance-index-logout-action-button-background;
+    }
+
+  }
+
+  &__action,
+  &__action:visited,
+  &__action:hover {
+    text-decoration: none;
+    color: $balance-index-action-button-font;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+    margin-top: 40px;
+    color: $balance-index-main-font-color;
+  }
+
+  &__table-header {
+    &--fixed-width {
+      width: 40%;
+    }
+  }
+
+  &__message {
+    text-align: center;
+  }
+
+}

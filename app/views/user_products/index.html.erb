@@ -25,6 +25,8 @@
 					} %>
 				<% end %>
 
+                <%= link_to "Balance", user_balance_index_path, class: 'products-index__action' %>
+
 				<%= link_to "Mis Retiros", user_withdrawals_path, class: 'products-index__action' %>
 
 				<%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action', data: { turbolinks: false } %>
