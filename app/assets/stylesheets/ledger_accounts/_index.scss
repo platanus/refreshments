@@ -1,8 +1,7 @@
-$balance-index-action-button-background: lighten(#383769, 15%);
-$balance-index-action-button-font: #fff;
-$balance-index-logout-action-button-background: #a8a8a8;
-$balance-index-main-font-color: #383769;
-$balance-index-table-actions-background: #acabfb;
+$button-background: lighten(#383769, 15%);
+$button-font-color: #fff;
+$logout-button-background: #a8a8a8;
+$main-font-color: #383769;
 
 .balance-index {
   &__table-container {
@@ -20,21 +19,21 @@ $balance-index-table-actions-background: #acabfb;
   }
 
   &__title {
-    color: $balance-index-main-font-color;
+    color: $main-font-color;
     margin: 0;
   }
 
   &__total-balance {
-    color: $balance-index-main-font-color;
+    color: $main-font-color;
   }
 
   &__action {
-    background-color: $balance-index-action-button-background;
+    background-color: $button-background;
     padding: 5px 10px;
     border-radius: 5px;
 
     &--logout {
-      background-color: $balance-index-logout-action-button-background;
+      background-color: $logout-button-background;
     }
 
   }
@@ -43,7 +42,7 @@ $balance-index-table-actions-background: #acabfb;
   &__action:visited,
   &__action:hover {
     text-decoration: none;
-    color: $balance-index-action-button-font;
+    color: $button-font-color;
   }
 
   &__table {
@@ -51,7 +50,7 @@ $balance-index-table-actions-background: #acabfb;
     table-layout: fixed;
     text-align: center;
     margin-top: 40px;
-    color: $balance-index-main-font-color;
+    color: $main-font-color;
   }
 
   &__table-header {
