@@ -37,7 +37,7 @@
         <tbody>
           <% @ledger_lines.each do |line| %>
             <tr>
-              <td> <%= line.date.in_time_zone('Santiago').strftime("%d/%m/%Y %H:%M") %> </td>
+              <td> <%= line.date.in_time_zone().strftime("%d/%m/%Y %H:%M") %> </td>
               <% if line.accountable_type === 'InvoiceProduct' %>
                 <td> Venta </td>
                 <td> <%= '%s a %d pesos' % @line_id_to_product_data_hash[line.id] %> </td>
