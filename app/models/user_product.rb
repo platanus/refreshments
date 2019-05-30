@@ -2,10 +2,10 @@ class UserProduct < ApplicationRecord
   validates :price, :stock, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
 
-  scope :actives, -> { where(active: true) }
+  scope :active, -> { where(active: true) }
   scope :with_stock, -> { where('stock > 0') }
 
-  scope :for_sale, -> { actives.with_stock }
+  scope :for_sale, -> { active.with_stock }
 
   belongs_to :user
   belongs_to :product
