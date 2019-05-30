@@ -29,16 +29,16 @@ RSpec.describe UserProduct, type: :model do
     end
   end
 
-  describe 'actives scope' do
+  describe 'active scope' do
     let!(:user_product_a) { create(:user_product, active: false) }
     let!(:user_product_b) { create(:user_product) }
 
     it 'only returns one active user product' do
-      expect(UserProduct.actives).to have_attributes(length: 1)
+      expect(UserProduct.active).to have_attributes(length: 1)
     end
 
     it 'returns correct user product' do
-      expect(UserProduct.actives.first.id).to eq(user_product_b.id)
+      expect(UserProduct.active.first.id).to eq(user_product_b.id)
     end
   end
 

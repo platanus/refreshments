@@ -6,7 +6,7 @@ class ProductSerializer < ActiveModel::Serializer
   has_many :user_products
 
   def user_products
-    @object.user_products.with_stock
+    @object.user_products.for_sale
   end
 
   def image_url
