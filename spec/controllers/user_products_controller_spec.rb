@@ -255,14 +255,14 @@ RSpec.describe UserProductsController, type: :controller do
       before { mock_authentication }
 
       it 'deletes correct product' do
-        expect(UserProduct.find_by(id: product_to_delete.id)).not_to be(nil)
+        expect(UserProduct.find_by(id: product_to_delete.id).active).to be(true)
         delete :destroy, params: { id: product_to_delete.id }
-        expect(UserProduct.find_by(id: product_to_delete.id)).to be(nil)
+        expect(UserProduct.find_by(id: product_to_delete.id).active).to be(false)
       end
 
-      it 'deletes only one product' do
+      it 'does not delete product from DB' do
         expect { delete :destroy, params: { id: product_to_delete.id } }
-          .to change(UserProduct, :count).by(-1)
+          .to change(UserProduct, :count).by(0)
       end
     end
   end

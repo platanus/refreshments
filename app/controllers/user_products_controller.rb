@@ -4,7 +4,7 @@ class UserProductsController < ApplicationController
 
   def index
     @withdrawable_amount = current_user.withdrawable_amount
-    @user_products = current_user.products_with_sales
+    @user_products = current_user.products_with_sales.actives
   end
 
   def new
@@ -29,7 +29,7 @@ class UserProductsController < ApplicationController
   end
 
   def destroy
-    user_product.destroy!
+    user_product.update!(active: false)
     redirect_to user_products_path
   end
 
