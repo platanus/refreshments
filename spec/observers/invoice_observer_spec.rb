@@ -8,20 +8,20 @@ describe InvoiceObserver do
   let(:invoice) { build(:invoice) }
 
   before do
-    allow(RegisterInvoicePayment).to receive(:for).with(invoice: invoice)
+    allow(RegisterInvoicePaymentJob).to receive(:perform_later).with(invoice)
   end
 
   context "when invoice is save" do
     it do
       trigger(:after, :save)
-      expect(RegisterInvoicePayment).to have_received(:for).with(invoice: invoice)
+      expect(RegisterInvoicePaymentJob).to have_received(:perform_later).with(invoice)
     end
   end
 
   context "when invoice is not save" do
     it do
       trigger(:before, :save)
-      expect(RegisterInvoicePayment).to_not have_received(:for)
+      expect(RegisterInvoicePaymentJob).to_not have_received(:perform_later)
     end
   end
 end
