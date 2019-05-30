@@ -8,8 +8,8 @@ describe GetPricesHash do
   let!(:user_product_b) { create(:user_product, user: user, product: product_b, price: 2000) }
   let(:products_hash) do
     {
-      product_a.id.to_s => { 'amount' => 3, 'price' => 1000 },
-      product_b.id.to_s => { 'amount' => 2, 'price' => 2000 }
+      product_a.id.to_s => { 'amount' => 3, user_products: [{ price: 1000 }] },
+      product_b.id.to_s => { 'amount' => 2, user_products: [{ price: 2000 }] }
     }
   end
 

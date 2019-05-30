@@ -93,13 +93,13 @@ export default {
   methods: {
     ...mapActions([
       'toggleResume',
-      'cleanKart',
+      'cleanCart',
       'cleanInvoice',
       'updateInvoiceSettled',
     ]),
     close() {
       this.cleanInvoice();
-      this.cleanKart();
+      this.cleanCart();
       this.toggleResume();
     },
     copyPaymentRequest() {

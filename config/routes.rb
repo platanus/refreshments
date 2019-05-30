@@ -2,11 +2,12 @@ Rails.application.routes.draw do
   root 'pages#welcome'
   get 'buy', to: 'pages#buy'
   scope path: '/api' do
-    api_version(module: "Api::V1", path: { value: "v1" }, defaults: { format: 'json' }) do
+    api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :products, only: [:index]
-      get "/satoshi_price", to: "prices#satoshi_price"
+      get '/satoshi_price', to: 'prices#satoshi_price'
+      get 'products/:product_id', to: 'products#get'
       resources :invoices, only: [:create]
-      get "invoices/status/:r_hash", to: "invoices#status"
+      get 'invoices/status/:r_hash', to: 'invoices#status'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config

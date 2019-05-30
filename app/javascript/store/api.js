@@ -10,6 +10,10 @@ export default {
     return axios.get('/api/v1/products')
       .then((response) => response.data);
   },
+  product(productId) {
+    return axios.get(`/api/v1/products/${productId}`)
+      .then((response) => response.data);
+  },
   buy(products, description) {
     return axios.post('/api/v1/invoices', { invoice: { products, memo: description } })
       .then((response) => response.data);

@@ -12,10 +12,18 @@ const store = new Vuex.Store({
     invoice: {},
     status: false,
     loading: false,
+    actionMessage: '',
+    actionProductId: null,
   },
   mutations: {
     setProduct: (state, payload) => {
       Object.assign(state.products[payload.id], payload);
+    },
+    setActionMessage: (state, payload) => {
+      state.actionMessage = payload;
+    },
+    setActionProduct: (state, payload) => {
+      state.actionProductId = payload;
     },
     setProducts: (state, payload) => {
       state.products = payload;
@@ -35,13 +43,14 @@ const store = new Vuex.Store({
     },
     setLoading: (state, payload) => {
       state.loading = payload;
-    }
+    },
   },
   actions: {
     getProducts: context => {
       api.products().then((response) => {
         const products = response.products.reduce((acc, product) => {
           acc[product.id] = { ...product, amount: 0 };
+
           return acc;
         }, {});
         context.commit('setProducts', products);
@@ -49,12 +58,30 @@ const store = new Vuex.Store({
     },
     decrementProduct: (context, payload) => {
       const amount = payload.amount - 1 > 0 ? payload.amount - 1 : 0;
-      context.commit('setProduct', { ...payload, amount: amount });
+      context.commit('setActionProduct', payload.id);
+      context.commit('setActionMessage', 'decrement');
+      context.commit('setProduct', { ...payload, amount });
       context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
-      context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
-      context.dispatch('buy');
+      if (payload.amount === 0) {
+        context.dispatch('updateProduct', payload);
+      }
+      const userProduct = payload.user_products.sort((a, b) => (a.price > b.price))[0];
+      if (userProduct.stock > payload.amount) {
+        context.commit('setActionProduct', payload.id);
+        context.commit('setActionMessage', 'increment');
+        context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
+        context.dispatch('buy');
+      } else {
+        context.commit('setActionProduct', payload.id);
+        context.commit('setActionMessage', 'maxStock');
+      }
+    },
+    updateProduct: (context, payload) => {
+      api.product(payload.id).then((response) => {
+        context.commit('setProduct', response.product);
+      });
     },
     buy: context => {
       if (context.getters.totalAmount) {
@@ -75,7 +102,7 @@ const store = new Vuex.Store({
     toggleResume: context => {
       context.commit('toggleResume');
     },
-    cleanKart: context => {
+    cleanCart: context => {
       context.getters.productsAsArray.forEach(product => {
         context.commit('setProduct', { ...product, amount: 0 });
       });
@@ -95,23 +122,26 @@ const store = new Vuex.Store({
     },
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);
-    }
+    },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
+    onSaleProducts: (state, getters) => (getters.productsAsArray
+      .filter(product => product.user_products.length > 0)),
     totalAmount: (state, getters) => (
-      getters.productsAsArray.reduce((acc, product) => acc += product.amount, 0)
+      getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),
     totalPrice: (state, getters) => (
-      getters.productsAsArray.reduce((acc, product) => acc += (product.price * product.amount), 0)
+      getters.onSaleProducts.reduce((acc, product) => acc + product.user_products
+        .sort((a, b) => (a.price - b.price))[0].price * product.amount, 0)
     ),
     buyProducts: (state, getters) => {
       const products = getters.productsAsArray.reduce((acc, product) => {
         if (product.amount > 0) {
           acc[product.id] = {
             amount: product.amount,
-            price: product.price,
-          }
+            price: product.user_products.sort((a, b) => (a.price - b.price))[0].price,
+          };
         }
 
         return acc;
@@ -128,7 +158,7 @@ const store = new Vuex.Store({
       });
 
       return description.join(',\n');
-    }
+    },
   },
 });
 
