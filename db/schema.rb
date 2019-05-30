@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_06_195023) do
+ActiveRecord::Schema.define(version: 2019_05_28_175648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_195023) do
     t.bigint "ledger_account_id"
     t.string "accountable_type"
     t.bigint "accountable_id"
-    t.date "date"
+    t.datetime "date"
     t.integer "amount"
     t.integer "balance", default: 0
     t.datetime "created_at", null: false

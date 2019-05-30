@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resource :user do
     resources :user_products, path: '/products', as: 'products'
     resources :withdrawals
+    resources :ledger_accounts, path: '/balance', as: 'balance'
   end
 
   post 'user/withdrawals/validate', to: 'withdrawals#validate'
