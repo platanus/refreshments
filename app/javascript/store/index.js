@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     loading: false,
     actionMessage: '',
     actionProductId: null,
+    emptyCart: true,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
     setLoading: (state, payload) => {
       state.loading = payload;
     },
+    setEmptyCart: (state, payload) => {
+      state.emptyCart = payload;
+    },
   },
   actions: {
     getProducts: context => {
@@ -61,6 +65,7 @@ const store = new Vuex.Store({
       context.commit('setActionProduct', payload.id);
       context.commit('setActionMessage', 'decrement');
       context.commit('setProduct', { ...payload, amount });
+      context.dispatch('setEmptyCart');
       context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
@@ -68,15 +73,15 @@ const store = new Vuex.Store({
         context.dispatch('updateProduct', payload);
       }
       const userProduct = payload.user_products.sort((a, b) => (a.price > b.price))[0];
+      context.commit('setActionProduct', payload.id);
       if (userProduct.stock > payload.amount) {
-        context.commit('setActionProduct', payload.id);
         context.commit('setActionMessage', 'increment');
         context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
         context.dispatch('buy');
       } else {
-        context.commit('setActionProduct', payload.id);
         context.commit('setActionMessage', 'maxStock');
       }
+      context.dispatch('setEmptyCart');
     },
     updateProduct: (context, payload) => {
       api.product(payload.id).then((response) => {
@@ -107,6 +112,7 @@ const store = new Vuex.Store({
         context.commit('setProduct', { ...product, amount: 0 });
       });
       context.commit('setLoading', false);
+      context.dispatch('setEmptyCart');
     },
     cleanInvoice: context => {
       context.commit('setInvoice', {});
@@ -122,6 +128,13 @@ const store = new Vuex.Store({
     },
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);
+    },
+    setEmptyCart: context => {
+      if (context.getters.totalAmount === 0) {
+        context.commit('setEmptyCart', true);
+      } else {
+        context.commit('setEmptyCart', false);
+      }
     },
   },
   getters: {

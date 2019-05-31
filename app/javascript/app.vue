@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
@@ -44,8 +44,20 @@ export default {
       'products': 'productsAsArray',
       'totalAmount': 'totalAmount',
     }),
+    ...mapState(['emptyCart']),
     sortedProductList() {
       return [...this.products].sort((a, b) => a.name.localeCompare(b.name));
+    },
+  },
+  watch: {
+    emptyCart(newValue) {
+      if (newValue) {
+        this.interval = setInterval(() => {
+          this.$store.dispatch('getProducts');
+        }, REFRESH_INTERVAL_TIME);
+      } else {
+        clearInterval(this.interval);
+      }
     },
   },
   mounted() {
