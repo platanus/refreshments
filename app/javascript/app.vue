@@ -25,13 +25,11 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
 import product from './components/product.vue';
-
-const REFRESH_INTERVAL_TIME = 120000;
 
 export default {
   components: {
@@ -44,30 +42,12 @@ export default {
       'products': 'productsAsArray',
       'totalAmount': 'totalAmount',
     }),
-    ...mapState(['emptyCart']),
     sortedProductList() {
       return [...this.products].sort((a, b) => a.name.localeCompare(b.name));
     },
   },
-  watch: {
-    emptyCart(newValue) {
-      if (newValue) {
-        this.interval = setInterval(() => {
-          this.$store.dispatch('getProducts');
-        }, REFRESH_INTERVAL_TIME);
-      } else {
-        clearInterval(this.interval);
-      }
-    },
-  },
   mounted() {
     this.$store.dispatch('getProducts');
-    this.interval = setInterval(() => {
-      this.$store.dispatch('getProducts');
-    }, REFRESH_INTERVAL_TIME);
-  },
-  destroyed() {
-    clearInterval(this.interval);
   },
 };
 </script>

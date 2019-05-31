@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 
 import api from './api';
 
+const REFRESH_INTERVAL_TIME = 120000;
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -14,7 +16,7 @@ const store = new Vuex.Store({
     loading: false,
     actionMessage: '',
     actionProductId: null,
-    emptyCart: true,
+    intervalId: null,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -45,8 +47,8 @@ const store = new Vuex.Store({
     setLoading: (state, payload) => {
       state.loading = payload;
     },
-    setEmptyCart: (state, payload) => {
-      state.emptyCart = payload;
+    setIntervalId: (state, payload) => {
+      state.intervalId = payload;
     },
   },
   actions: {
@@ -58,6 +60,7 @@ const store = new Vuex.Store({
           return acc;
         }, {});
         context.commit('setProducts', products);
+        context.dispatch('starGetProductsInterval');
       });
     },
     decrementProduct: (context, payload) => {
@@ -65,7 +68,7 @@ const store = new Vuex.Store({
       context.commit('setActionProduct', payload.id);
       context.commit('setActionMessage', 'decrement');
       context.commit('setProduct', { ...payload, amount });
-      context.dispatch('setEmptyCart');
+      context.dispatch('starGetProductsInterval');
       context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
@@ -81,7 +84,7 @@ const store = new Vuex.Store({
       } else {
         context.commit('setActionMessage', 'maxStock');
       }
-      context.dispatch('setEmptyCart');
+      context.dispatch('stopGetProductsInterval');
     },
     updateProduct: (context, payload) => {
       api.product(payload.id).then((response) => {
@@ -112,7 +115,7 @@ const store = new Vuex.Store({
         context.commit('setProduct', { ...product, amount: 0 });
       });
       context.commit('setLoading', false);
-      context.dispatch('setEmptyCart');
+      context.dispatch('starGetProductsInterval');
     },
     cleanInvoice: context => {
       context.commit('setInvoice', {});
@@ -129,11 +132,18 @@ const store = new Vuex.Store({
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);
     },
-    setEmptyCart: context => {
-      if (context.getters.totalAmount === 0) {
-        context.commit('setEmptyCart', true);
-      } else {
-        context.commit('setEmptyCart', false);
+    starGetProductsInterval: context => {
+      if (context.getters.totalAmount === 0 && context.state.intervalId === null) {
+        const interval = setInterval(() => {
+          context.dispatch('getProducts');
+        }, REFRESH_INTERVAL_TIME);
+        context.commit('setIntervalId', interval);
+      }
+    },
+    stopGetProductsInterval: context => {
+      if (context.state.intervalId) {
+        clearInterval(context.state.intervalId);
+        context.commit('setIntervalId', null);
       }
     },
   },
