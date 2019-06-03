@@ -31,8 +31,6 @@ import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
 import product from './components/product.vue';
 
-const REFRESH_INTERVAL_TIME = 120000;
-
 export default {
   components: {
     appResume,
@@ -50,12 +48,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getProducts');
-    this.interval = setInterval(() => {
-      this.$store.dispatch('getProducts');
-    }, REFRESH_INTERVAL_TIME);
-  },
-  destroyed() {
-    clearInterval(this.interval);
   },
 };
 </script>
