@@ -60,7 +60,7 @@ const store = new Vuex.Store({
           return acc;
         }, {});
         context.commit('setProducts', products);
-        context.dispatch('starGetProductsInterval');
+        context.dispatch('startGetProductsInterval');
       });
     },
     decrementProduct: (context, payload) => {
@@ -68,7 +68,7 @@ const store = new Vuex.Store({
       context.commit('setActionProduct', payload.id);
       context.commit('setActionMessage', 'decrement');
       context.commit('setProduct', { ...payload, amount });
-      context.dispatch('starGetProductsInterval');
+      context.dispatch('startGetProductsInterval');
       context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
@@ -115,7 +115,7 @@ const store = new Vuex.Store({
         context.commit('setProduct', { ...product, amount: 0 });
       });
       context.commit('setLoading', false);
-      context.dispatch('starGetProductsInterval');
+      context.dispatch('startGetProductsInterval');
     },
     cleanInvoice: context => {
       context.commit('setInvoice', {});
@@ -132,8 +132,8 @@ const store = new Vuex.Store({
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);
     },
-    starGetProductsInterval: context => {
-      if (context.getters.totalAmount === 0 && context.state.intervalId === null) {
+    startGetProductsInterval: context => {
+      if (context.getters.totalAmount === 0 && !context.state.intervalId) {
         const interval = setInterval(() => {
           context.dispatch('getProducts');
         }, REFRESH_INTERVAL_TIME);
