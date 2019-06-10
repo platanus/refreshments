@@ -21,17 +21,7 @@ RSpec.describe Withdrawal, type: :model do
     withdrawal
   end
 
-  let!(:user) { create(:user) }
-  let!(:user_ledger_account) { create(:ledger_account, accountable: user) }
-  let!(:invoice_product) { create(:invoice_product) }
-  let!(:initial_balance_line) do
-    create(
-      :ledger_line,
-      ledger_account: user_ledger_account,
-      accountable: invoice_product,
-      balance: -100000
-    )
-  end
+  let!(:user) { create(:user, :with_account) }
 
   context 'basic validations' do
     subject { create_withdrawal_without_callback }

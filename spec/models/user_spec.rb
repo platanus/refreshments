@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { create(:user) }
-  let(:user_ledger_account) { create(:ledger_account, accountable: user) }
+  let(:user) { create(:user, :with_account) }
   let(:invoice_product) { create(:invoice_product) }
   let(:user_with_product) { create(:user_with_product) }
   let(:user_with_invoice) { create(:user_with_invoice) }
@@ -13,6 +12,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#total_sales' do
+    let(:user) { create(:user) }
+    let(:user_ledger_account) { create(:ledger_account, accountable: user) }
+
     context 'user has no sales' do
       it { expect(user.total_sales).to be(0) }
     end
@@ -58,15 +60,6 @@ RSpec.describe User, type: :model do
     end
 
     describe '#total_withdrawal' do
-      before do
-        create(
-          :ledger_line,
-          ledger_account: user_ledger_account,
-          accountable: invoice_product,
-          balance: -100000
-        )
-      end
-
       context 'user has no withdrawals' do
         it { expect(user.total_withdrawals).to be(0) }
       end
@@ -95,15 +88,6 @@ RSpec.describe User, type: :model do
     end
 
     describe '#total_pending_withdrawals' do
-      before do
-        create(
-          :ledger_line,
-          ledger_account: user_ledger_account,
-          accountable: invoice_product,
-          balance: -100000
-        )
-      end
-
       context 'user has no pending withdrawals' do
         before do
           create(:withdrawal, user: user).confirm!
@@ -126,15 +110,6 @@ RSpec.describe User, type: :model do
     end
 
     describe '#total_confirmed_withdrawals' do
-      before do
-        create(
-          :ledger_line,
-          ledger_account: user_ledger_account,
-          accountable: invoice_product,
-          balance: -100000
-        )
-      end
-
       context 'user has no confirmed withdrawals' do
         before do
           create(:withdrawal, user: user)
@@ -157,6 +132,9 @@ RSpec.describe User, type: :model do
     end
 
     describe '#withdrawable_amount' do
+      let(:user) { create(:user) }
+      let(:user_ledger_account) { create(:ledger_account, accountable: user) }
+
       context 'user has no ledger lines' do
         it { expect(user.withdrawable_amount).to be(0) }
       end

@@ -25,17 +25,7 @@ RSpec.describe WithdrawalsController, type: :controller do
   end
 
   let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
-  let!(:user) { create(:user) }
-  let!(:user_ledger_account) { create(:ledger_account, accountable: user) }
-  let!(:invoice_product) { create(:invoice_product) }
-  let!(:ledger_line) do
-    create(
-      :ledger_line,
-      ledger_account: user_ledger_account,
-      accountable: invoice_product,
-      balance: -10000
-    )
-  end
+  let!(:user) { create(:user, :with_account) }
 
   describe 'GET #new' do
     context 'unauthenticated user' do
