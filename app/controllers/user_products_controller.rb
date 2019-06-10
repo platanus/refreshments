@@ -4,6 +4,7 @@ class UserProductsController < ApplicationController
 
   def index
     @withdrawable_amount = current_user.withdrawable_amount
+    @total_sales = current_user.total_sales
     @user_products = current_user.products_with_sales.active
   end
 

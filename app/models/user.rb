@@ -12,10 +12,12 @@ class User < ApplicationRecord
   has_many :withdrawals
 
   def total_sales
-    UserProduct.where(user_id: id)
-               .joins(invoice_products: :invoice)
-               .where('invoices.settled=true')
-               .sum('invoice_products.product_price')
+    if user_ledger_lines.empty?
+      0
+    else
+      -user_ledger_lines.where(accountable_type: 'InvoiceProduct')
+                        .sum('ledger_lines.amount')
+    end
   end
 
   def total_withdrawals
@@ -31,7 +33,16 @@ class User < ApplicationRecord
   end
 
   def withdrawable_amount
-    total_sales - total_withdrawals
+    if user_ledger_lines.empty?
+      0
+    else
+      -user_ledger_lines.sorted.last.balance
+    end
+  end
+
+  def user_ledger_lines
+    user_ledger_account = LedgerAccount.find_by(accountable_id: id)
+    LedgerLine.where(ledger_account_id: user_ledger_account&.id)
   end
 
   def products_with_sales
