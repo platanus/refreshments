@@ -20,7 +20,28 @@ RSpec.describe UserProductsController, type: :controller do
     end
 
     context 'authenticated user' do
-      let(:user) { create(:user) }
+      let!(:user) { create(:user) }
+      let!(:user_ledger_account) { create(:ledger_account, accountable: user) }
+      let!(:sales_ledger_lines) do
+        create_list(
+          :ledger_line,
+          4,
+          ledger_account: user_ledger_account,
+          accountable: invoice_product,
+          amount: -2
+        )
+      end
+      let!(:withdrawal_ledger_line) do
+        create(
+          :ledger_line,
+          ledger_account: user_ledger_account,
+          accountable: user,
+          balance: -20,
+          date: sales_ledger_lines[0].date + 1.day
+        )
+      end
+      let!(:invoice_product) { create(:invoice_product) }
+
       before do
         create_list(:user_product, 3, user: user)
         mock_authentication
@@ -31,9 +52,14 @@ RSpec.describe UserProductsController, type: :controller do
         expect(assigns(:user_products).length).to eq(3)
       end
 
-      it 'assigns user withdrawable amount' do
+      it 'assigns correct withdrawable amount' do
         get :index
-        expect(assigns(:withdrawable_amount)).to be_an(Integer)
+        expect(assigns(:withdrawable_amount)).to eq(20)
+      end
+
+      it 'assigns correct total sales amount' do
+        get :index
+        expect(assigns(:total_sales)).to eq(8)
       end
 
       it 'returns correct "index" view' do

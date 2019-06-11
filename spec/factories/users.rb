@@ -10,6 +10,12 @@ FactoryBot.define do
 
     password { '123456' }
 
+    trait :with_account do
+      after(:create) do |user|
+        create(:ledger_account, :with_line, accountable: user)
+      end
+    end
+
     factory :user_with_product do
       transient do
         product_count { 1 }

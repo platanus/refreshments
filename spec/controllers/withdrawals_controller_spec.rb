@@ -25,48 +25,9 @@ RSpec.describe WithdrawalsController, type: :controller do
   end
 
   let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
-
-  describe 'GET #index' do
-    let(:user) { create(:user_with_invoice) }
-
-    context 'unauthenticated user' do
-      it 'redirects to sign up form' do
-        get :index
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    context 'authenticated user' do
-      before do
-        create_withdrawals_with_every_state
-        mock_authentication
-      end
-
-      it 'assigns list with user withdrawals' do
-        get :index
-        expect(assigns(:withdrawals)).to have(3).items
-      end
-
-      it 'assigns total pending sum' do
-        get :index
-        expect(assigns(:total_pending)).to be_an(Integer)
-      end
-
-      it 'assigns total confirmed sum' do
-        get :index
-        expect(assigns(:total_confirmed)).to be_an(Integer)
-      end
-
-      it 'returns correct "index" view' do
-        get :index
-        expect(response).to render_template('withdrawals/index')
-      end
-    end
-  end
+  let!(:user) { create(:user, :with_account) }
 
   describe 'GET #new' do
-    let(:user) { create(:user) }
-
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do
         get :new, xhr: true
@@ -101,7 +62,7 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #create' do
     let(:action) { :create }
-    let(:user) { create(:user_with_invoice) }
+
     before do
       allow_any_instance_of(Withdrawal)
         .to receive(:add_job_to_withdrawal_requests_worker)
@@ -186,7 +147,6 @@ RSpec.describe WithdrawalsController, type: :controller do
 
   describe 'POST #validate' do
     let(:action) { :validate }
-    let(:user) { create(:user_with_invoice) }
 
     context 'unauthenticated user' do
       it 'returns 401 unauthorized' do

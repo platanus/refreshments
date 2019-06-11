@@ -27,8 +27,6 @@
 
                 <%= link_to "Balance", user_balance_index_path, class: 'products-index__action' %>
 
-				<%= link_to "Mis Retiros", user_withdrawals_path, class: 'products-index__action' %>
-
 				<%= link_to "Agregar producto", new_user_product_path, class: 'products-index__action', data: { turbolinks: false } %>
 
 				<%= link_to "Log out", destroy_user_session_path,
@@ -38,8 +36,18 @@
 			</div>
 		</div>
 
-		<h4 class="products-index__total-sales"> Total de ventas: <%= current_user.total_sales %> (Satoshis) </h4>
-		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= @withdrawable_amount %> (Satoshis) </h4>
+		<h4 class="products-index__total-sales"> Total de ventas: <%= number_to_currency(
+          @total_sales,
+          unit: 'Satoshis',
+          format: '%n %u',
+          negative_format: '-%n %u'
+        ) %></h4>
+		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= number_to_currency(
+          @withdrawable_amount,
+          unit: 'Satoshis',
+          format: '%n %u',
+          negative_format: '-%n %u'
+        ) %></h4>
 
 		<% if @user_products.length > 0 %>
 			<table class="products-index__table">
