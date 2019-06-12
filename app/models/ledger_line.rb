@@ -16,7 +16,7 @@ end
 #  ledger_account_id :bigint(8)
 #  accountable_type  :string
 #  accountable_id    :bigint(8)
-#  date              :date
+#  date              :datetime
 #  amount            :integer
 #  balance           :integer          default(0)
 #  created_at        :datetime         not null

@@ -1,33 +1,47 @@
-class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
+class CreateInvoice < PowerTypes::Command.new(:shopping_cart_items)
   def perform
-    Invoice.transaction do
-      validate_total_satoshis!
-      create_invoice
-      create_invoice_products
-    end
-    @new_invoice
+    return false unless check_stock
+
+    invoice = Invoice.create(
+      memo: memo,
+      clp: total_clp,
+      amount: total_satoshis
+    )
+    invoice.invoice_products.push(*invoice_products)
+    invoice.r_hash = invoice_response['r_hash']
+    invoice.payment_request = invoice_response['payment_request']
+    invoice.save!
+    invoice
   end
 
   private
 
-  def validate_total_satoshis!
-    raise 'Invalid satoshi amount' unless invoice_total_satoshis.positive?
+  def memo
+    @shopping_cart_items.map do |shopping_cart_item|
+      "#{shopping_cart_item.amount} x #{shopping_cart_item.product.name}"
+    end.join(', ')
   end
 
-  def invoice_total_satoshis
-    @invoice_total_satoshis ||= GetPriceOnSatoshis.for(clp_price: invoice_total_clp)
+  def total_clp
+    @total_clp ||= invoice_products.pluck(:product_price).sum
   end
 
-  def invoice_total_clp
-    @invoice_total_clp ||= begin
-      @products_hash.map do |product_id, data|
-        (prices_hash[product_id.to_i] || 0) * data['amount']
-      end.inject(:+) || 0
+  def total_satoshis
+    @total_satoshis ||= GetPriceOnSatoshis.for(clp_price: total_clp)
+  end
+
+  def invoice_products
+    @invoice_products ||= begin
+      invoice_products = []
+      @shopping_cart_items.each do |shopping_cart_item|
+        invoice_products.push(*BuildInvoiceProducts.for(shopping_cart_item: shopping_cart_item))
+      end
+      invoice_products
     end
   end
 
-  def prices_hash
-    @prices_hash ||= GetPricesHash.for(products_hash: @products_hash)
+  def check_stock
+    invoice_products.count == @shopping_cart_items.reduce(0) { |acc, item| acc + item.amount }
   end
 
   def lightning_network_client
@@ -35,24 +49,6 @@ class CreateInvoice < PowerTypes::Command.new(:memo, :products_hash)
   end
 
   def invoice_response
-    @invoice_response ||= lightning_network_client.create_invoice(@memo, invoice_total_satoshis)
-  end
-
-  def create_invoice
-    @new_invoice = Invoice.create!(
-      amount: invoice_total_satoshis,
-      clp: invoice_total_clp,
-      memo: @memo,
-      payment_request: invoice_response['payment_request'],
-      r_hash: invoice_response['r_hash']
-    )
-  end
-
-  def create_invoice_products
-    CreateInvoiceProducts.for(
-      invoice: @new_invoice,
-      prices_hash: prices_hash,
-      products_hash: @products_hash
-    )
+    @invoice_response ||= lightning_network_client.create_invoice(memo, total_satoshis)
   end
 end

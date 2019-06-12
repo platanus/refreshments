@@ -1,155 +1,109 @@
 require 'rails_helper'
 
 describe CreateInvoice do
-  let(:product_a) { create(:product) }
-  let(:product_b) { create(:product) }
-
-  let(:lightning_network_client) do
-    mocked_lightning_client = double
-    allow(mocked_lightning_client)
-      .to receive(:create_invoice)
-      .and_return(
-        'r_hash' => 'r_hash',
-        'payment_request' => 'payment_request',
-        'add_index' => 'add_index'
-      )
-    mocked_lightning_client
-  end
-
-  let(:memo) { 'Memo' }
-
-  let(:products_hash) do
-    {
-      product_a.id.to_s => { 'amount' => 3, 'price' => 1000 },
-      product_b.id.to_s => { 'amount' => 2, 'price' => 1000 }
-    }
-  end
-
-  let(:prices_hash) { { product_a.id => 1000, product_b.id => 1000 } }
+  let(:amount) { 1 }
+  let(:product_bon_bon) { create(:product, name: 'Bon o Bon') }
+  let(:product_coca_cola) { create(:product, name: 'Coca Cola') }
+  let(:invoice_product) { build(:invoice_product, product_price: 1000) }
 
   def perform
-    described_class.for(memo: memo, products_hash: products_hash)
-  end
-
-  def mock_lightning_network_client
-    allow_any_instance_of(described_class)
-      .to receive(:lightning_network_client)
-      .and_return(lightning_network_client)
-  end
-
-  def mock_price_on_satoshis
-    allow(GetPriceOnSatoshis).to receive(:for) do |args|
-      args[:clp_price] * 10_000
-    end
-  end
-
-  def mock_prices_hash
-    allow(GetPricesHash)
-      .to receive(:for)
-      .and_return(prices_hash)
-  end
-
-  def mock_create_invoice_products
-    allow(CreateInvoiceProducts)
-      .to receive(:for)
-      .and_return(true)
+    described_class.for(shopping_cart_items: shopping_cart_items)
   end
 
   before do
-    mock_lightning_network_client
-    mock_price_on_satoshis
-    mock_prices_hash
-    mock_create_invoice_products
+    allow_any_instance_of(LightningNetworkClient).to receive(:create_invoice)
+      .with(memo, total_satoshis)
+      .and_return('payment_request' => 'request', 'r_hash' => 'hash')
   end
 
-  it { expect(perform).to be_a(Invoice) }
+  context 'with one shopping_cart_item and a valid invoice_product' do
+    let(:shopping_cart_items) { [ShoppingCartItem.new(product_bon_bon.id, amount)] }
+    let(:memo) { '1 x Bon o Bon' }
+    let(:total_satoshis) { 4050 }
 
-  it 'creates a new Invoice in data base' do
-    expect { perform }.to change { Invoice.all.count }.by(1)
-  end
-
-  it 'creates a new Invoice with correct amount' do
-    expect(perform.amount).to eq(50_000_000)
-  end
-
-  it 'creates a new Invoice with correct clp' do
-    expect(perform.clp).to eq(5_000)
-  end
-
-  it 'creates a new Invoice with correct memo' do
-    expect(perform.memo).to eq(memo)
-  end
-
-  it 'creates a new Invoice with correct r_hash' do
-    expect(perform.r_hash).to eq('r_hash')
-  end
-
-  it 'creates a new Invoice with correct payment request' do
-    expect(perform.payment_request).to eq('payment_request')
-  end
-
-  it 'calls GetPriceOnSatoshis with correct clp_price' do
-    perform
-    expect(GetPriceOnSatoshis)
-      .to have_received(:for)
-      .with(clp_price: 5_000)
-  end
-
-  it 'calls CreateInvoiceProducts with correct params' do
-    invoice = perform
-    expect(CreateInvoiceProducts)
-      .to have_received(:for)
-      .with(invoice: invoice, prices_hash: prices_hash, products_hash: products_hash)
-  end
-
-  it 'calls LightningNetworkClient.create_invoice with correct params' do
-    perform
-    expect(lightning_network_client)
-      .to have_received(:create_invoice)
-      .with(memo, 50_000_000)
-  end
-
-  it 'calls GetPricesHash with correct params' do
-    perform
-    expect(GetPricesHash)
-      .to have_received(:for)
-      .with(products_hash: products_hash)
-  end
-
-  context 'with 0 satoshis' do
-    let(:prices_hash) { { product_a.id => 0, product_b.id => 0 } }
-
-    it 'raises satoshi amount error' do
-      expect { perform }.to raise_error('Invalid satoshi amount')
-    end
-  end
-
-  context 'with error when creating invoice products' do
     before do
-      allow(CreateInvoiceProducts)
-        .to receive(:for) do
-          3.times { create(:invoice_product) }
-          raise ActiveRecord::RecordInvalid
-        end
+      shopping_cart_items.each do |shopping_cart_item|
+        allow(BuildInvoiceProducts).to receive(:for).with(shopping_cart_item: shopping_cart_item)
+                                                    .and_return(invoice_product)
+      end
+      allow(GetPriceOnSatoshis).to receive(:for).with(clp_price: 1000).and_return(4050)
     end
 
-    it 'raises corresponding error and does not create new invoice' do
-      expect { perform }.to raise_error(ActiveRecord::RecordInvalid)
-      expect(Invoice.all.count).to eq(0)
-      expect(InvoiceProduct.all.count).to eq(0)
-    end
+    it { expect { perform }.to change { Invoice.all.count }.by(1) }
+    it { expect(perform.memo).to eq('1 x Bon o Bon') }
+    it { expect(perform.clp).to eq(1000) }
+    it { expect(perform.amount).to eq(4050) }
+    it { expect(perform.r_hash).to eq('hash') }
+    it { expect(perform.payment_request).to eq('request') }
+    it { expect(perform.invoice_products.first).to eq(invoice_product) }
   end
 
-  context 'with error when getting products hash' do
+  context 'with one shopping_cart_item and amount = 2' do
+    let(:amount) { 2 }
+    let(:shopping_cart_items) { [ShoppingCartItem.new(product_bon_bon.id, amount)] }
+    let(:memo) { '2 x Bon o Bon' }
+    let(:total_satoshis) { 8100 }
+
     before do
-      allow(GetPricesHash)
-        .to receive(:for)
-        .and_raise('Error when getting prices hash')
+      shopping_cart_items.each do |shopping_cart_item|
+        allow(BuildInvoiceProducts).to receive(:for).with(shopping_cart_item: shopping_cart_item)
+                                                    .and_return(Array.new(2, invoice_product))
+      end
+      allow(GetPriceOnSatoshis).to receive(:for).with(clp_price: 2000).and_return(8100)
     end
 
-    it 'raises corresponding error and does not create new invoice' do
-      expect { perform }.to raise_error('Error when getting prices hash')
-      expect(Invoice.all.count).to eq(0)
+    it { expect { perform }.to change { Invoice.all.count }.by(1) }
+    it { expect(perform.memo).to eq('2 x Bon o Bon') }
+    it { expect(perform.clp).to eq(2000) }
+    it { expect(perform.amount).to eq(8100) }
+    it { expect(perform.r_hash).to eq('hash') }
+    it { expect(perform.payment_request).to eq('request') }
+    it { expect(perform.invoice_products.size).to eq(2) }
+    it { expect(perform.invoice_products.first).to eq(invoice_product) }
+  end
+
+  context 'with two shopping_cart_item and valid invoice_products' do
+    let(:shopping_cart_items) do
+      [
+        ShoppingCartItem.new(product_bon_bon.id, amount),
+        ShoppingCartItem.new(product_coca_cola.id, amount)
+      ]
     end
+    let(:memo) { '1 x Bon o Bon, 1 x Coca Cola' }
+    let(:total_satoshis) { 8100 }
+
+    before do
+      shopping_cart_items.each do |shopping_cart_item|
+        allow(BuildInvoiceProducts).to receive(:for).with(shopping_cart_item: shopping_cart_item)
+                                                    .and_return(invoice_product)
+      end
+      allow(GetPriceOnSatoshis).to receive(:for).with(clp_price: 2000).and_return(8100)
+    end
+
+    it { expect { perform }.to change { Invoice.all.count }.by(1) }
+    it { expect(perform.memo).to eq('1 x Bon o Bon, 1 x Coca Cola') }
+    it { expect(perform.clp).to eq(2000) }
+    it { expect(perform.amount).to eq(8100) }
+    it { expect(perform.r_hash).to eq('hash') }
+    it { expect(perform.payment_request).to eq('request') }
+    it { expect(perform.invoice_products.size).to eq(2) }
+    it { expect(perform.invoice_products.first).to eq(invoice_product) }
+  end
+
+  context 'with invalid amount of invoice_products' do
+    let(:amount) { 2 }
+    let(:shopping_cart_items) { [ShoppingCartItem.new(product_bon_bon.id, amount)] }
+    let(:memo) { '2 x Bon o Bon' }
+    let(:total_satoshis) { 8100 }
+
+    before do
+      shopping_cart_items.each do |shopping_cart_item|
+        allow(BuildInvoiceProducts).to receive(:for).with(shopping_cart_item: shopping_cart_item)
+                                                    .and_return(invoice_product)
+      end
+    end
+
+    it { expect { perform }.to change { Invoice.all.count }.by(0) }
+    it { expect(perform).to be_falsy }
   end
 end
