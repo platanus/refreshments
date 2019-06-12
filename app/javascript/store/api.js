@@ -14,8 +14,8 @@ export default {
     return axios.get(`/api/v1/products/${productId}`)
       .then((response) => response.data);
   },
-  buy(products, description) {
-    return axios.post('/api/v1/invoices', { invoice: { products, memo: description } })
+  buy(products) {
+    return axios.post('/api/v1/invoices', { invoice: { products } })
       .then((response) => response.data);
   },
   checkInvoiceStatus(hash) {

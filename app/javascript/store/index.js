@@ -94,11 +94,10 @@ const store = new Vuex.Store({
     buy: context => {
       if (context.getters.totalAmount) {
         const products = context.getters.buyProducts;
-        const description = context.getters.buyDescription;
 
         context.commit('setLoading', true);
 
-        api.buy(products, description).then((response) => {
+        api.buy(products).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
         });
@@ -163,7 +162,6 @@ const store = new Vuex.Store({
         if (product.amount > 0) {
           acc[product.id] = {
             amount: product.amount,
-            price: product.user_products.sort((a, b) => (a.price - b.price))[0].price,
           };
         }
 
