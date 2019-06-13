@@ -9,21 +9,21 @@ RSpec.describe RegisterInvoicePaymentJob, type: :job do
 
   let(:invoice) { create(:invoice) }
 
-  describe "#perform_later" do
+  describe '#perform_later' do
     it do
       expect do
-        RegisterInvoicePaymentJob.perform_later(invoice)
-      end.to have_enqueued_job.on_queue("ledger_transaction")
+        RegisterInvoicePaymentJob.perform_later(invoice.id)
+      end.to have_enqueued_job.on_queue('ledger_transaction')
     end
   end
 
-  describe "#perform_now" do
+  describe '#perform_now' do
     before do
       allow(RegisterInvoicePayment).to receive(:for).with(invoice: invoice)
     end
 
     it do
-      RegisterInvoicePaymentJob.perform_now(invoice)
+      RegisterInvoicePaymentJob.perform_now(invoice.id)
       expect(RegisterInvoicePayment).to have_received(:for).with(invoice: invoice)
     end
   end
