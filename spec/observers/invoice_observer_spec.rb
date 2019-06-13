@@ -7,17 +7,21 @@ describe InvoiceObserver do
 
   let(:invoice) { create(:invoice) }
 
+  before do    context 'when invoice is save' do
+    allow(RegisterInvoicePaymentJob).to receive(:perform_later).with(invoice)
+  end
+
   context 'when invoice is save' do
     it do
       trigger(:after, :save)
-      expect { RegisterInvoicePaymentJob.to have_enqueued_job.with(invoice.id) }
+      expect(RegisterInvoicePaymentJob).to have_received(:perform_later).with(invoice)
     end
   end
 
   context 'when invoice is not save' do
     it do
       trigger(:before, :save)
-      expect { RegisterInvoicePaymentJob.to_not have_enqueued_job }
+      expect(RegisterInvoicePaymentJob).to_not have_received(:perform_later)
     end
   end
 end
