@@ -12,7 +12,7 @@ RSpec.describe RegisterInvoicePaymentJob, type: :job do
   describe '#perform_later' do
     it do
       expect do
-        RegisterInvoicePaymentJob.perform_later(invoice.id)
+        RegisterInvoicePaymentJob.perform_later(invoice)
       end.to have_enqueued_job.on_queue('ledger_transaction')
     end
   end
@@ -23,7 +23,7 @@ RSpec.describe RegisterInvoicePaymentJob, type: :job do
     end
 
     it do
-      RegisterInvoicePaymentJob.perform_now(invoice.id)
+      RegisterInvoicePaymentJob.perform_now(invoice)
       expect(RegisterInvoicePayment).to have_received(:for).with(invoice: invoice)
     end
   end
