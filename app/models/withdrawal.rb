@@ -1,4 +1,5 @@
 class Withdrawal < ApplicationRecord
+  include PowerTypes::Observable
   MIN_BUDA_AMOUNT = 9999
   SATOSHIS_TO_BTC = 10**-8
 

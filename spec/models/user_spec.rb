@@ -6,6 +6,16 @@ RSpec.describe User, type: :model do
   let(:user_with_product) { create(:user_with_product) }
   let(:user_with_invoice) { create(:user_with_invoice) }
 
+  before do
+    PowerTypes::Observable.observable_disabled = true
+  end
+
+  after do
+    if PowerTypes::Observable.observable_disabled?
+      PowerTypes::Observable.observable_disabled = false
+    end
+  end
+
   describe 'basic validations' do
     it { should have_many(:products) }
     it { should have_many(:withdrawals) }

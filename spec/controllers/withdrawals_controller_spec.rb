@@ -24,6 +24,16 @@ RSpec.describe WithdrawalsController, type: :controller do
     create_withdrawal_without_callback.reject!
   end
 
+  before do
+    PowerTypes::Observable.observable_disabled = true
+  end
+
+  after do
+    if PowerTypes::Observable.observable_disabled?
+      PowerTypes::Observable.observable_disabled = false
+    end
+  end
+
   let(:btc_address) { '1AGNa15ZQXAZUgFiqJ2i7Z2DPU2J6hW62i' }
   let!(:user) { create(:user, :with_account) }
 
