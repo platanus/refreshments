@@ -22,4 +22,8 @@ export default {
     return axios.get(`/api/v1/invoices/status/${encodeURIComponent(hash)}`)
       .then((response) => response);
   },
+  getGif() {
+    return axios.get('/api/v1/gif')
+      .then((response) => response.data.data);
+  },
 };
