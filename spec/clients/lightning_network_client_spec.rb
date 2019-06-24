@@ -59,7 +59,7 @@ RSpec.describe LightningNetworkClient do
   describe '#create_invoice' do
     before do
       expect(LightningNetworkClient).to receive(:post)
-        .with("/invoices", anything)
+        .with('/invoices', anything)
         .and_return(response)
     end
 
@@ -76,6 +76,55 @@ RSpec.describe LightningNetworkClient do
 
       it 'raises exception' do
         expect { client.create_invoice('memo', 0.1234) }.to raise_error
+      end
+    end
+  end
+
+  describe '#transaction' do
+    before do
+      expect(LightningNetworkClient).to receive(:post)
+        .with('/channels/transactions', anything)
+        .and_return(response)
+    end
+
+    context 'when node returns valid info' do
+      let(:response) { success }
+
+      it 'returns node response' do
+        expect(client.transaction('payment_request')).to eq(response)
+      end
+    end
+
+    context 'when node returns error' do
+      let(:response) { failure }
+
+      it 'raises exception' do
+        expect { client.transaction('payment_request') }.to raise_error
+      end
+    end
+  end
+
+  describe '#decode_payment_request' do
+    let(:payment_request) { 'expected_invoice_hash' }
+    before do
+      expect(LightningNetworkClient).to receive(:get)
+        .with("/payreq/#{payment_request}", anything)
+        .and_return(response)
+    end
+
+    context 'when node returns valid info' do
+      let(:response) { success }
+
+      it 'returns node response' do
+        expect(client.decode_payment_request(payment_request)).to eq(response)
+      end
+    end
+
+    context 'when node returns error' do
+      let(:response) { failure }
+
+      it 'raises exception' do
+        expect { client.decode_payment_request(payment_request) }.to raise_error
       end
     end
   end
