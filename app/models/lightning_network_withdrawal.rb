@@ -1,6 +1,7 @@
 class LightningNetworkWithdrawal < ApplicationRecord
+  include PowerTypes::Observable
   include AASM
-  aasm do
+  aasm column: 'state' do
     state :pending, initial: true
     state :confirmed, :rejected
 
@@ -19,11 +20,13 @@ end
 # Table name: lightning_network_withdrawals
 #
 #  id           :bigint(8)        not null, primary key
-#  invoice_hash :string
+#  invoice_hash :string           not null
 #  state        :string
 #  user_id      :bigint(8)        not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  amount       :integer
+#  memo         :string
 #
 # Indexes
 #
