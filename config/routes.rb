@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       get 'products/:product_id', to: 'products#get'
       resources :invoices, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
-      get '/gif', to: 'gifs#import_gif'
+      get '/gif', to: 'gifs#show_random'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config

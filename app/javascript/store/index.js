@@ -151,7 +151,7 @@ const store = new Vuex.Store({
     },
     getGif: context => {
       api.getGif().then((response) => {
-        context.commit('setGif', response.image_url);
+        context.commit('setGif', response.gif_url.gif_url);
       });
     },
   },

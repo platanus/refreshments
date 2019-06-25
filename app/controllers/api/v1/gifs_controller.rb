@@ -1,14 +1,12 @@
 class Api::V1::GifsController < Api::V1::BaseController
-  API_KEY = ENV['GIPHY_API_KEY']
-  GIF_SEARCH = 'celebration'.freeze
+  def show_random
+    gif_url = giphy_client.random_gif
+    respond_with gif_url: gif_url
+  end
 
-  def import_gif
-    url = format(
-      'https://api.giphy.com/v1/gifs/random?&api_key=%<api_key>s&tag=%<gif_search>s',
-      api_key: API_KEY,
-      gif_search: GIF_SEARCH
-    )
-    response = HTTParty.get(url)
-    render json: response
+  private
+
+  def giphy_client
+    @giphy_client ||= GiphyClient.new
   end
 end

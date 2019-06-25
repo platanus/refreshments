@@ -24,6 +24,6 @@ export default {
   },
   getGif() {
     return axios.get('/api/v1/gif')
-      .then((response) => response.data.data);
+      .then((response) => response.data);
   },
 };
