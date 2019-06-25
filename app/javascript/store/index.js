@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     actionMessage: '',
     actionProductId: null,
     intervalId: null,
+    gif: null,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -49,6 +50,9 @@ const store = new Vuex.Store({
     },
     setIntervalId: (state, payload) => {
       state.intervalId = payload;
+    },
+    setGif: (state, payload) => {
+      state.gif = payload;
     },
   },
   actions: {
@@ -144,6 +148,11 @@ const store = new Vuex.Store({
         clearInterval(context.state.intervalId);
         context.commit('setIntervalId', null);
       }
+    },
+    getGif: context => {
+      api.getGif().then((response) => {
+        context.commit('setGif', response.gif_url.gif_url);
+      });
     },
   },
   getters: {
