@@ -48,14 +48,24 @@ $main-font-color: #383769;
   &__table {
     width: 100%;
     table-layout: fixed;
-    text-align: center;
+    text-align: left;
     margin-top: 40px;
     color: $main-font-color;
   }
 
   &__table-header {
+    &--fixed-right {
+      text-align: right;
+    }
+
     &--fixed-width {
       width: 40%;
+    }
+  }
+
+  &__table-info {
+    &--fixed-right {
+      text-align: right;
     }
   }
 
