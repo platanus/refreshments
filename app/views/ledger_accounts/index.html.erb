@@ -2,7 +2,7 @@
   <div class="balance-index__table-container">
 
     <div class="balance-index__header">
-      <h1 class="balance-index__title"> Mi Balance </h1>
+      <h1 class="balance-index__title"> Mi Cartola </h1>
 
       <div class="balance-index__header-actions">
         <%= link_to "Mis Productos", user_products_path, class: 'balance-index__action' %>
@@ -30,23 +30,29 @@
             <th class="balance-index__table-header"> Fecha </th>
             <th class="balance-index__table-header"> Operación </th>
             <th class="balance-index__table-header balance-index__table-header--fixed-width"> Descripción </th>
-            <th class="balance-index__table-header"> Monto (Satoshis) </th>
-            <th class="balance-index__table-header"> Balance (Satoshis) </th>
+            <th class="balance-index__table-header--fixed-right"> Monto (Satoshis) </th>
+            <th class="balance-index__table-header--fixed-right"> Balance (Satoshis) </th>
           </tr>
         </thead>
         <tbody>
           <% @ledger_lines.each do |line| %>
             <tr>
-              <td> <%= line.date.in_time_zone().strftime("%d/%m/%Y %H:%M") %> </td>
+              <td class="balance-index__table-info"> <%= line.date.in_time_zone().strftime("%d/%m/%Y %H:%M") %> </td>
               <% if line.accountable_type === 'InvoiceProduct' %>
-                <td> Venta </td>
-                <td> <%= '%s a %d pesos' % @line_id_to_product_data_hash[line.id] %> </td>
+                <td class="balance-index__table-info"> Venta </td>
+                <td class="balance-index__table-info">
+                  <%= '%s a %d pesos' % @line_id_to_product_data_hash[line.id] %>
+                </td>
               <% elsif line.accountable_type === 'User' %>
-                <td> Retiro </td>
-                <td></td>
+                <td class="balance-index__table-info"> Retiro </td>
+                <td class="balance-index__table-info"></td>
               <% end %>
-              <td> <%= number_to_currency(-line.amount, unit: '', negative_format: '(%n)') %> </td>
-              <td> <%= number_to_currency(-line.balance, unit: '', negative_format: '(%n)') %> </td>
+              <td class="balance-index__table-info--fixed-right">
+                <%= number_to_currency(-line.amount, unit: '', negative_format: '(%n)') %>
+              </td>
+              <td class="balance-index__table-info--fixed-right">
+                <%= number_to_currency(-line.balance, unit: '', negative_format: '(%n)') %>
+              </td>
             </tr>
           <% end %>
         </tbody>
