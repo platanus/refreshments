@@ -10,7 +10,7 @@
     <div class="app">
       <div
         class="product-list"
-        key="products"
+        :key="products"
       >
         <product
           v-for="product in sortedProductList"
