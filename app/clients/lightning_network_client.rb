@@ -26,7 +26,7 @@ class LightningNetworkClient
   def transaction(payment_request)
     check_success self.class.post(
       '/channels/transactions',
-      body: { payment_request: payment_request },
+      body: { payment_request: payment_request }.to_json,
       headers: headers,
       verify: false
     )
