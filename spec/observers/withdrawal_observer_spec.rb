@@ -5,24 +5,22 @@ describe WithdrawalObserver do
     described_class.trigger(_type, _event, withdrawal)
   end
 
-  let(:user_with_invoice) { create(:user_with_invoice) }
-  let(:withdrawal) { build(:withdrawal, user: user_with_invoice, aasm_state: 'confirmed') }
-
-  before do
-    allow(RegisterWithdrawalPayment).to receive(:for).with(withdrawal: withdrawal)
+  let(:user_with_account) { create(:user, :with_account) }
+  let(:withdrawal) do
+    build(:withdrawal, id: 123, user: user_with_account, aasm_state: 'confirmed')
   end
 
-  context "when withdrawal is save" do
+  context 'when withdrawal is saved' do
     it do
       trigger(:after, :save)
-      expect(RegisterWithdrawalPayment).to have_received(:for).with(withdrawal: withdrawal)
+      expect { RegisterWithdrawalPaymentJob.to receive(:perform_later).with(withdrawal) }
     end
   end
 
-  context "when invoice is not save" do
+  context 'when withdrawal is not saved' do
     it do
       trigger(:before, :save)
-      expect(RegisterWithdrawalPayment).to_not have_received(:for)
+      expect { RegisterWithdrawalPaymentJob.to_not receive(:perform_later) }
     end
   end
 end

@@ -7,7 +7,7 @@ class LightningNetworkClient
   base_uri "https://#{LND_HOST}:#{LND_PORT}/v1"
 
   def invoices
-    check_success self.class.get("/invoices", headers: headers, verify: false)
+    check_success self.class.get('/invoices', headers: headers, verify: false)
   end
 
   def invoice(r_hash)
@@ -16,11 +16,24 @@ class LightningNetworkClient
 
   def create_invoice(memo, amount)
     check_success self.class.post(
-      "/invoices",
+      '/invoices',
       body: { memo: memo, value: amount }.to_json,
       headers: headers,
       verify: false
     )
+  end
+
+  def transaction(payment_request)
+    check_success self.class.post(
+      '/channels/transactions',
+      body: { payment_request: payment_request }.to_json,
+      headers: headers,
+      verify: false
+    )
+  end
+
+  def decode_payment_request(payment_request)
+    check_success self.class.get("/payreq/#{payment_request}", headers: headers, verify: false)
   end
 
   private

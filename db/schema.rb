@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_175648) do
+ActiveRecord::Schema.define(version: 2019_06_20_161201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,17 @@ ActiveRecord::Schema.define(version: 2019_05_28_175648) do
     t.datetime "updated_at", null: false
     t.index ["accountable_type", "accountable_id"], name: "index_ledger_lines_on_accountable_type_and_accountable_id"
     t.index ["ledger_account_id"], name: "index_ledger_lines_on_ledger_account_id"
+  end
+
+  create_table "lightning_network_withdrawals", force: :cascade do |t|
+    t.string "invoice_hash", null: false
+    t.string "state"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "amount"
+    t.string "memo"
+    t.index ["user_id"], name: "index_lightning_network_withdrawals_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
