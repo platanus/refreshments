@@ -17,7 +17,7 @@
 
 			<div class="products-index__header-actions">
 				<% if @withdrawable_amount > 0 %>
-					<%= link_to "Hacer retiro", new_user_withdrawal_path, {
+					<%= link_to "Hacer retiro", new_user_lightning_network_withdrawal_path, {
 						remote: true,
 						'data-toggle' => "modal",
 						'data-target' => "#withdrawal-modal-holder",
