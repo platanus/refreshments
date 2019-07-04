@@ -25,7 +25,7 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.subscribe((mutation) => {
+    this.unsubscribe = this.$store.subscribe((mutation) => {
       if (mutation.type === 'setActionMessage' && this.actionProductId === this.product.id) {
         this.message(this.actionMessage, this.product);
       }
@@ -53,6 +53,9 @@ export default {
       'actionMessage',
       'actionProductId',
     ]),
+  },
+  beforeDestroy() {
+    this.unsubscribe();
   },
 };
 </script>
