@@ -10,8 +10,9 @@ class LightningNetworkWithdrawalsController < ApplicationController
       invoice_hash: lightning_network_withdrawal_params[:invoice_hash],
       user: current_user
     )
-
-    render 'feedback'
+    render 'successful'
+  rescue LightningNetworkClientError::ClientError
+    render 'unsuccessful'
   end
 
   private
