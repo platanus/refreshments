@@ -82,13 +82,13 @@ const store = new Vuex.Store({
       const userProduct = payload.user_products.sort((a, b) => (a.price > b.price))[0];
       context.commit('setActionProduct', payload.id);
       if (userProduct.stock > payload.amount) {
-        context.commit('setActionMessage', 'increment');
         context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
+        context.commit('setActionMessage', 'increment');
+        context.dispatch('stopGetProductsInterval');
         context.dispatch('buy');
       } else {
         context.commit('setActionMessage', 'maxStock');
       }
-      context.dispatch('stopGetProductsInterval');
     },
     updateProduct: (context, payload) => {
       api.product(payload.id).then((response) => {
@@ -97,11 +97,11 @@ const store = new Vuex.Store({
     },
     buy: context => {
       if (context.getters.totalAmount) {
-        const products = context.getters.buyProducts;
+        const cartProducts = context.getters.cartProducts;
 
         context.commit('setLoading', true);
 
-        api.buy(products).then((response) => {
+        api.buy(cartProducts).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
         });
@@ -166,7 +166,7 @@ const store = new Vuex.Store({
       getters.onSaleProducts.reduce((acc, product) => acc + product.user_products
         .sort((a, b) => (a.price - b.price))[0].price * product.amount, 0)
     ),
-    buyProducts: (state, getters) => {
+    cartProducts: (state, getters) => {
       const products = getters.productsAsArray.reduce((acc, product) => {
         if (product.amount > 0) {
           acc[product.id] = {

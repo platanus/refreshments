@@ -45,8 +45,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      'products': 'productsAsArray',
-      'totalAmount': 'totalAmount',
+      'products': 'onSaleProducts',
     }),
     ...mapState([
       'status',
