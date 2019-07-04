@@ -8,17 +8,8 @@ describe ProcessLightningNetworkWithdrawal do
   let(:user) { create(:user) }
   let(:ledger_account) { create(:ledger_account, accountable: user) }
   let(:lightning_withdrawal) { create(:lightning_network_withdrawal, user_id: user.id) }
-  let(:decode_response_body) do
-    {
-      'num_satoshis' => '10000',
-      'description' => 'withdrawal memo'
-    }
-  end
 
   before do
-    allow_any_instance_of(LightningNetworkClient).to receive(:decode_payment_request)
-      .with(lightning_withdrawal.invoice_hash)
-      .and_return(decode_response_body)
     allow_any_instance_of(LightningNetworkClient).to receive(:transaction)
       .with(lightning_withdrawal.invoice_hash)
   end

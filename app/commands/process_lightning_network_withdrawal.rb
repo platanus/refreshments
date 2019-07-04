@@ -1,7 +1,5 @@
 class ProcessLightningNetworkWithdrawal < PowerTypes::Command.new(:lightning_withdrawal)
   def perform
-    decode_invoice
-
     if enough_funds?
       process_payment
     else
@@ -10,14 +8,6 @@ class ProcessLightningNetworkWithdrawal < PowerTypes::Command.new(:lightning_wit
   end
 
   private
-
-  def decode_invoice
-    decoded_invoice = lightning_network_client
-                      .decode_payment_request(@lightning_withdrawal.invoice_hash)
-    @lightning_withdrawal.amount = decoded_invoice['num_satoshis'].to_i
-    @lightning_withdrawal.memo = decoded_invoice['description']
-    @lightning_withdrawal.save!
-  end
 
   def enough_funds?
     withdrawal_user_withdrawable_amount >= withdrawal_amount

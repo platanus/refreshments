@@ -49,15 +49,32 @@ RSpec.describe LightningNetworkWithdrawalsController, type: :controller do
     let(:invoice_hash) { 'invoice hash' }
     let(:action) { :create }
 
-    before do
-      mock_authentication
-      expect(PayInvoiceToUser).to receive(:for)
-        .with(invoice_hash: invoice_hash, user: user)
-        .and_return(true)
+    context 'when no error is raised' do
+      before do
+        mock_authentication
+        expect(PayInvoiceToUser).to receive(:for)
+          .with(invoice_hash: invoice_hash, user: user)
+          .and_return(true)
+      end
+
+      it 'renders successful template' do
+        mock_post_request(invoice_hash, action)
+        expect(subject).to render_template('successful')
+      end
     end
 
-    it 'calls PayInvoiceToUser command' do
-      mock_post_request(invoice_hash, action)
+    context 'when lightning network client error is raised' do
+      before do
+        mock_authentication
+        expect(PayInvoiceToUser).to receive(:for)
+          .with(invoice_hash: invoice_hash, user: user)
+          .and_raise(LightningNetworkClientError::ClientError)
+      end
+
+      it 'renders unsuccessful template' do
+        mock_post_request(invoice_hash, action)
+        expect(subject).to render_template('unsuccessful')
+      end
     end
   end
 end
