@@ -43,7 +43,7 @@
                 <td class="balance-index__table-info">
                   <%= '%s a %d pesos' % @line_id_to_product_data_hash[line.id] %>
                 </td>
-              <% elsif line.accountable_type === 'User' %>
+              <% elsif line.accountable_type === 'LightningNetworkWithdrawal' %>
                 <td class="balance-index__table-info"> Retiro </td>
                 <td class="balance-index__table-info"></td>
               <% end %>
