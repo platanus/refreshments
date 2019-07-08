@@ -3,7 +3,7 @@ class LightningNetworkWithdrawal < ApplicationRecord
   include AASM
   aasm column: 'state' do
     state :pending, initial: true
-    state :confirmed, :rejected
+    state :confirmed, :rejected, :failed
 
     event :confirm do
       transitions from: :pending, to: :confirmed
@@ -11,6 +11,10 @@ class LightningNetworkWithdrawal < ApplicationRecord
 
     event :reject do
       transitions from: :pending, to: :rejected
+    end
+
+    event :fail do
+      transitions from: :pending, to: :failed
     end
   end
 end

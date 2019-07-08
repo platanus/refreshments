@@ -14,4 +14,8 @@ RSpec.describe LightningNetworkWithdrawal, type: :model do
   it 'changes state from pending to rejected' do
     expect(subject).to transition_from(:pending).to(:rejected).on_event(:reject)
   end
+
+  it 'changes state from pending to failed' do
+    expect(subject).to transition_from(:pending).to(:failed).on_event(:fail)
+  end
 end
