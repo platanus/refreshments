@@ -15,9 +15,12 @@ class ProcessLightningNetworkWithdrawal < PowerTypes::Command.new(:lightning_wit
 
   def process_payment
     ActiveRecord::Base.transaction do
-      @lightning_withdrawal.confirm!
-      RegisterLightningNetworkWithdrawalPayment.for(lightning_withdrawal: @lightning_withdrawal)
-      lightning_network_client.transaction(@lightning_withdrawal.invoice_hash)
+      response = lightning_network_client.transaction(@lightning_withdrawal.invoice_hash)
+      if response['payment_route']
+        @lightning_withdrawal.confirm!
+      else
+        @lightning_withdrawal.fail!
+      end
     end
   end
 
