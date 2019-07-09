@@ -2,7 +2,7 @@ class RegisterLightningNetworkWithdrawalPayment < PowerTypes::Command.new(:light
   PLATANUS_WALLET_ID = ENV.fetch('PLATANUS_WALLET_ID')
 
   def perform
-    return unless @lightning_withdrawal.confirmed?
+    return if withdrawal_not_confirmed? || allready_accounted?
 
     Ledger::Transfer.for(
       from: lightning_account,
@@ -14,6 +14,14 @@ class RegisterLightningNetworkWithdrawalPayment < PowerTypes::Command.new(:light
   end
 
   private
+
+  def withdrawal_not_confirmed?
+    !@lightning_withdrawal.confirmed?
+  end
+
+  def allready_accounted?
+    LedgerLine.where(accountable: @lightning_withdrawal).any?
+  end
 
   def debt_to_seller_account
     LedgerAccount.find_or_create_by!(
