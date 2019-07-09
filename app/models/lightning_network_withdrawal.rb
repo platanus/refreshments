@@ -1,6 +1,9 @@
 class LightningNetworkWithdrawal < ApplicationRecord
   include PowerTypes::Observable
   include AASM
+
+  belongs_to :user
+
   aasm column: 'state' do
     state :pending, initial: true
     state :confirmed, :rejected, :failed
