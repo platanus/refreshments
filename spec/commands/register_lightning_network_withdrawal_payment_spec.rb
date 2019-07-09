@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe RegisterLightningNetworkWithdrawalPayment do
-  def perform(*_args)
-    described_class.for(*_args)
+  def perform
+    described_class.for(lightning_withdrawal: lightning_withdrawal)
   end
 
   before do
@@ -15,8 +15,9 @@ describe RegisterLightningNetworkWithdrawalPayment do
     end
   end
 
+  let!(:platanus) { create(:wallet, id: 1) }
+
   context 'when a withdrawal is confirmed' do
-    let!(:platanus) { create(:wallet, id: 1) }
     let(:user_with_invoice) { create(:user_with_invoice) }
     let(:lightning_account) do
       create(:ledger_account, accountable: platanus, category: 'Wallet')
@@ -48,7 +49,7 @@ describe RegisterLightningNetworkWithdrawalPayment do
     end
 
     it do
-      perform(lightning_withdrawal: lightning_withdrawal)
+      perform
     end
   end
 
@@ -56,7 +57,24 @@ describe RegisterLightningNetworkWithdrawalPayment do
     let!(:lightning_withdrawal) { build(:lightning_network_withdrawal, state: 'rejected') }
 
     it do
-      expect(perform(lightning_withdrawal: lightning_withdrawal)).to eq(nil)
+      expect(perform).to eq(nil)
+    end
+  end
+
+  context 'when a withdrawal is allready accounted' do
+    let(:lightning_withdrawal) { create(:lightning_network_withdrawal, state: 'confirmed') }
+
+    before do
+      perform
+    end
+
+    def accounted_lines_count
+      LedgerLine.where(accountable: lightning_withdrawal).count
+    end
+
+    it 'should not add new ledger lines' do
+      expect(accounted_lines_count).to eq(2)
+      expect { perform }.to_not (change { accounted_lines_count })
     end
   end
 end
