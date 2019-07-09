@@ -7,8 +7,6 @@ class LightningNetworkWithdrawalObserver < PowerTypes::Observer
   end
 
   def register_lightning_network_withdrawal_payment
-    if object.state_changed?(from: :pending, to: :confirmed)
-      RegisterLightningNetworkWithdrawalPaymentJob.set(wait: 5.seconds).perform_later(object)
-    end
+    RegisterLightningNetworkWithdrawalPaymentJob.set(wait: 5.seconds).perform_later(object)
   end
 end
