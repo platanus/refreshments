@@ -26,6 +26,12 @@
 	      <%= f.number_field :stock, { class: 'product-form__input', error: false } %>
 	    </div>
 
+			<% if @user_product.new_record? %>
+				<div class="product-form__text">
+					<%= link_to 'Mi producto no está en las opciones', new_product_path, class: 'product-form__text--link', data: { turbolinks: false } %>
+				</div>
+			<% end %>
+
 		  <%= f.submit "#{@user_product.new_record? ? 'Agregar' : 'Editar'} producto", class: 'product-form__button' %>
 
 		<% end  %>
