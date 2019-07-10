@@ -70,7 +70,6 @@ $product-form-input-border-width: 1px;
     margin: 0;
     padding: 5px;
     height: 36px;
-    text-align: right;
     border: $product-form-input-border-width solid $product-form-input-border;
     border-radius: 8px;
     background-color: $product-form-input-background;
@@ -91,7 +90,10 @@ $product-form-input-border-width: 1px;
 
     &--select {
       direction: rtl;
-      padding: 10px;
+    }
+
+    &--number {
+      text-align: right;
     }
   }
 
