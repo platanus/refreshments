@@ -101,11 +101,24 @@ $product-form-input-border-width: 1px;
     width: 60%;
     color: $product-form-button-font;
     background-color: $product-form-button-background;
-    padding: 8px 0;
+    padding: 20px 0;
     border-radius: 10px;
 
-    &:hover {
-      cursor: pointer;
+    &--submit {
+      width: 60%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &--return {
+      width: 35%;
+
+      &:hover {
+        cursor: pointer;
+        color: $product-form-button-font;
+      }
     }
   }
 

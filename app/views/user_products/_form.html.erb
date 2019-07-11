@@ -1,20 +1,19 @@
 <div class="main-page">
 
-	<div class="product-form">
-		<h3 class="product-form__title"> Formulario de Producto </h3>
-		<%= form_for @user_product, class: 'product-form__form' do |f| %>
+  <div class="product-form">
+	  <h3 class="product-form__title"> Formulario de Producto </h3>
+	  <%= form_for @user_product, class: 'product-form__form' do |f| %>
 
-			<%= render "shared/errors", resource: @user_product, extra_classes: 'product-form__alert' %>
-
-			<% if @user_product.new_record? %>
-				<div class="product-form__field">
-		      <%= f.label :product_id, 'Producto', { class: 'product-form__label' } %>
-		      <%= f.collection_select :product_id,
-		      	Product.all, :id, :name,
-		      	{},
-		      	{ class: 'product-form__input product-form__input--select', error: false } %>
-		    </div>
-			<% end %>
+  	    <%= render "shared/errors", resource: @user_product, extra_classes: 'product-form__alert' %>
+	    <% if @user_product.new_record? %>
+		  <div class="product-form__field">
+		    <%= f.label :product_id, 'Producto', { class: 'product-form__label' } %>
+		    <%= f.collection_select :product_id,
+		      Product.all, :id, :name,
+		      {},
+		      { class: 'product-form__input product-form__input--select', error: false } %>
+		  </div>
+		<% end %>
 
 	    <div class="product-form__field">
 	      <%= f.label :price, 'Precio', { class: 'product-form__label' } %>
@@ -26,14 +25,20 @@
 	      <%= f.number_field :stock, { class: 'product-form__input product-form__input--number', error: false } %>
 	    </div>
 
-			<% if @user_product.new_record? %>
-				<div class="product-form__text">
-					<%= link_to 'Mi producto no está en las opciones', new_product_path, class: 'product-form__text--link', data: { turbolinks: false } %>
-				</div>
-			<% end %>
+		<% if @user_product.new_record? %>
+		  <div class="product-form__text">
+			<%= link_to 'Mi producto no está en las opciones', new_product_path, class: 'product-form__text--link', data: { turbolinks: false } %>
+		  </div>
+		<% end %>
 
-		  <%= f.submit "#{@user_product.new_record? ? 'Agregar' : 'Editar'} producto", class: 'product-form__button' %>
-
-		<% end  %>
-	</div>
+		<div class="product-form__field">
+		  <%= link_to 'Volver',
+			user_products_path,
+			class: 'product-form__button product-form__button--return',
+			data: { turbolinks: false }
+		  %>		  
+		  <%= f.submit "#{@user_product.new_record? ? 'Agregar' : 'Editar'} producto", class: 'product-form__button product-form__button--submit' %>
+		</div>	
+	  <% end  %>
+  </div>
 </div>
