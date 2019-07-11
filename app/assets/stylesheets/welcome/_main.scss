@@ -1,3 +1,5 @@
+$login-option-button-background: #fff;
+$login-option-button-font: #5356dc;
 $register-option-button-background: #5356dc;
 $register-option-button-font: #fff;
 $buy-option-button-background: #fff;
@@ -20,8 +22,19 @@ $buy-option-button-font: #5356dc;
     border-radius: 10px;
     font-size: 18px;
 
-    &:nth-child(1) {
-      margin-right: 50px;
+    &:nth-child(2) {
+      margin-left: 25px;
+      margin-right: 25px;
+    }
+
+    &--login {
+      background-color: $login-option-button-background;
+      color: $login-option-button-font;
+
+      &:hover {
+        color: $login-option-button-font;
+      }
+
     }
 
     &--register {
