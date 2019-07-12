@@ -10,6 +10,10 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def image_url
-    rails_blob_path(object.image, only_path: true)
+    if object.image.variable?
+      rails_representation_url(object.image.variant(resize: "500x500"), only_path: true)
+    else
+      rails_blob_path(object.image, only_path: true)
+    end
   end
 end
