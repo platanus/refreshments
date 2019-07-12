@@ -2,22 +2,22 @@
   <h4 class= "navigation__nav-title"> Refreshments </h4>
 
   <%= link_to "Home", root_path,
-		class: "navigation__nav-route navigation__nav-route--home",
-		data: { turbolinks: false }
-	%>
+    class: "navigation__nav-route navigation__nav-route--home",
+    data: { turbolinks: false }
+  %>
 
   <% if user_signed_in? %>
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
       class: "navigation__nav-route navigation__nav-route--logout",
-		  data: { turbolinks: false }
-	  %>
+      data: { turbolinks: false }
+    %>
 
   <% else %>
     <%= link_to "Iniciar sesión", new_user_session_path,
-		  class: "navigation__nav-route navigation__nav-route--login",
-		  data: { turbolinks: false }
-	  %>
+      class: "navigation__nav-route navigation__nav-route--login",
+      data: { turbolinks: false }
+    %>
   <% end %>
 
 </div>
