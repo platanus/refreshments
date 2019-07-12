@@ -1,0 +1,40 @@
+$navbar-item-font: #5356dc;
+$navigation-background-color: #fff;
+
+.navigation {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  background-color: $navigation-background-color;
+  padding: 8px 5px;
+
+  &__nav-title {
+    align-self: flex-start;
+    margin-left: 4px;
+  }
+
+  &__nav-route {
+    font-size: 16px;
+    padding: 0px 10px;
+    border-radius: 10px;
+
+    &--home {
+      margin-right: auto;
+      color: $navbar-item-font;
+    }
+
+    &--login {
+      margin-left: auto;
+      color: $navbar-item-font;
+    }
+
+    &--logout {
+      margin-left: auto;
+      color: $navbar-item-font;
+    }
+
+    &:hover {
+      color: $navbar-item-font;
+    }
+  }
+}
