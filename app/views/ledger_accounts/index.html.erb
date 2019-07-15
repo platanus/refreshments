@@ -1,5 +1,5 @@
 <div class="main-page balance-index">
-  <div class="balance-index__table-container">
+  <div id="balance-index-table-container" class="balance-index__table-container">
 
     <div id="withdrawal-modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -7,6 +7,10 @@
 	  		</div>
 	  	</div>
 		</div>
+
+    <%- flash.each do |_, msg| -%>
+	    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+	  <%- end -%>
 
     <div class="balance-index__header">
       <h1 class="balance-index__title"> Mi Cartola </h1>
@@ -17,7 +21,7 @@
 						remote: true,
 						'data-toggle' => "modal",
 						'data-target' => "#withdrawal-modal-holder",
-						class: 'balance-index__action'
+						class: 'balance-index__action balance-index__action--withdraw'
 					} %>
 				<% end %>
 
