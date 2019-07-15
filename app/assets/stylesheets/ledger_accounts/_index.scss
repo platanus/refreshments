@@ -1,7 +1,8 @@
-$button-background: lighten(#383769, 15%);
-$button-font-color: #fff;
+$balance-index-action-button-background: lighten(#383769, 15%);
+$balance-index-action-button-font-color: #fff;
 $logout-button-background: #a8a8a8;
-$main-font-color: #383769;
+$balance-index-withdraw-action-button-background: #a8a8a8;
+$balance-index-main-font-color: #383769;
 
 .balance-index {
   &__table-container {
@@ -19,22 +20,26 @@ $main-font-color: #383769;
   }
 
   &__title {
-    color: $main-font-color;
+    color: $balance-index-main-font-color;
     margin: 0;
   }
 
   &__total-balance {
-    color: $main-font-color;
+    color: $balance-index-main-font-color;
   }
 
   &__withdrawable-amount {
-    color: $main-font-color;
+    color: $balance-index-main-font-color;
   }
 
   &__action {
-    background-color: $button-background;
+    background-color: $balance-index-action-button-background;
     padding: 5px 10px;
     border-radius: 5px;
+
+    &--withdraw {
+      background-color: $balance-index-withdraw-action-button-background;
+    }
 
     &--logout {
       background-color: $logout-button-background;
@@ -46,7 +51,7 @@ $main-font-color: #383769;
   &__action:visited,
   &__action:hover {
     text-decoration: none;
-    color: $button-font-color;
+    color: $balance-index-action-button-font-color;
   }
 
   &__table {
@@ -54,7 +59,7 @@ $main-font-color: #383769;
     table-layout: fixed;
     text-align: left;
     margin-top: 40px;
-    color: $main-font-color;
+    color: $balance-index-main-font-color;
   }
 
   &__table-header {
