@@ -1,6 +1,7 @@
 $products-index-action-button-background: lighten(#383769, 15%);
 $products-index-action-button-font: #fff;
 $products-index-logout-action-button-background: #a8a8a8;
+$products-index-withdraw-action-button-background: #a8a8a8;
 $products-index-main-font-color: #383769;
 $products-index-table-actions-background: #acabfb;
 
@@ -36,6 +37,10 @@ $products-index-table-actions-background: #acabfb;
     background-color: $products-index-action-button-background;
     padding: 5px 10px;
     border-radius: 5px;
+
+    &--withdraw {
+      background-color: $products-index-withdraw-action-button-background;
+    }
 
     &--logout {
       background-color: $products-index-logout-action-button-background;
