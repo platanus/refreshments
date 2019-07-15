@@ -1,0 +1,55 @@
+$products-index-modal-button-font: #fff;
+$products-index-modal-title-color: #383769;
+$products-index-modal-button-background: #383769;
+
+.modal-header {
+  &__title {
+    color: $products-index-modal-title-color;
+    margin: 0;
+  }
+}
+
+.modal-body {
+  &__field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto 10px;
+    width: 80%;
+  }
+
+  &__label {
+    width: 100%;
+    margin-left: 30px;
+    margin: 0;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    margin: 0;
+    display: block;
+  }
+
+  &__title {
+    color: $products-index-modal-title-color;
+    margin: 0;
+  }
+
+  &__alert {
+    font-size: 12px;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+
+  &__button {
+    width: 60%;
+    color: $products-index-modal-button-font;
+    background-color: $products-index-modal-button-background;
+    padding: 8px 0;
+    border-radius: 5px;
+  }
+}
