@@ -1,4 +1,11 @@
 <tr>
+  <td>
+    <%= user_product.product.image.attached? ?
+      image_tag(url_for(user_product.product.image),
+      class: 'products-index__table-image--fixed-size')
+      : 'N/A'
+		%>
+  </td>
 	<td> <%= user_product.product_name %> </td>
 	<td> <%= user_product.price %> </td>
 	<td> <%= user_product.stock %> </td>
