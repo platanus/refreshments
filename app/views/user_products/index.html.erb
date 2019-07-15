@@ -3,14 +3,14 @@
 
 		<div id="withdrawal-modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 			<div class="modal-dialog" role="document">
-	  		<div class="modal-content">
-	  		</div>
-	  	</div>
+        <div class="modal-content">
+        </div>
+      </div>
 		</div>
 
 		<%- flash.each do |_, msg| -%>
-	    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
-	  <%- end -%>
+      <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+    <%- end -%>
 
 		<div class="products-index__header">
 			<h1 class="products-index__title"> Mis Productos </h1>
@@ -54,14 +54,14 @@
 		<% if @user_products.length > 0 %>
 			<table class="products-index__table">
 				<thead>
-			    <tr>
-			      <th class="products-index__table-header"> Nombre </th>
-			      <th class="products-index__table-header"> Precio (CLP) </th>
-			      <th class="products-index__table-header"> Stock </th>
-			      <th class="products-index__table-header"> Ventas (UN) </th>
-			      <th class="products-index__table-header"> Ventas (Satoshis) </th>
-			      <th class="products-index__table-header products-index__table-header--fixed-width"> Acciones </th>
-			    </tr>
+          <tr>
+            <th class="products-index__table-header"> Nombre </th>
+            <th class="products-index__table-header"> Precio (CLP) </th>
+            <th class="products-index__table-header"> Stock </th>
+            <th class="products-index__table-header"> Ventas (UN) </th>
+            <th class="products-index__table-header"> Ventas (Satoshis) </th>
+            <th class="products-index__table-header products-index__table-header--fixed-width"> Acciones </th>
+          </tr>
 				</thead>
 				<tbody>
 					<% @user_products.each do |user_product| %>

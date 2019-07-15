@@ -1,16 +1,27 @@
 <div class="main-page balance-index">
-  <div id="balance-index-table-container" class="balance-index__table-container">
-
-    <div id="withdrawal-modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-	  		<div class="modal-content">
-	  		</div>
-	  	</div>
+  <div
+    id="balance-index-table-container"
+    class="balance-index__table-container"
+  >
+    <div
+      id="withdrawal-modal-holder"
+      class="modal hide fade"
+      role="dialog"
+      aria-labelledby="basicModal"
+      aria-hidden="true"
+    >
+			<div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content">
+        </div>
+      </div>
 		</div>
 
     <%- flash.each do |_, msg| -%>
-	    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
-	  <%- end -%>
+      <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+    <%- end -%>
 
     <div class="balance-index__header">
       <h1 class="balance-index__title"> Mi Cartola </h1>
@@ -57,7 +68,9 @@
         <tbody>
           <% @ledger_lines.each do |line| %>
             <tr>
-              <td class="balance-index__table-info"> <%= line.date.in_time_zone().strftime("%d/%m/%Y %H:%M") %> </td>
+              <td class="balance-index__table-info">
+                <%= line.date.in_time_zone().strftime("%d/%m/%Y %H:%M") %>
+              </td>
               <% if line.accountable_type === 'InvoiceProduct' %>
                 <td class="balance-index__table-info"> Venta </td>
                 <td class="balance-index__table-info">
@@ -80,6 +93,5 @@
     <% else %>
       <p class="balance-index__message">  Tu cuenta no tiene movimientos :( </p>
     <% end %>
-
   </div>
 </div>
