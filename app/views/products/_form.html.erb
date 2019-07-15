@@ -1,10 +1,10 @@
 <div class="main-page">
 
-	<div class="product-form">
-		<h3 class="product-form__title"> Crear nuevo producto </h3>
-		<%= form_for @product, class: 'product-form__form' do |f| %>
+  <div class="product-form">
+	<h3 class="product-form__title"> Crear nuevo producto </h3>
+	<%= form_for @product, class: 'product-form__form' do |f| %>
 
-			<%= render "shared/errors", resource: @product, extra_classes: 'product-form__alert' %>
+	  <%= render "shared/errors", resource: @product, extra_classes: 'product-form__alert' %>
 
 	    <div class="product-form__field">
 	      <%= f.label :name, 'Nombre', { class: 'product-form__label' } %>
@@ -16,8 +16,14 @@
 	      <%= f.file_field :image, { class: 'product-form__input product-form__input--image', error: false } %>
 	    </div>
 
-		  <%= f.submit 'Crear producto', class: 'product-form__button' %>
-
-		<% end  %>
-	</div>
+	    <div class="product-form__field">
+		    <%= link_to 'Volver',
+			   new_user_product_path,
+			   class: 'product-form__button product-form__button--return',
+			   data: { turbolinks: false }
+		    %>
+		    <%= f.submit 'Crear producto', class: 'product-form__button product-form__button--submit' %>
+		  </div>
+	  <% end  %>
+  </div>
 </div>
