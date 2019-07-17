@@ -10,6 +10,7 @@ class UserProductsController < ApplicationController
 
   def new
     @user_product = current_user.user_products.new
+    @products = Product.order('name ASC')
   end
 
   def create
