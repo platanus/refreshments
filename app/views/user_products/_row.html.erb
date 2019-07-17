@@ -26,14 +26,6 @@
     %>
   </td>
 	<td class="products-index__table-actions">
-		<button
-			type="button"
-			class="products-index__action products-index__table-action"
-			data-toggle="modal"
-			data-target="#<%= "image-modal-holder-#{user_product.id}" %>"
-		>
-			Ver
-		</button>
 	  <%= link_to "Editar", edit_user_product_path(user_product), class: 'products-index__action products-index__table-action' %>
 	  <%= link_to "Eliminar", user_product_path(user_product),
 	  	data: {:confirm => 'Are you sure?'},
