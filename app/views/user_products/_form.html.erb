@@ -10,7 +10,7 @@
 		    <div class="product-form__field">
 		      <%= f.label :product_id, 'Producto', { class: 'product-form__label' } %>
 		      <%= f.collection_select :product_id,
-		        Product.all, :id, :name,
+		        @products, :id, :name,
 		        {},
 		        { class: 'product-form__input product-form__input--select', error: false }
           %>
