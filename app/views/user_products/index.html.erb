@@ -41,13 +41,15 @@
           unit: 'Satoshis',
           format: '%n %u',
           negative_format: '-%n %u'
-        ) %></h4>
+        ) %>
+    </h4>
 		<h4 class="products-index__withdrawable-amount"> Monto disponible para retiro: <%= number_to_currency(
           @withdrawable_amount,
           unit: 'Satoshis',
           format: '%n %u',
           negative_format: '-%n %u'
-        ) %></h4>
+        ) %>
+    </h4>
 
 		<% if @user_products.length > 0 %>
 			<table class="products-index__table">
