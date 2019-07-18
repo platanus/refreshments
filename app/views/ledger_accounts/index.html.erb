@@ -10,14 +10,14 @@
       aria-labelledby="basicModal"
       aria-hidden="true"
     >
-			<div
+      <div
         class="modal-dialog"
         role="document"
       >
         <div class="modal-content">
         </div>
       </div>
-		</div>
+    </div>
 
     <%- flash.each do |_, msg| -%>
       <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
@@ -28,13 +28,13 @@
 
       <div class="balance-index__header-actions">
         <% if current_user.withdrawable_amount > 0 %>
-					<%= link_to "Hacer retiro", new_user_lightning_network_withdrawal_path, {
-						remote: true,
-						'data-toggle' => "modal",
-						'data-target' => "#withdrawal-modal-holder",
-						class: 'balance-index__action balance-index__action--withdraw'
-					} %>
-				<% end %>
+          <%= link_to "Hacer retiro", new_user_lightning_network_withdrawal_path, {
+            remote: true,
+            'data-toggle' => "modal",
+            'data-target' => "#withdrawal-modal-holder",
+            class: 'balance-index__action balance-index__action--withdraw'
+          } %>
+        <% end %>
 
         <%= link_to "Mis Productos", user_products_path, class: 'balance-index__action' %>
 
