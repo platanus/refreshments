@@ -4,3 +4,8 @@ $('.products-index__withdrawable-amount').text('Monto disponible para retiro: <%
 $('#withdrawal-modal-holder').modal('hide');
 $('.products-index__action--withdraw').remove();
 $('#products-index-table-container').prepend('<div class="alert alert-success"> Se ha enviado una solicitud de retiro. </div>');
+
+$('.balance-index__withdrawable-amount').text('Monto disponible para retiro: <%= current_user.withdrawable_amount %>');
+$('#withdrawal-modal-holder').modal('hide');
+$('.balance-index__action--withdraw').remove();
+$('#balance-index-table-container').prepend('<div class="alert alert-success"> Se ha enviado una solicitud de retiro. </div>');

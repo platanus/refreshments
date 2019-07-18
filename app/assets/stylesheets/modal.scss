@@ -1,10 +1,10 @@
-$products-index-modal-button-font: #fff;
-$products-index-modal-title-color: #383769;
-$products-index-modal-button-background: #383769;
+$modal-button-font: #fff;
+$modal-title-color: #383769;
+$modal-button-background: #383769;
 
 .modal-header {
   &__title {
-    color: $products-index-modal-title-color;
+    color: $modal-title-color;
     margin: 0;
   }
 }
@@ -32,7 +32,7 @@ $products-index-modal-button-background: #383769;
   }
 
   &__title {
-    color: $products-index-modal-title-color;
+    color: $modal-title-color;
     margin: 0;
   }
 
@@ -47,8 +47,8 @@ $products-index-modal-button-background: #383769;
 
   &__button {
     width: 60%;
-    color: $products-index-modal-button-font;
-    background-color: $products-index-modal-button-background;
+    color: $modal-button-font;
+    background-color: $modal-button-background;
     padding: 8px 0;
     border-radius: 5px;
   }
