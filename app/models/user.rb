@@ -64,6 +64,10 @@ class User < ApplicationRecord
   def available_funds
     LedgerAccount.find_or_create_by(category: 'available_funds', accountable: self)
   end
+
+  def unconfirmed_withdrawal_funds
+    LedgerAccount.find_or_create_by(category: 'unconfirmed_withdrawal_funds', accountable: self)
+  end
 end
 
 # == Schema Information
