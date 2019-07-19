@@ -69,7 +69,7 @@
               <% if line.accountable_type === 'InvoiceProduct' %>
                 <td class="balance-index__table-info"> Venta </td>
                 <td class="balance-index__table-info">
-                  <%= '%s a %d pesos' % @line_id_to_product_data_hash[line.id] %>
+                  <%= "#{line.accountable.product.name} a $#{line.accountable.product_price}" %>
                 </td>
               <% elsif line.accountable_type === 'LightningNetworkWithdrawal' %>
                 <td class="balance-index__table-info"> Retiro </td>
