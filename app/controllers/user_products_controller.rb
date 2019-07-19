@@ -1,6 +1,7 @@
 class UserProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_user_product, only: %i[edit show update destroy]
+  before_action :check_user_product, only: [:edit, :update, :destroy]
+  before_action :products, only: [:new, :create]
 
   def index
     @withdrawable_amount = current_user.withdrawable_amount
@@ -10,7 +11,6 @@ class UserProductsController < ApplicationController
 
   def new
     @user_product = current_user.user_products.new
-    @products = Product.order('name ASC')
   end
 
   def edit; end
@@ -61,5 +61,9 @@ class UserProductsController < ApplicationController
 
   def user_product
     @user_product ||= current_user.user_products.find_by(id: params[:id])
+  end
+
+  def products
+    @products ||= Product.order('name ASC')
   end
 end
