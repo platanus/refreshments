@@ -19,6 +19,10 @@ class InvoiceProduct < ApplicationRecord
     user_product.save!
   end
 
+  def product
+    user_product.product
+  end
+
   private
 
   def product_price_initial_calc
