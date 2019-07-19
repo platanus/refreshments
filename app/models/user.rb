@@ -60,6 +60,10 @@ class User < ApplicationRecord
         'COALESCE(SUM(settled_invoice_products.product_price), 0) AS total_satoshi'
       )
   end
+
+  def available_funds
+    LedgerAccount.find_or_create_by(category: 'available_funds', accountable: self)
+  end
 end
 
 # == Schema Information
