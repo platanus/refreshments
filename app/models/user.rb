@@ -21,11 +21,7 @@ class User < ApplicationRecord
   end
 
   def withdrawable_amount
-    if user_ledger_lines.empty?
-      0
-    else
-      -user_ledger_lines.sorted.last.balance
-    end
+    available_funds.balance * -1
   end
 
   def user_ledger_lines

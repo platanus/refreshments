@@ -22,6 +22,11 @@ RSpec.describe Withdrawal, type: :model do
   end
 
   let!(:user) { create(:user, :with_account) }
+  let(:user_funds) { 10000000 }
+
+  before do
+    expect(user).to receive(:withdrawable_amount).and_return(user_funds)
+  end
 
   context 'basic validations' do
     subject { create_withdrawal_without_callback }
@@ -33,6 +38,7 @@ RSpec.describe Withdrawal, type: :model do
 
   context 'insufficient funds validations' do
     let(:withdrawal) { build(:withdrawal, user: user, amount: 100001) }
+    let(:user_funds) { 0 }
 
     it 'should raise validation error' do
       expect { withdrawal.save! }.to raise_error(ActiveRecord::RecordInvalid)

@@ -62,49 +62,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'withdrawal functions' do
-    before do
-      allow_any_instance_of(Withdrawal)
-        .to receive(:add_job_to_withdrawal_requests_worker)
-        .and_return(true)
-    end
-
-    describe '#withdrawable_amount' do
-      let(:user) { create(:user) }
-      let(:user_ledger_account) { create(:ledger_account, accountable: user) }
-
-      context 'user has no ledger lines' do
-        it { expect(user.withdrawable_amount).to be(0) }
-      end
-
-      context 'user has ledger lines' do
-        let(:ledger_lines) do
-          create_list(
-            :ledger_line,
-            5,
-            ledger_account: user_ledger_account,
-            accountable: user,
-            balance: -5000
-          )
-        end
-
-        before do
-          create(
-            :ledger_line,
-            ledger_account: user_ledger_account,
-            accountable: user,
-            date: ledger_lines[0].date + 1.day,
-            balance: -1000
-          )
-        end
-
-        it 'assigns balance of last line' do
-          expect(user.withdrawable_amount).to be(1000)
-        end
-      end
-    end
-  end
-
   describe '#products_with_sales' do
     context 'user with 1 product and 0 invoices' do
       let(:products_with_sales) { user_with_product.products_with_sales }
