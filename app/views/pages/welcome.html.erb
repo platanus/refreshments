@@ -1,4 +1,5 @@
 <div class="main-page welcome-page">
+  <%= render 'shared/navigation' %>
 
 	<%- flash.each do |_, msg| -%>
     <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
