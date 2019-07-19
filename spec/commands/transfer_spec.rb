@@ -16,7 +16,7 @@ describe Ledger::Transfer do
       from: account_from,
       to: account_to,
       amount: amount_traded,
-      countable: invoice_product,
+      accountable: invoice_product,
       date: invoice_product.created_at,
       category: 'new'
     )
