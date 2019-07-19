@@ -21,47 +21,6 @@ RSpec.describe User, type: :model do
     it { should have_many(:withdrawals) }
   end
 
-  describe '#total_sales' do
-    let(:user) { create(:user) }
-    let(:user_ledger_account) { create(:ledger_account, accountable: user) }
-
-    context 'user has no sales' do
-      it { expect(user.total_sales).to be(0) }
-    end
-
-    context 'user has only sales' do
-      before do
-        create_list(
-          :ledger_line,
-          6,
-          accountable: invoice_product,
-          ledger_account: user_ledger_account,
-          amount: -15000
-        )
-      end
-      it { expect(user.total_sales).to be(90000) }
-    end
-
-    context 'user has sales and withdrawals' do
-      before do
-        create_list(
-          :ledger_line,
-          5,
-          accountable: invoice_product,
-          ledger_account: user_ledger_account,
-          amount: -15000
-        )
-        create(
-          :ledger_line,
-          accountable: user,
-          ledger_account: user_ledger_account,
-          amount: 15000
-        )
-      end
-      it { expect(user.total_sales).to be(75000) }
-    end
-  end
-
   describe '#products_with_sales' do
     context 'user with 1 product and 0 invoices' do
       let(:products_with_sales) { user_with_product.products_with_sales }

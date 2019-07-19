@@ -11,15 +11,6 @@ class User < ApplicationRecord
   has_many :invoices, through: :invoice_products
   has_many :withdrawals
 
-  def total_sales
-    if user_ledger_lines.empty?
-      0
-    else
-      -user_ledger_lines.where(accountable_type: 'InvoiceProduct')
-                        .sum('ledger_lines.amount')
-    end
-  end
-
   def withdrawable_amount
     available_funds.balance * -1
   end
