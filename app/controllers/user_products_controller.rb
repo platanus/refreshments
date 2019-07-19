@@ -13,6 +13,8 @@ class UserProductsController < ApplicationController
     @products = Product.order('name ASC')
   end
 
+  def edit; end
+
   def create
     @user_product = current_user.user_products.new(create_params)
     if @user_product.save

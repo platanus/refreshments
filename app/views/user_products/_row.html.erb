@@ -1,5 +1,12 @@
 <tr>
-	<td> <%= user_product.product_name %> </td>
+  <td>
+    <%= user_product.product.image.attached? ?
+      image_tag(url_for(user_product.product.image),
+      class: 'products-index__table-image--fixed-size')
+      : 'N/A'
+    %>
+  </td>
+  <td> <%= user_product.product_name %> </td>
   <td>
     <%= number_to_currency(user_product.price,
                            unit: '',
@@ -8,9 +15,9 @@
                           )
     %>
   </td>
-	<td> <%= user_product.stock %> </td>
-	<td> <%= user_product.total_count %> </td>
-	<td>
+  <td> <%= user_product.stock %> </td>
+  <td> <%= user_product.total_count %> </td>
+  <td>
     <%= number_to_currency(user_product.total_satoshi,
                              unit: '',
                              format: '%n %u',
@@ -18,20 +25,12 @@
                             )
     %>
   </td>
-	<td class="products-index__table-actions">
-		<button
-			type="button"
-			class="products-index__action products-index__table-action"
-			data-toggle="modal"
-			data-target="#<%= "image-modal-holder-#{user_product.id}" %>"
-		>
-			Ver
-		</button>
-	  <%= link_to "Editar", edit_user_product_path(user_product), class: 'products-index__action products-index__table-action' %>
-	  <%= link_to "Eliminar", user_product_path(user_product),
-	  	data: {:confirm => 'Are you sure?'},
-	  	:method => :delete,
-	  	class: 'products-index__action products-index__table-action'
-	  %>
-	</td>
+  <td class="products-index__table-actions">
+    <%= link_to "Editar", edit_user_product_path(user_product), class: 'products-index__action products-index__table-action' %>
+    <%= link_to "Eliminar", user_product_path(user_product),
+      data: {:confirm => 'Are you sure?'},
+      :method => :delete,
+      class: 'products-index__action products-index__table-action'
+    %>
+  </td>
 </tr>

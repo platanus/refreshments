@@ -35,6 +35,16 @@ $product-form-input-border-width: 1px;
     margin: 0 auto 30px;
   }
 
+
+  &__preview-image {
+    flex-basis: 100%;
+    justify-content: center;
+    border-radius: 4px;
+    max-width: 50%;
+    max-height: 50%;
+    margin: auto;
+  }
+
   &__label {
     margin: 0;
     padding: 5px;

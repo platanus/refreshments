@@ -14,6 +14,8 @@ class UserProduct < ApplicationRecord
 
   validate :prevent_change_of_product, on: :update
 
+  delegate :image, to: :product, prefix: false, allow_nil: true
+
   def prevent_change_of_product
     if product_id_changed?
       errors.add :product_id, :cant_change_product_reference
