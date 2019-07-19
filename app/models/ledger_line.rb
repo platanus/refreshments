@@ -21,6 +21,7 @@ end
 #  balance           :integer          default(0)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  category          :string
 #
 # Indexes
 #

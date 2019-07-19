@@ -1,4 +1,5 @@
-class Ledger::Transfer < PowerTypes::Command.new(:from, :to, :amount, :countable, :date)
+class Ledger::Transfer < PowerTypes::Command.new(:from, :to, :amount, :countable, :date,
+  :category)
   def perform
     ActiveRecord::Base.transaction do
       create_line_and_update_account(@from, -@amount)
@@ -12,7 +13,7 @@ class Ledger::Transfer < PowerTypes::Command.new(:from, :to, :amount, :countable
     updated_balance = account.balance + amount
     {
       ledger_account: account, amount: amount, balance: updated_balance,
-      accountable: @countable, date: @date
+      accountable: @countable, date: @date, category: @category
     }
   end
 
