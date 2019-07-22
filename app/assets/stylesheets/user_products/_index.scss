@@ -37,10 +37,6 @@ $products-index-table-actions-background: #acabfb;
     background-color: $products-index-action-button-background;
     padding: 5px 10px;
     border-radius: 5px;
-
-    &--withdraw {
-      background-color: $products-index-withdraw-action-button-background;
-    }
   }
 
   &__action,
