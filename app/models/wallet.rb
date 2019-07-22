@@ -1,4 +1,7 @@
 class Wallet < ApplicationRecord
+  def available_funds
+    LedgerAccount.find_or_create_by(category: 'available_funds', accountable: self)
+  end
 end
 
 # == Schema Information

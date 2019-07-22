@@ -44,6 +44,7 @@ RSpec.describe UserProductsController, type: :controller do
 
       before do
         create_list(:user_product, 3, user: user)
+        allow(user).to receive(:withdrawable_amount).and_return(20)
         mock_authentication
       end
 
@@ -55,11 +56,6 @@ RSpec.describe UserProductsController, type: :controller do
       it 'assigns correct withdrawable amount' do
         get :index
         expect(assigns(:withdrawable_amount)).to eq(20)
-      end
-
-      it 'assigns correct total sales amount' do
-        get :index
-        expect(assigns(:total_sales)).to eq(8)
       end
 
       it 'returns correct "index" view' do

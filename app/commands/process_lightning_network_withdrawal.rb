@@ -29,8 +29,7 @@ class ProcessLightningNetworkWithdrawal < PowerTypes::Command.new(:lightning_wit
   end
 
   def withdrawal_user_withdrawable_amount
-    @withdrawal_user_withdrawable_amount ||= User.find(@lightning_withdrawal.user_id)
-                                                 .withdrawable_amount
+    @withdrawal_user_withdrawable_amount ||= @lightning_withdrawal.user.withdrawable_amount
   end
 
   def withdrawal_amount

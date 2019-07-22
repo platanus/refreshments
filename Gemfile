@@ -51,6 +51,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'table_print'
 end
 
 group :development, :test do

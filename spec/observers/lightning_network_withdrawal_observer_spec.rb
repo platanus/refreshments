@@ -28,7 +28,7 @@ describe LightningNetworkWithdrawalObserver do
     it do
       trigger(:after, :save)
       expect do
-        RegisterLightningNetworkWithdrawalPaymentJob.to receive(:perform_later)
+        Ledger::RegisterLightningNetworkWithdrawalJob.to receive(:perform_later)
           .with(lightning_network_withdrawal)
       end
     end
@@ -37,7 +37,7 @@ describe LightningNetworkWithdrawalObserver do
   context 'when lightning network is not saved' do
     it do
       trigger(:before, :save)
-      expect { RegisterLightningNetworkWithdrawalPaymentJob.to_not receive(:perform_later) }
+      expect { Ledger::RegisterLightningNetworkWithdrawalJob.to_not receive(:perform_later) }
     end
   end
 end

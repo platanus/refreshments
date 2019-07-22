@@ -6,18 +6,12 @@ describe InvoiceObserver do
   end
 
   let(:invoice) { create(:invoice) }
+  let(:invoice_product) { create(:invoice_product, invoice: invoice) }
 
   context 'when invoice is save' do
     it do
       trigger(:after, :save)
-      expect { RegisterInvoicePaymentJob.to receive(:perform_later).with(invoice) }
-    end
-  end
-
-  context 'when invoice is not save' do
-    it do
-      trigger(:before, :save)
-      expect { RegisterInvoicePaymentJob.to_not receive(:perform_later) }
+      expect { Ledger::RegisterInvoiceProductJob.to receive(:perform_later).with(invoice_product) }
     end
   end
 end

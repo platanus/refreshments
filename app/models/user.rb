@@ -11,33 +11,8 @@ class User < ApplicationRecord
   has_many :invoices, through: :invoice_products
   has_many :withdrawals
 
-  def total_sales
-    if user_ledger_lines.empty?
-      0
-    else
-      -user_ledger_lines.where(accountable_type: 'InvoiceProduct')
-                        .sum('ledger_lines.amount')
-    end
-  end
-
-  def total_withdrawals
-    withdrawals.where.not(aasm_state: :rejected).sum(:amount)
-  end
-
-  def total_pending_withdrawals
-    withdrawals.where(aasm_state: :pending).sum(:amount)
-  end
-
-  def total_confirmed_withdrawals
-    withdrawals.where(aasm_state: :confirmed).sum(:amount)
-  end
-
   def withdrawable_amount
-    if user_ledger_lines.empty?
-      0
-    else
-      -user_ledger_lines.sorted.last.balance
-    end
+    available_funds.balance * -1
   end
 
   def user_ledger_lines
@@ -59,6 +34,14 @@ class User < ApplicationRecord
         'COUNT(settled_invoice_products.id) AS total_count',
         'COALESCE(SUM(settled_invoice_products.product_price), 0) AS total_satoshi'
       )
+  end
+
+  def available_funds
+    LedgerAccount.find_or_create_by(category: 'available_funds', accountable: self)
+  end
+
+  def unconfirmed_withdrawal_funds
+    LedgerAccount.find_or_create_by(category: 'unconfirmed_withdrawal_funds', accountable: self)
   end
 end
 
