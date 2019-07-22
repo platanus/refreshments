@@ -1,21 +1,34 @@
-<div class="navigation">
-  <h4 class= "navigation__nav-title"> Refreshments </h4>
-
-  <%= link_to "Home", root_path,
-    class: "navigation__nav-route navigation__nav-route--home",
+<div class="navbar">
+  <%= link_to "Refreshments", root_path,
+    class: "navbar__nav-title",
     data: { turbolinks: false }
   %>
 
   <% if user_signed_in? %>
+    <%= link_to "Cartola", user_balance_index_path,
+      class: 'navbar__nav-link navbar__nav-link--balance',
+      data: { turbolinks: false }
+    %>
+
+    <%= link_to "Productos", user_products_path,
+      class: 'navbar__nav-link navbar__nav-link--products',
+      data: { turbolinks: false }
+    %>
+
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
-      class: "navigation__nav-route navigation__nav-route--logout",
+      class: 'navbar__nav-link navbar__nav-link--logout',
       data: { turbolinks: false }
     %>
 
   <% else %>
+    <%= link_to "Catálogo de compra", buy_path,
+      class: 'navbar__nav-link navbar__nav-link--buy',
+      data: { turbolinks: false }
+    %>
+
     <%= link_to "Iniciar sesión", new_user_session_path,
-      class: "navigation__nav-route navigation__nav-route--login",
+      class: 'navbar__nav-link navbar__nav-link--login',
       data: { turbolinks: false }
     %>
   <% end %>
