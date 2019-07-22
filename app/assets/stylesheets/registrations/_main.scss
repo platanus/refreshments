@@ -42,8 +42,10 @@ $registration-form-width: 368px;
     width: $registration-form-width;
   }
 
+  &__register-link,
   &__sign-in-link,
-  &__sign-in-link:visited {
+  &__sign-in-link:visited,
+  &__register-link:visited {
     text-decoration: none;
     border-bottom: 1px dotted $registration-form-input-font;
     color: $registration-form-input-font;

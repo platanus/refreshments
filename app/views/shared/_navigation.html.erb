@@ -1,34 +1,34 @@
 <div class="navbar">
   <%= link_to "Refreshments", root_path,
-    class: "navbar__nav-title",
+    class: "navbar__title",
     data: { turbolinks: false }
   %>
 
   <% if user_signed_in? %>
     <%= link_to "Cartola", user_balance_index_path,
-      class: 'navbar__nav-link navbar__nav-link--balance',
+      class: 'navbar__link',
       data: { turbolinks: false }
     %>
 
     <%= link_to "Productos", user_products_path,
-      class: 'navbar__nav-link navbar__nav-link--products',
+      class: 'navbar__link',
       data: { turbolinks: false }
     %>
 
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
-      class: 'navbar__nav-link navbar__nav-link--logout',
+      class: 'navbar__link navbar__link--right',
       data: { turbolinks: false }
     %>
 
   <% else %>
     <%= link_to "Catálogo de compra", buy_path,
-      class: 'navbar__nav-link navbar__nav-link--buy',
+      class: 'navbar__link navbar__link--buy',
       data: { turbolinks: false }
     %>
 
     <%= link_to "Iniciar sesión", new_user_session_path,
-      class: 'navbar__nav-link navbar__nav-link--login',
+      class: 'navbar__link navbar__link--right',
       data: { turbolinks: false }
     %>
   <% end %>

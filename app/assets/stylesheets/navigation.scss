@@ -10,7 +10,7 @@ $navbar-background-color: #fff;
   background-color: $navbar-background-color;
   padding: 8px 5px;
 
-  &__nav-title {
+  &__title {
     font-size: 24px;
     align-self: flex-start;
     color: $navbar-title-font;
@@ -20,33 +20,12 @@ $navbar-background-color: #fff;
     }
   }
 
-  &__nav-link {
+  &__link {
     font-size: 16px;
     margin-top: 2px;
 
-    &--balance {
-      color: $navbar-item-font;
-    }
-
-    &--buy {
-      color: $navbar-item-font;
-    }
-
-    &--home {
-      color: $navbar-item-font;
-    }
-
-    &--login {
+    &--right {
       margin-left: auto;
-      color: $navbar-item-font;
-    }
-
-    &--logout {
-      margin-left: auto;
-      color: $navbar-item-font;
-    }
-
-    &--products {
       color: $navbar-item-font;
     }
 
@@ -55,8 +34,8 @@ $navbar-background-color: #fff;
     }
   }
 
-  &__nav-link,
-  &__nav-title {
+  &__link,
+  &__title {
     padding-right: 10px;
     padding-left: 10px;
     border-radius: 10px;
