@@ -23,6 +23,10 @@ class InvoiceProduct < ApplicationRecord
     user_product.product
   end
 
+  def price_in_clp
+    (product_price / invoice.satoshi_clp_ratio).round
+  end
+
   private
 
   def product_price_initial_calc
