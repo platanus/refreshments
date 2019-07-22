@@ -73,7 +73,13 @@
                 </td>
               <% elsif line.accountable_type === 'LightningNetworkWithdrawal' %>
                 <td class="balance-index__table-info"> Retiro </td>
-                <td class="balance-index__table-info"></td>
+                <td class="balance-index__table-info">
+                  <% if line.category === 'new' %>
+                    Nuevo retiro #<%= line.accountable.id %>
+                  <% elsif line.category === 'failed' %>
+                    Devolución por retiro fallido #<%= line.accountable.id %>
+                  <% end %>
+                </td>
               <% end %>
               <td class="balance-index__table-info--fixed-right">
                 <%= number_to_currency(-line.amount, unit: '', negative_format: '(%n)') %>
