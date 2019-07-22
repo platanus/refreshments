@@ -11,6 +11,6 @@ class Ledger::RegisterLightningNetworkWithdrawalFailed < Ledger::BaseRegister
   private
 
   def failed?
-    @accountable.failed?
+    @accountable.failed? || @accountable.rejected?
   end
 end

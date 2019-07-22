@@ -22,4 +22,13 @@ describe Ledger::RegisterLightningNetworkWithdrawalFailed do
     it { expect { perform }.to change { user.available_funds.balance }.by(-amount) }
     it { expect { perform }.to change { user.unconfirmed_withdrawal_funds.balance }.by(amount) }
   end
+
+  context "when a lightning network withdrawal was rejected" do
+    before do
+      ln_withdrawal.state = :rejected
+    end
+
+    it { expect { perform }.to change { user.available_funds.balance }.by(-amount) }
+    it { expect { perform }.to change { user.unconfirmed_withdrawal_funds.balance }.by(amount) }
+  end
 end
