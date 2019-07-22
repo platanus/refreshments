@@ -4,7 +4,7 @@ class Ledger::RegisterLightningNetworkWithdrawalFailed < Ledger::BaseRegister
     @category = 'failed'
     @from_account = lightning_network_withdrawal.user.available_funds
     @to_account = lightning_network_withdrawal.user.unconfirmed_withdrawal_funds
-    @date = lightning_network_withdrawal.created_at
+    @date = lightning_network_withdrawal.updated_at
     @amount_to_register = failed? ? lightning_network_withdrawal.amount : 0
   end
 
