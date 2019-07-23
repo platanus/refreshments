@@ -66,12 +66,9 @@ $products-index-table-actions-background: #acabfb;
 
   &__table-image {
     &--fixed-size {
-      width: 50%;
-      height: 50%;
-      min-width: 20%;
-      min-height: 20%;
-      max-width: 60px;
-      max-height: 60px;
+      width: 100px;
+      height: 60px;
+      object-fit: contain;
     }
   }
 
