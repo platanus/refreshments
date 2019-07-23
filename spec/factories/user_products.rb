@@ -1,9 +1,6 @@
 FactoryBot.define do
   factory :user_product do
-    transient do
-      product_name { 'custom product name' }
-    end
-
+    name { 'custom product name' }
     product { create(:product, name: product_name) }
     user { create(:user) }
     stock { 10 }

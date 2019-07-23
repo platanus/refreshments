@@ -1,5 +1,5 @@
 class UserProduct < ApplicationRecord
-  validates :price, :stock, presence: true
+  validates :name, :price, :stock, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
   validates :image, attached: true
 
@@ -36,6 +36,7 @@ end
 #  active     :boolean          default(TRUE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  name       :string
 #
 # Indexes
 #
