@@ -9,6 +9,7 @@ gem 'activeadmin_addons'
 gem "aws-sdk-s3"
 gem 'bootstrap'
 gem 'coffee-rails', '~> 4.2'
+gem 'data_migrate'
 gem 'devise'
 gem 'devise-i18n'
 gem 'enumerize'
