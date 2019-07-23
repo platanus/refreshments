@@ -2,14 +2,6 @@
   <%= render 'shared/navigation' %>
 
   <div id="products-index-table-container" class="products-index__table-container">
-
-    <div id="withdrawal-modal-holder" class="modal hide fade" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-      </div>
-    </div>
-
     <%- flash.each do |_, msg| -%>
       <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
     <%- end -%>
@@ -18,19 +10,6 @@
       <h1 class="products-index__title"> Mis Productos </h1>
 
       <div class="products-index__header-actions">
-        <% if @withdrawable_amount > 0 %>
-          <%= link_to "Hacer retiro", new_user_lightning_network_withdrawal_path, {
-            remote: true,
-            'data-toggle' => "modal",
-            'data-target' => "#withdrawal-modal-holder",
-            class: 'products-index__action products-index__action--withdraw'
-          } %>
-        <% end %>
-
-        <%= link_to 'Cartola', user_balance_index_path,
-          class: 'products-index__action'
-        %>
-
         <%= link_to "Agregar producto", new_user_product_path,
           class: 'products-index__action',
           data: { turbolinks: false }

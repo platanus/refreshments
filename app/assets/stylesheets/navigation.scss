@@ -1,41 +1,44 @@
 $navbar-item-font: #5356dc;
-$navigation-background-color: #fff;
+$navbar-item-hover: #080a1a;
+$navbar-title-font: #10123f;
+$navbar-background-color: #fff;
 
-.navigation {
+.navbar {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  background-color: $navigation-background-color;
+  background-color: $navbar-background-color;
   padding: 8px 5px;
 
-  &__nav-title {
+  &__title {
+    font-size: 24px;
     align-self: flex-start;
-    margin-left: 4px;
+    color: $navbar-title-font;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
-  &__nav-route {
+  &__link {
     font-size: 16px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border-radius: 10px;
+    margin-top: 2px;
 
-    &--home {
-      margin-right: auto;
-      color: $navbar-item-font;
-    }
-
-    &--login {
-      margin-left: auto;
-      color: $navbar-item-font;
-    }
-
-    &--logout {
+    &--right {
       margin-left: auto;
       color: $navbar-item-font;
     }
 
     &:hover {
-      color: $navbar-item-font;
+      color: $navbar-item-hover;
     }
   }
+
+  &__link,
+  &__title {
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 10px;
+  }
+
 }
