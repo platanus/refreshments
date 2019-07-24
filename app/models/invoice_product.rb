@@ -19,10 +19,6 @@ class InvoiceProduct < ApplicationRecord
     user_product.save!
   end
 
-  def product
-    user_product.product
-  end
-
   def price_in_clp
     (product_price / invoice.satoshi_clp_ratio).round
   end

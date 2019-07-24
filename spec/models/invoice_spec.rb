@@ -11,7 +11,6 @@ RSpec.describe Invoice, type: :model do
     it { should validate_numericality_of(:clp) }
     it { should have_many(:invoice_products) }
     it { should have_many(:user_products) }
-    it { should have_many(:products) }
   end
 
   describe 'satoshi_clp_ratio' do
