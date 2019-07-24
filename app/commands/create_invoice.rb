@@ -18,7 +18,7 @@ class CreateInvoice < PowerTypes::Command.new(:shopping_cart_items)
 
   def memo
     @shopping_cart_items.map do |shopping_cart_item|
-      "#{shopping_cart_item.amount} x #{shopping_cart_item.product.name}"
+      "#{shopping_cart_item.amount} x #{shopping_cart_item.user_product.name}"
     end.join(', ')
   end
 
