@@ -17,7 +17,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'basic validations' do
-    it { should have_many(:products) }
+    it { should have_many(:user_products) }
+    it { should have_many(:invoices) }
     it { should have_many(:withdrawals) }
   end
 
@@ -37,8 +38,8 @@ RSpec.describe User, type: :model do
         expect(products_with_sales.first.total_satoshi).to eq(0)
       end
 
-      it 'return correct product_name' do
-        expect(products_with_sales.first.product_name).to eq('custom product name')
+      it 'return correct name' do
+        expect(products_with_sales.first.name).to eq('custom product name')
       end
 
       it 'has every necessary product attribute' do
@@ -63,8 +64,8 @@ RSpec.describe User, type: :model do
         expect(products_with_sales.first.total_satoshi).to eq(0)
       end
 
-      it 'return correct product_name' do
-        expect(products_with_sales.first.product_name).to eq('custom product name')
+      it 'return correct name' do
+        expect(products_with_sales.first.name).to eq('custom product name')
       end
 
       it 'has every necessary product attribute' do
@@ -88,8 +89,8 @@ RSpec.describe User, type: :model do
         expect(products_with_sales.first.total_count).to eq(1)
       end
 
-      it 'return correct product_name' do
-        expect(products_with_sales.first.product_name).to eq('custom product name')
+      it 'return correct name' do
+        expect(products_with_sales.first.name).to eq('custom product name')
       end
 
       it 'has every necessary product attribute' do
