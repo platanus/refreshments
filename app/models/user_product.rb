@@ -13,6 +13,9 @@ class UserProduct < ApplicationRecord
   belongs_to :user
   has_many :invoice_products
   has_many :invoices, through: :invoice_products
+
+  CATEGORIES = [:snacks, :drinks, :other]
+  enum category: CATEGORIES, _prefix: :categories
 end
 
 # == Schema Information

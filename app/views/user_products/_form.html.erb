@@ -70,6 +70,15 @@
         <%= f.number_field :stock, { class: 'product-form__input product-form__input--number', error: false } %>
       </div>
 
+      <div class="product-form__field">
+        <%= f.label :category, 'Categoría', { class: 'product-form__label' } %>
+        <%= f.select(:category,
+          UserProduct.categories.keys.map{|category| [category.titleize, category]},
+          {},
+          { class: 'product-form__input product-form__input--select', error: false })
+          %>
+      </div>
+
       <% if @user_product.new_record? %>
         <div class="product-form__field">
           <%= f.label :image, 'Elige una foto', { class: 'product-form__label product-form__label--image' } %>
