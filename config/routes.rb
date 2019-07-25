@@ -20,8 +20,6 @@ Rails.application.routes.draw do
     get 'suppliers/sign_in', to: 'devise/sessions#new'
   end
 
-  resources :products, only: [:new, :create]
-
   resource :user do
     resources :user_products, path: '/products', as: 'products'
     resources :withdrawals
