@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :products, only: [:index]
+      resources :user_products, only: [:index, :show]
       get '/satoshi_price', to: 'prices#satoshi_price'
       get 'products/:product_id', to: 'products#get'
       resources :invoices, only: [:create]
