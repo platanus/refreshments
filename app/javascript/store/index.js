@@ -58,7 +58,7 @@ const store = new Vuex.Store({
   actions: {
     getProducts: context => {
       api.products().then((response) => {
-        const products = response.products.reduce((acc, product) => {
+        const products = response.user_products.reduce((acc, product) => {
           acc[product.id] = { ...product, amount: 0 };
 
           return acc;
@@ -79,9 +79,8 @@ const store = new Vuex.Store({
       if (payload.amount === 0) {
         context.dispatch('updateProduct', payload);
       }
-      const userProduct = payload.user_products.sort((a, b) => (a.price > b.price))[0];
       context.commit('setActionProduct', payload.id);
-      if (userProduct.stock > payload.amount) {
+      if (payload.stock > payload.amount) {
         context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
         context.commit('setActionMessage', 'increment');
         context.dispatch('stopGetProductsInterval');
@@ -92,7 +91,7 @@ const store = new Vuex.Store({
     },
     updateProduct: (context, payload) => {
       api.product(payload.id).then((response) => {
-        context.commit('setProduct', response.product);
+        context.commit('setProduct', response.user_product);
       });
     },
     buy: context => {
@@ -158,13 +157,12 @@ const store = new Vuex.Store({
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     onSaleProducts: (state, getters) => (getters.productsAsArray
-      .filter(product => product.user_products.length > 0)),
+      .filter(product => product.for_sale)),
     totalAmount: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),
     totalPrice: (state, getters) => (
-      getters.onSaleProducts.reduce((acc, product) => acc + product.user_products
-        .sort((a, b) => (a.price - b.price))[0].price * product.amount, 0)
+      getters.onSaleProducts.reduce((acc, product) => acc + product.price * product.amount, 0)
     ),
     cartProducts: (state, getters) => {
       const products = getters.productsAsArray.reduce((acc, product) => {

@@ -7,7 +7,7 @@
       class="product__image"
       :src="product.image_url"
     >
-    <span class="product__price">${{ userProductPrice(product) }}</span>
+    <span class="product__price">${{ product.price }}</span>
   </v-touch>
 </template>
 <script>
@@ -41,11 +41,6 @@ export default {
       if (content.message.length > 0) {
         this.flash(content.message, content.status);
       }
-    },
-    userProductPrice(product) {
-      const sortedList = [...product.user_products].sort((a, b) => (a.price - b.price));
-
-      return sortedList[0].price;
     },
   },
   computed: {
