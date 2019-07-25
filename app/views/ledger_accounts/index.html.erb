@@ -69,7 +69,7 @@
               <% if line.accountable_type === 'InvoiceProduct' %>
                 <td class="balance-index__table-info"> Venta </td>
                 <td class="balance-index__table-info">
-                  <%= "#{line.accountable.product.name} a $#{line.accountable.price_in_clp}" %>
+                  <%= "#{line.accountable.user_product.name} a $#{line.accountable.price_in_clp}" %>
                 </td>
               <% elsif line.accountable_type === 'LightningNetworkWithdrawal' %>
                 <td class="balance-index__table-info"> Retiro </td>
