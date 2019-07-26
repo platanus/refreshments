@@ -1,5 +1,5 @@
 class UserProduct < ApplicationRecord
-  validates :name, :price, :stock, presence: true
+  validates :name, :price, :stock, :category, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
   validates :image, attached: true
 
@@ -30,6 +30,7 @@ end
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  name       :string
+#  category   :integer          default("other"), not null
 #
 # Indexes
 #
