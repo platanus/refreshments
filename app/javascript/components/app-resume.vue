@@ -33,7 +33,7 @@
         >
           <div class="resume-product__price">{{ product.amount }}</div>
           <div class="resume-product__name">{{ product.name }}</div>
-          <div class="resume-product__total">$ {{ userProductPrice(product) }}</div>
+          <div class="resume-product__total">$ {{ product.price }}</div>
         </v-touch>
       </div>
       <div class="resume-total">
@@ -79,11 +79,6 @@ export default {
       if (content.length > 0) {
         this.flash(content, 'success');
       }
-    },
-    userProductPrice(product) {
-      const sortedList = [...product.user_products].sort((a, b) => (a.price - b.price));
-
-      return sortedList[0].price;
     },
   },
 };

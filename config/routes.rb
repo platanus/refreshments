@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   get 'buy', to: 'pages#buy'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :products, only: [:index]
+      resources :user_products, only: [:index, :show]
       get '/satoshi_price', to: 'prices#satoshi_price'
-      get 'products/:product_id', to: 'products#get'
       resources :invoices, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
       get '/gif', to: 'gifs#show_random'
@@ -20,8 +19,6 @@ Rails.application.routes.draw do
     get 'suppliers/sign_up', to: 'devise/registrations#new'
     get 'suppliers/sign_in', to: 'devise/sessions#new'
   end
-
-  resources :products, only: [:new, :create]
 
   resource :user do
     resources :user_products, path: '/products', as: 'products'

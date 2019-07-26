@@ -5,7 +5,6 @@ class Invoice < ApplicationRecord
 
   has_many :invoice_products
   has_many :user_products, through: :invoice_products
-  has_many :products, through: :user_products
 
   scope :settled, -> { where(settled: true) }
 

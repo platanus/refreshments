@@ -1,6 +1,6 @@
 class BuildInvoiceProducts < PowerTypes::Command.new(:shopping_cart_item)
   def perform
-    return [] if best_user_product.nil?
+    return [] if user_product_without_stock?
 
     Array.new(@shopping_cart_item.amount).map { build_invoice_product }
   end
@@ -8,17 +8,15 @@ class BuildInvoiceProducts < PowerTypes::Command.new(:shopping_cart_item)
   private
 
   def build_invoice_product
-    InvoiceProduct.new(user_product: best_user_product, product_price: best_user_product.price)
+    InvoiceProduct.new(user_product: user_product, product_price: user_product.price)
   end
 
-  def best_user_product
-    @best_user_product ||= product.user_products
-                                  .where('stock >= ?', min_stock)
-                                  .order(price: :asc).first
+  def user_product_without_stock?
+    user_product.stock < min_stock
   end
 
-  def product
-    @shopping_cart_item.product
+  def user_product
+    @user_product ||= @shopping_cart_item.user_product
   end
 
   def min_stock
