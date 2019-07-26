@@ -1,5 +1,5 @@
 production:
-  :concurrency: 5
+  :concurrency: 1
 :queues:
   - default
   - ledger_transaction
