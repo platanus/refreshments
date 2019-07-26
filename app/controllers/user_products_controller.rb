@@ -38,7 +38,7 @@ class UserProductsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:user_product).permit(:name, :price, :stock, :image, :active)
+    params.require(:user_product).permit(:name, :price, :stock, :image, :category, :active)
   end
 
   def check_user_product
