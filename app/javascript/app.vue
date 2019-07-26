@@ -8,15 +8,40 @@
       <flash-message transition-name="list-complete" />
     </div>
     <div class="app">
-      <div
-        class="product-list"
-        key="products"
-      >
-        <product
-          v-for="product in sortedProductList"
-          :key="product.id"
-          :product="product"
-        />
+      <div class="product-categories">
+        <span class="product-category__title">Snacks</span>
+        <div
+          class="product-category"
+          key="snacks"
+        >
+          <product
+            v-for="product in snacks"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
+        <span class="product-category__title">Bebestibles</span>
+        <div
+          class="product-category"
+          key="drinks"
+        >
+          <product
+            v-for="product in drinks"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
+        <span class="product-category__title">Otros</span>
+        <div
+          class="product-category"
+          key="other"
+        >
+          <product
+            v-for="product in other"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
       <div class="sidebar">
         <div class="sidebar__container">
@@ -45,14 +70,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      'products': 'onSaleProducts',
+      'snacks': 'groupBySnack',
+      'drinks': 'groupByDrink',
+      'other': 'groupByOther',
     }),
     ...mapState([
       'status',
     ]),
-    sortedProductList() {
-      return [...this.products].sort((a, b) => a.name.localeCompare(b.name));
-    },
   },
   methods: {
     closeModal() {
