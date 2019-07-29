@@ -10,5 +10,6 @@ FactoryBot.define do
         image/jpg'
       )
     end
+    category { :drinks }
   end
 end

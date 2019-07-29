@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe UserProductsController, type: :controller do
-  def mock_post_request(name, price, stock, image)
+  def mock_post_request(name, price, stock, image, category)
     params = {
       user_product: {
         name: name,
         price: price,
-        stock: stock
+        stock: stock,
+        category: category
       }
     }
     params[:user_product][:image] = image unless image.nil?
@@ -95,7 +96,7 @@ RSpec.describe UserProductsController, type: :controller do
       before { mock_authentication }
 
       context 'with correct params' do
-        before { mock_post_request('test_name', 100, 10, image) }
+        before { mock_post_request('test_name', 100, 10, image, :drinks) }
 
         it 'creates user product with correct name' do
           expect(assigns(:user_product)).to have_attributes(name: 'test_name')
@@ -113,13 +114,17 @@ RSpec.describe UserProductsController, type: :controller do
           expect(assigns(:user_product).image).to be_attached
         end
 
+        it 'creates user product with correct category' do
+          expect(assigns(:user_product)).to have_attributes(category: 'drinks')
+        end
+
         it 'redirects to user product path' do
           expect(response).to redirect_to(user_products_path)
         end
       end
 
       context 'with no name' do
-        before { mock_post_request(nil, 100, 10, image) }
+        before { mock_post_request(nil, 100, 10, image, :drinks) }
 
         it 'does not create user product' do
           expect(UserProduct.all.count).to eq(0)
@@ -136,7 +141,7 @@ RSpec.describe UserProductsController, type: :controller do
       end
 
       context 'with no price' do
-        before { mock_post_request('test_name', nil, 10, image) }
+        before { mock_post_request('test_name', nil, 10, image, :drinks) }
 
         it 'does not create user product' do
           expect(UserProduct.all.count).to eq(0)
@@ -153,7 +158,7 @@ RSpec.describe UserProductsController, type: :controller do
       end
 
       context 'with no stock' do
-        before { mock_post_request('test_name', 100, nil, image) }
+        before { mock_post_request('test_name', 100, nil, image, :drinks) }
 
         it 'does not create user product' do
           expect(UserProduct.all.count).to eq(0)
@@ -170,7 +175,7 @@ RSpec.describe UserProductsController, type: :controller do
       end
 
       context 'with no image' do
-        before { mock_post_request('test_name', 100, 10, nil) }
+        before { mock_post_request('test_name', 100, 10, nil, :drinks) }
 
         it 'does not create user product' do
           expect(UserProduct.all.count).to eq(0)
@@ -182,6 +187,23 @@ RSpec.describe UserProductsController, type: :controller do
 
         it 'sets image error attribute to user product' do
           expect(assigns(:user_product).errors.messages[:image])
+            .to include('no puede estar en blanco')
+        end
+      end
+
+      context 'with no category' do
+        before { mock_post_request('test_name', 100, 10, image, nil) }
+
+        it 'does not create user product' do
+          expect(UserProduct.all.count).to eq(0)
+        end
+
+        it 'returns "new" view' do
+          expect(response).to render_template('user_products/new')
+        end
+
+        it 'sets category error attribute to user product' do
+          expect(assigns(:user_product).errors.messages[:category])
             .to include('no puede estar en blanco')
         end
       end
@@ -242,7 +264,8 @@ RSpec.describe UserProductsController, type: :controller do
               name: 'test_name',
               price: 10000,
               active: false,
-              stock: 20
+              stock: 20,
+              category: :other
             }
           }
         end
@@ -265,11 +288,14 @@ RSpec.describe UserProductsController, type: :controller do
         it 'changes stock correctly' do
           expect(user_product.reload).to have_attributes(stock: 20)
         end
+        it 'changes category correctly' do
+          expect(user_product.reload).to have_attributes(category: 'other')
+        end
       end
 
       context 'user product doesnt exists in users scope' do
         it 'returns 404 error' do
-          expect { patch(:update, params: { id: 100 }) }
+          expect { patch(:update, params: { id: 1000 }) }
             .to raise_error(ActiveRecord::RecordNotFound)
         end
       end

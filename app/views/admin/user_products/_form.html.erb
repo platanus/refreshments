@@ -5,6 +5,7 @@
     <%= f.input :price %>
     <%= f.input :active %>
     <%= f.input :stock %>
+    <%= f.input :category, as: :select, collection: UserProduct.categories.keys.map{|category| [category.titleize, category]} %>
     <%= f.input :image, as: :file %>
     <%= f.actions %>
   <% end  %>
