@@ -1,6 +1,7 @@
 class UserProduct < ApplicationRecord
   validates :name, :price, :stock, :category, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
+  validates :fee_rate, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
   validates :image, attached: true
 
   scope :active, -> { where(active: true) }
@@ -31,6 +32,7 @@ end
 #  updated_at :datetime         not null
 #  name       :string
 #  category   :integer          default("other"), not null
+#  fee_rate   :decimal(4, 3)    default(0.0), not null
 #
 # Indexes
 #
