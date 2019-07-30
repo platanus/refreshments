@@ -159,12 +159,9 @@ const store = new Vuex.Store({
     onSaleProducts: (state, getters) => (getters.productsAsArray
       .filter(product => product.for_sale))
       .sort((a, b) => a.name.localeCompare(b.name)),
-    groupBySnack: (state, getters) => (getters.onSaleProducts
-      .filter(product => product.category === 'snacks')),
-    groupByDrink: (state, getters) => (getters.onSaleProducts
-      .filter(product => product.category === 'drinks')),
-    groupByOther: (state, getters) => (getters.onSaleProducts
-      .filter(product => product.category === 'other')),
+    groupByCategory: (state, getters) => (keyword) => {
+      return getters.onSaleProducts.filter(product => product.category === keyword)
+    },
     totalAmount: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),
