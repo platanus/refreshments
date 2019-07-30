@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_144744) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "category", default: 2, null: false
-    t.decimal "fee_rate", precision: 4, scale: 3, default: "0.0", null: false
+    t.decimal "fee_rate", default: "0.0", null: false
     t.index ["user_id"], name: "index_user_products_on_user_id"
   end
 
