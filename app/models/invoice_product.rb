@@ -25,6 +25,10 @@ class InvoiceProduct < ApplicationRecord
     (product_price / invoice.satoshi_clp_ratio).round
   end
 
+  def fee_percentage
+    fee_rate * 100
+  end
+
   private
 
   def product_price_initial_calc
