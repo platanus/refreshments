@@ -3,5 +3,6 @@ class Ledger::RegisterInvoiceProductJob < ApplicationJob
 
   def perform(invoice_product)
     Ledger::RegisterInvoiceProduct.new(invoice_product).perform
+    Ledger::RegisterInvoiceProductFee.new(invoice_product).perform
   end
 end
