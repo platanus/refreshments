@@ -32,7 +32,7 @@ end
 #  updated_at :datetime         not null
 #  name       :string
 #  category   :integer          default("other"), not null
-#  fee_rate   :decimal(4, 3)    default(0.0), not null
+#  fee_rate   :decimal(, )      default(0.0), not null
 #
 # Indexes
 #
