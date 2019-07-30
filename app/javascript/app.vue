@@ -9,38 +9,18 @@
     </div>
     <div class="app">
       <div class="product-categories">
-        <span class="product-category__title">Snacks</span>
         <div
-          class="product-category"
-          key="snacks"
+          v-for="category in productsArray"
+          :key="category.title"
         >
-          <product
-            v-for="product in snacks"
-            :key="product.id"
-            :product="product"
-          />
-        </div>
-        <span class="product-category__title">Bebestibles</span>
-        <div
-          class="product-category"
-          key="drinks"
-        >
-          <product
-            v-for="product in drinks"
-            :key="product.id"
-            :product="product"
-          />
-        </div>
-        <span class="product-category__title">Otros</span>
-        <div
-          class="product-category"
-          key="other"
-        >
-          <product
-            v-for="product in other"
-            :key="product.id"
-            :product="product"
-          />
+          <span class="product-category__title">{{ category.title }}</span>
+          <div class="product-category">
+            <product
+              v-for="product in category.products"
+              :key="product.id"
+              :product="product"
+            />
+          </div>
         </div>
       </div>
       <div class="sidebar">
@@ -70,13 +50,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      'snacks': 'groupBySnack',
-      'drinks': 'groupByDrink',
-      'other': 'groupByOther',
+      'products': 'groupByCategory',
     }),
     ...mapState([
       'status',
     ]),
+    productsArray() {
+      return [
+        { title: 'Snacks', products: this.products('snacks') },
+        { title: 'Bebestibles', products: this.products('drinks') },
+        { title: 'Otros', products: this.products('other') },
+      ];
+    },
   },
   methods: {
     closeModal() {
