@@ -38,5 +38,9 @@ RSpec.describe InvoiceProduct, type: :model do
     it 'saves invoice product with correct price' do
       expect(invoice_product.product_price).to eq(user_product.price * MOCKED_SATOSHI_CLP_RATIO)
     end
+
+    it 'saves invoice product with correct fee_rate' do
+      expect(invoice_product.product_fee).to eq(user_product.price * invoice_product.fee_rate)
+    end
   end
 end

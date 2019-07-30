@@ -1,17 +1,19 @@
 class InvoiceProduct < ApplicationRecord
-  validates :product_price, presence: true
+  validates :product_price, :product_fee, :fee_rate, presence: true
+  validates :fee_rate, inclusion: { in: (0..1).step(0.001) }
 
   belongs_to :user_product
   belongs_to :invoice
 
   scope :settled, -> { joins(:invoice).merge(Invoice.settled) }
 
-  before_validation :fix_product_price, on: :create
+  before_validation :fix_product_price_and_fee, on: :create
 
-  def fix_product_price
+  def fix_product_price_and_fee
     return if user_product.nil? || invoice.nil?
 
     self.product_price = product_price_initial_calc
+    self.product_fee = product_fee_to_pay
   end
 
   def discount_stock
@@ -28,6 +30,10 @@ class InvoiceProduct < ApplicationRecord
   def product_price_initial_calc
     user_product.price * invoice.satoshi_clp_ratio
   end
+
+  def product_fee_to_pay
+    product_price * fee_rate
+  end
 end
 
 # == Schema Information
@@ -40,6 +46,8 @@ end
 #  updated_at      :datetime         not null
 #  product_price   :integer          not null
 #  user_product_id :bigint(8)
+#  product_fee     :integer          default(0), not null
+#  fee_rate        :decimal(, )      default(0.0), not null
 #
 # Indexes
 #
