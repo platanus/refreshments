@@ -52,4 +52,17 @@ RSpec.describe UserProduct, type: :model do
       expect(UserProduct.for_sale.first.id).to eq(user_product_c.id)
     end
   end
+
+  describe '#set_fee_percentage=' do
+    let(:value) { 10 }
+    let(:user_product) { create(:user_product) }
+
+    def perform
+      user_product.fee_percentage = value
+    end
+
+    it 'sets the fee_rate' do
+      expect { perform }.to change(user_product, :fee_rate).from(0).to(0.1)
+    end
+  end
 end

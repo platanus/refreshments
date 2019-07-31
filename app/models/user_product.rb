@@ -1,7 +1,7 @@
 class UserProduct < ApplicationRecord
   validates :name, :price, :stock, :category, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
-  validates :fee_rate, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
+  validates :fee_rate, inclusion: { in: (0..1).step(0.001) }
   validates :image, attached: true
 
   scope :active, -> { where(active: true) }
@@ -17,6 +17,14 @@ class UserProduct < ApplicationRecord
 
   CATEGORIES = [:snacks, :drinks, :other]
   enum category: CATEGORIES, _prefix: :categories
+
+  def fee_percentage
+    fee_rate * 100
+  end
+
+  def fee_percentage=(value)
+    self.fee_rate = value.to_f / 100
+  end
 end
 
 # == Schema Information

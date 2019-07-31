@@ -15,7 +15,7 @@ $product-form-input-border-width: 1px;
 
 .product-form {
   background-color: $product-form-background;
-  width: 50%;
+  width: 60%;
   margin: 70px auto 0;
   padding: 50px 30px;
   border-radius: 15px;
@@ -27,6 +27,11 @@ $product-form-input-border-width: 1px;
     margin-bottom: 30px;
   }
 
+  &__disclaimer {
+    color: $product-form-main-font-color;
+    font-size: 12px;
+  }
+
   &__field {
     padding: 5px;
     display: flex;
@@ -35,6 +40,10 @@ $product-form-input-border-width: 1px;
     margin: 0 auto 30px;
   }
 
+  &__icon {
+    height: 36px;
+    object-fit: contain;
+  }
 
   &__preview-image {
     flex-basis: 100%;

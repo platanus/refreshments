@@ -8,7 +8,11 @@ class BuildInvoiceProducts < PowerTypes::Command.new(:shopping_cart_item)
   private
 
   def build_invoice_product
-    InvoiceProduct.new(user_product: user_product, product_price: user_product.price)
+    InvoiceProduct.new(
+      user_product: user_product,
+      product_price: user_product.price,
+      fee_rate: user_product.fee_rate
+    )
   end
 
   def user_product_without_stock?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_144744) do
+ActiveRecord::Schema.define(version: 2019_07_30_152944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 2019_07_29_144744) do
     t.datetime "updated_at", null: false
     t.integer "product_price", null: false
     t.bigint "user_product_id"
+    t.integer "product_fee", default: 0, null: false
+    t.decimal "fee_rate", default: "0.0", null: false
     t.index ["invoice_id"], name: "index_invoice_products_on_invoice_id"
     t.index ["user_product_id"], name: "index_invoice_products_on_user_product_id"
   end

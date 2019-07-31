@@ -3,6 +3,7 @@
     <%= f.input :user, as: :select, collection: User.all.pluck(:email, :id) %>
     <%= f.input :name %>
     <%= f.input :price %>
+    <%= f.input :fee_rate %>
     <%= f.input :active %>
     <%= f.input :stock %>
     <%= f.input :category, as: :select, collection: UserProduct.categories.keys.map{|category| [category.titleize, category]} %>

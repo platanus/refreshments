@@ -11,6 +11,9 @@ RSpec.describe Ledger::RegisterInvoiceProductJob, type: :job do
   it 'calls ledger RegisterInvoiceProduct command with invoice_product param' do
     expect(Ledger::RegisterInvoiceProduct).to receive(:new).with(invoice_product)
                                                            .and_return(ledger_register)
+
+    expect(Ledger::RegisterInvoiceProductFee).to receive(:new).with(invoice_product)
+                                                              .and_return(ledger_register)
     perform
   end
 end

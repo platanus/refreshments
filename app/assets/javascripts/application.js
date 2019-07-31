@@ -29,3 +29,18 @@ $(document).ready(() => {
     });
   }
 });
+
+function setFeeValue() {
+  const feeValue = $('#result');
+  feeValue.text(
+    // eslint-disable-next-line no-magic-numbers
+    ($('#price').val() * $('#fee').val() / 100).toFixed(1)
+  );
+}
+
+$(document).on('turbolinks:load', () => {
+  setFeeValue();
+  $('#price, #fee').change(() => {
+    setFeeValue();
+  });
+});
