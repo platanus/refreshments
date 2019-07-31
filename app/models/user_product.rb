@@ -17,6 +17,14 @@ class UserProduct < ApplicationRecord
 
   CATEGORIES = [:snacks, :drinks, :other]
   enum category: CATEGORIES, _prefix: :categories
+
+  def fee_percentage
+    fee_rate * 100
+  end
+
+  def fee_percentage=(value)
+    self.fee_rate = value.to_f / 100
+  end
 end
 
 # == Schema Information
