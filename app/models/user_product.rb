@@ -1,7 +1,7 @@
 class UserProduct < ApplicationRecord
   validates :name, :price, :stock, :category, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
-  validates :fee_rate, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
+  validates :fee_rate, inclusion: { in: (0..1).step(0.001) }
   validates :image, attached: true
 
   scope :active, -> { where(active: true) }
