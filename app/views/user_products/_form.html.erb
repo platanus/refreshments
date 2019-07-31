@@ -78,6 +78,7 @@
       </div>
 
       <div class="product-form__field">
+        <%= image_tag "leprechaun.png", :class => "product-form__icon" %>
         <%= f.label :fee_percentage, 'Comisión (%)*', { class: 'product-form__label' } %>
         <%= f.number_field :fee_percentage, { id: 'fee', class: 'product-form__input product-form__input--number', error: false, step: 0.1, in: 0.0..100.0 } %>
       </div>
