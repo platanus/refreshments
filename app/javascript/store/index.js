@@ -157,7 +157,11 @@ const store = new Vuex.Store({
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     onSaleProducts: (state, getters) => (getters.productsAsArray
-      .filter(product => product.for_sale)),
+      .filter(product => product.for_sale))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    groupByCategory: (state, getters) => keyword => (getters.onSaleProducts
+      .filter(product => product.category === keyword)
+    ),
     totalAmount: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),

@@ -1,6 +1,6 @@
 <template>
   <v-touch
-    class="product-list__product"
+    class="product-category__product"
     @tap="incrementProduct(product)"
   >
     <img

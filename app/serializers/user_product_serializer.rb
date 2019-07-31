@@ -1,7 +1,7 @@
 class UserProductSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :stock, :price, :image_url, :for_sale
+  attributes :id, :name, :stock, :price, :image_url, :for_sale, :category
 
   def for_sale
     object.active && object.stock.positive?
