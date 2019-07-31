@@ -1,5 +1,5 @@
 ActiveAdmin.register UserProduct do
-  permit_params :name, :price, :user_id, :active, :stock, :category, :image
+  permit_params :name, :price, :fee_rate, :user_id, :active, :stock, :category, :image
 
   form partial: 'form'
 
@@ -10,6 +10,7 @@ ActiveAdmin.register UserProduct do
       row :name
       row :user
       row :price
+      row :fee_rate
       row :active
       row :stock
       row :category
