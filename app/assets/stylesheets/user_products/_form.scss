@@ -27,6 +27,11 @@ $product-form-input-border-width: 1px;
     margin-bottom: 30px;
   }
 
+  &__disclaimer {
+    color: $product-form-main-font-color;
+    font-size: 12px;
+  }
+
   &__field {
     padding: 5px;
     display: flex;

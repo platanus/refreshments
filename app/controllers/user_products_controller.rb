@@ -40,7 +40,7 @@ class UserProductsController < ApplicationController
   def permitted_params
     params
       .require(:user_product)
-      .permit(:name, :price, :stock, :image, :category, :fee_rate, :active)
+      .permit(:name, :price, :stock, :image, :category, :fee_percentage, :active)
   end
 
   def check_user_product

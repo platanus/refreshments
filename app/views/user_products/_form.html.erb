@@ -60,7 +60,7 @@
 
       <div class="product-form__field">
         <%= f.label :price, 'Precio', { class: 'product-form__label' } %>
-        <%= f.number_field :price, { class: 'product-form__input product-form__input--number', error: false } %>
+        <%= f.number_field :price, { id: 'price', class: 'product-form__input product-form__input--number', error: false } %>
       </div>
 
       <div class="product-form__field">
@@ -78,6 +78,11 @@
       </div>
 
       <div class="product-form__field">
+        <%= f.label :fee_percentage, 'Comisión (%)*', { class: 'product-form__label' } %>
+        <%= f.number_field :fee_percentage, { id: 'fee', class: 'product-form__input product-form__input--number', error: false, step: 0.1, in: 0.0..100.0 } %>
+      </div>
+
+      <div class="product-form__field">
         <%= f.label :image, "#{@user_product.new_record? ? 'Agregar' : 'Editar'} imagen", { class: 'product-form__label product-form__label--image' } %>
         <%= f.file_field :image, { class: 'product-form__input product-form__input--image', error: false } %>
       </div>
@@ -91,5 +96,8 @@
         <%= f.submit "#{@user_product.new_record? ? 'Agregar' : 'Editar'} producto", class: 'product-form__button product-form__button--submit' %>
       </div>
     <% end %>
+    <div class="product-form__disclaimer">
+      * $<span id="result"></span> se aportarán a un fondo común para un asado por cada venta
+    </div>
   </div>
 </div>
