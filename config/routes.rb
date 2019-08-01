@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'buy', to: 'pages#buy'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :user_products, only: [:index, :show]
+      resources :products, only: [:index, :show]
       get '/satoshi_price', to: 'prices#satoshi_price'
       resources :invoices, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resource :user do
-    resources :user_products, path: '/products', as: 'products'
+    resources :products
     resources :withdrawals
     resources :ledger_accounts, path: '/balance', as: 'balance'
     resources :lightning_network_withdrawals
