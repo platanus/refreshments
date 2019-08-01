@@ -1,21 +1,21 @@
-class UserProductsController < ApplicationController
+class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_user_product, only: [:edit, :update, :destroy]
+  before_action :check_product, only: [:edit, :update, :destroy]
 
   def index
     @withdrawable_amount = current_user.withdrawable_amount
-    @user_products = current_user.products_with_sales.active
+    @products = current_user.products_with_sales.active
   end
 
   def new
-    @user_product = current_user.user_products.new
+    @product = current_user.products.new
   end
 
   def edit; end
 
   def create
-    @user_product = current_user.user_products.new(permitted_params)
-    if @user_product.save
+    @product = current_user.products.new(permitted_params)
+    if @product.save
       redirect_to user_products_path
     else
       render "new"
@@ -23,7 +23,7 @@ class UserProductsController < ApplicationController
   end
 
   def update
-    if user_product.update(permitted_params)
+    if product.update(permitted_params)
       redirect_to user_products_path
     else
       render "edit"
@@ -31,7 +31,7 @@ class UserProductsController < ApplicationController
   end
 
   def destroy
-    user_product.update!(active: false)
+    product.update!(active: false)
     redirect_to user_products_path
   end
 
@@ -39,15 +39,15 @@ class UserProductsController < ApplicationController
 
   def permitted_params
     params
-      .require(:user_product)
+      .require(:product)
       .permit(:name, :price, :stock, :image, :category, :fee_percentage, :active)
   end
 
-  def check_user_product
-    return not_found unless user_product
+  def check_product
+    return not_found unless product
   end
 
-  def user_product
-    @user_product ||= current_user.user_products.find_by(id: params[:id])
+  def product
+    @product ||= current_user.products.find_by(id: params[:id])
   end
 end
