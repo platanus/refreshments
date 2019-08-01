@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_30_152944) do
+ActiveRecord::Schema.define(version: 2019_08_01_155914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(version: 2019_07_30_152944) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_price", null: false
-    t.bigint "user_product_id"
+    t.bigint "product_id"
     t.integer "product_fee", default: 0, null: false
     t.decimal "fee_rate", default: "0.0", null: false
     t.index ["invoice_id"], name: "index_invoice_products_on_invoice_id"
-    t.index ["user_product_id"], name: "index_invoice_products_on_user_product_id"
+    t.index ["product_id"], name: "index_invoice_products_on_product_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_152944) do
     t.index ["user_id"], name: "index_lightning_network_withdrawals_on_user_id"
   end
 
-  create_table "user_products", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "price", null: false
     t.integer "stock", null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_152944) do
     t.string "name"
     t.integer "category", default: 2, null: false
     t.decimal "fee_rate", default: "0.0", null: false
-    t.index ["user_id"], name: "index_user_products_on_user_id"
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

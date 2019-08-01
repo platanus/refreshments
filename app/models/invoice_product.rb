@@ -44,17 +44,17 @@ end
 #
 # Table name: invoice_products
 #
-#  id              :bigint(8)        not null, primary key
-#  invoice_id      :bigint(8)        not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  product_price   :integer          not null
-#  user_product_id :bigint(8)
-#  product_fee     :integer          default(0), not null
-#  fee_rate        :decimal(, )      default(0.0), not null
+#  id            :bigint(8)        not null, primary key
+#  invoice_id    :bigint(8)        not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  product_price :integer          not null
+#  product_fee   :integer          default(0), not null
+#  fee_rate      :decimal(, )      default(0.0), not null
+#  product_id    :bigint(8)
 #
 # Indexes
 #
-#  index_invoice_products_on_invoice_id       (invoice_id)
-#  index_invoice_products_on_user_product_id  (user_product_id)
+#  index_invoice_products_on_invoice_id  (invoice_id)
+#  index_invoice_products_on_product_id  (product_id)
 #

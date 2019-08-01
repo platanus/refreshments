@@ -29,7 +29,7 @@ end
 
 # == Schema Information
 #
-# Table name: user_products
+# Table name: products
 #
 #  id         :bigint(8)        not null, primary key
 #  user_id    :bigint(8)        not null
@@ -44,5 +44,5 @@ end
 #
 # Indexes
 #
-#  index_user_products_on_user_id  (user_id)
+#  index_products_on_user_id  (user_id)
 #
