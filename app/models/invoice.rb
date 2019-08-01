@@ -4,7 +4,7 @@ class Invoice < ApplicationRecord
   validates :clp, :amount, numericality: { greater_than: 0 }
 
   has_many :invoice_products
-  has_many :user_products, through: :invoice_products
+  has_many :products, through: :invoice_products
 
   scope :settled, -> { where(settled: true) }
 

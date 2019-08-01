@@ -3,8 +3,8 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
-  has_many :user_products
-  has_many :invoice_products, through: :user_products
+  has_many :products
+  has_many :invoice_products, through: :products
   has_many :invoices, through: :invoice_products
   has_many :withdrawals
 
@@ -18,14 +18,14 @@ class User < ApplicationRecord
   end
 
   def products_with_sales
-    user_products
+    products
       .joins(
         "LEFT OUTER JOIN (#{InvoiceProduct.settled.to_sql}) AS settled_invoice_products " \
-        "ON settled_invoice_products.user_product_id = user_products.id"
+        "ON settled_invoice_products.product_id = products.id"
       )
-      .group('user_products.id')
+      .group('products.id')
       .select(
-        'user_products.*',
+        'products.*',
         'COUNT(settled_invoice_products.id) AS total_count',
         'COALESCE(SUM(settled_invoice_products.product_price), 0) AS total_satoshi'
       )
