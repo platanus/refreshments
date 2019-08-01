@@ -1,4 +1,4 @@
-<%= semantic_form_for [:admin, @user_product], builder: ActiveAdmin::FormBuilder do |f| %>
+<%= semantic_form_for [:admin, @product], builder: ActiveAdmin::FormBuilder do |f| %>
   <%= f.inputs do %>
     <%= f.input :user, as: :select, collection: User.all.pluck(:email, :id) %>
     <%= f.input :name %>
@@ -6,7 +6,7 @@
     <%= f.input :fee_rate %>
     <%= f.input :active %>
     <%= f.input :stock %>
-    <%= f.input :category, as: :select, collection: UserProduct.categories.keys.map{|category| [category.titleize, category]} %>
+    <%= f.input :category, as: :select, collection: Product.categories.keys.map{|category| [category.titleize, category]} %>
     <%= f.input :image, as: :file %>
     <%= f.actions %>
   <% end  %>

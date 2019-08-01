@@ -25,7 +25,7 @@
         ) %>
     </h4>
 
-    <% if @user_products.length > 0 %>
+    <% if @products.length > 0 %>
       <table class="products-index__table">
         <thead>
           <tr>
@@ -39,8 +39,8 @@
           </tr>
         </thead>
         <tbody>
-          <% @user_products.each do |user_product| %>
-            <%= render "row", user_product: user_product %>
+          <% @products.each do |product| %>
+            <%= render "row", product: product %>
           <% end %>
         </tbody>
       </table>
