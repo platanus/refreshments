@@ -15,12 +15,12 @@ RSpec.describe InvoiceProduct, type: :model do
 
   def create_invoice_products(product_invoice_count)
     product_invoice_count.times do
-      create(:invoice_product, invoice: invoice, user_product: user_product)
+      create(:invoice_product, invoice: invoice, product: product)
     end
   end
 
   describe 'basic validations' do
-    it { should belong_to(:user_product) }
+    it { should belong_to(:product) }
     it { should belong_to(:invoice) }
     it { should validate_presence_of(:product_price) }
 
@@ -31,16 +31,16 @@ RSpec.describe InvoiceProduct, type: :model do
   end
 
   let(:invoice) { initialize_invoice }
-  let(:user_product) { create(:user_product, stock: 3) }
-  let(:invoice_product) { create(:invoice_product, invoice: invoice, user_product: user_product) }
+  let(:product) { create(:product, stock: 3) }
+  let(:invoice_product) { create(:invoice_product, invoice: invoice, product: product) }
 
   describe "before validations 'fix_product_price' hook" do
     it 'saves invoice product with correct price' do
-      expect(invoice_product.product_price).to eq(user_product.price * MOCKED_SATOSHI_CLP_RATIO)
+      expect(invoice_product.product_price).to eq(product.price * MOCKED_SATOSHI_CLP_RATIO)
     end
 
     it 'saves invoice product with correct fee_rate' do
-      expect(invoice_product.product_fee).to eq(user_product.price * invoice_product.fee_rate)
+      expect(invoice_product.product_fee).to eq(product.price * invoice_product.fee_rate)
     end
   end
 end

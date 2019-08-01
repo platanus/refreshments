@@ -10,7 +10,7 @@ describe Ledger::RegisterInvoiceProduct do
   let(:settled) { true }
   let(:invoice) { create(:invoice, settled: settled, amount: price) }
   let(:invoice_product) { create(:invoice_product, invoice: invoice) }
-  let(:user) { invoice_product.user_product.user }
+  let(:user) { invoice_product.product.user }
 
   before do
     ENV["PLATANUS_WALLET_ID"] = node.id.to_s

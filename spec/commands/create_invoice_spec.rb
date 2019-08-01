@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe CreateInvoice do
   let(:amount) { 1 }
-  let(:product_bon_bon) { create(:user_product, name: 'Bon o Bon') }
-  let(:product_coca_cola) { create(:user_product, name: 'Coca Cola') }
+  let(:product_bon_bon) { create(:product, name: 'Bon o Bon') }
+  let(:product_coca_cola) { create(:product, name: 'Coca Cola') }
   let(:invoice_product) { build(:invoice_product, product_price: 1000) }
 
   def perform

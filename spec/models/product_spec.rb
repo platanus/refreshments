@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserProduct, type: :model do
+RSpec.describe Product, type: :model do
   describe 'basic validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:price) }
@@ -14,55 +14,55 @@ RSpec.describe UserProduct, type: :model do
   end
 
   describe 'active scope' do
-    let!(:user_product_a) { create(:user_product, active: false) }
-    let!(:user_product_b) { create(:user_product) }
+    let!(:product_a) { create(:product, active: false) }
+    let!(:product_b) { create(:product) }
 
-    it 'only returns one active user product' do
-      expect(UserProduct.active).to have_attributes(length: 1)
+    it 'only returns one active product' do
+      expect(Product.active).to have_attributes(length: 1)
     end
 
-    it 'returns correct user product' do
-      expect(UserProduct.active.first.id).to eq(user_product_b.id)
+    it 'returns correct product' do
+      expect(Product.active.first.id).to eq(product_b.id)
     end
   end
 
   describe 'with_stock scope' do
-    let!(:user_product_a) { create(:user_product, stock: 0) }
-    let!(:user_product_b) { create(:user_product) }
+    let!(:product_a) { create(:product, stock: 0) }
+    let!(:product_b) { create(:product) }
 
-    it 'only returns one user product with stock' do
-      expect(UserProduct.with_stock).to have_attributes(length: 1)
+    it 'only returns one product with stock' do
+      expect(Product.with_stock).to have_attributes(length: 1)
     end
 
-    it 'returns correct user product' do
-      expect(UserProduct.with_stock.first.id).to eq(user_product_b.id)
+    it 'returns correct product' do
+      expect(Product.with_stock.first.id).to eq(product_b.id)
     end
   end
 
   describe 'for_sale scope' do
-    let!(:user_product_a) { create(:user_product, stock: 0) }
-    let!(:user_product_b) { create(:user_product, active: false) }
-    let!(:user_product_c) { create(:user_product) }
+    let!(:product_a) { create(:product, stock: 0) }
+    let!(:product_b) { create(:product, active: false) }
+    let!(:product_c) { create(:product) }
 
-    it 'only returns one user product with stock' do
-      expect(UserProduct.for_sale).to have_attributes(length: 1)
+    it 'only returns one product with stock' do
+      expect(Product.for_sale).to have_attributes(length: 1)
     end
 
-    it 'returns correct user product' do
-      expect(UserProduct.for_sale.first.id).to eq(user_product_c.id)
+    it 'returns correct product' do
+      expect(Product.for_sale.first.id).to eq(product_c.id)
     end
   end
 
   describe '#set_fee_percentage=' do
     let(:value) { 10 }
-    let(:user_product) { create(:user_product) }
+    let(:product) { create(:product) }
 
     def perform
-      user_product.fee_percentage = value
+      product.fee_percentage = value
     end
 
     it 'sets the fee_rate' do
-      expect { perform }.to change(user_product, :fee_rate).from(0).to(0.1)
+      expect { perform }.to change(product, :fee_rate).from(0).to(0.1)
     end
   end
 end
