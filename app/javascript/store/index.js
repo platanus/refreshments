@@ -58,7 +58,7 @@ const store = new Vuex.Store({
   actions: {
     getProducts: context => {
       api.products().then((response) => {
-        const products = response.user_products.reduce((acc, product) => {
+        const products = response.products.reduce((acc, product) => {
           acc[product.id] = { ...product, amount: 0 };
 
           return acc;
@@ -91,7 +91,7 @@ const store = new Vuex.Store({
     },
     updateProduct: (context, payload) => {
       api.product(payload.id).then((response) => {
-        context.commit('setProduct', response.user_product);
+        context.commit('setProduct', response.product);
       });
     },
     buy: context => {

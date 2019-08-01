@@ -7,11 +7,11 @@ axios.defaults.headers = {
 
 export default {
   products() {
-    return axios.get('/api/v1/user_products')
+    return axios.get('/api/v1/products')
       .then((response) => response.data);
   },
   product(productId) {
-    return axios.get(`/api/v1/user_products/${productId}`)
+    return axios.get(`/api/v1/products/${productId}`)
       .then((response) => response.data);
   },
   buy(products) {
