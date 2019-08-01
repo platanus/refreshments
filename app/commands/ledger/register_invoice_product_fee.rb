@@ -3,7 +3,7 @@ class Ledger::RegisterInvoiceProductFee < Ledger::BaseRegister
     @accountable = invoice_product
     @category = 'fee'
     @from_account = business_user.available_funds
-    @to_account = invoice_product.user_product.user.available_funds
+    @to_account = invoice_product.product.user.available_funds
     @date = invoice.created_at
     @amount_to_register = invoice.settled ? invoice_product.product_fee : 0
   end

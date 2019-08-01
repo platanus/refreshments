@@ -2,7 +2,7 @@ class Ledger::RegisterInvoiceProduct < Ledger::BaseRegister
   def initialize(invoice_product)
     @accountable = invoice_product
     @category = 'settled'
-    @from_account = invoice_product.user_product.user.available_funds
+    @from_account = invoice_product.product.user.available_funds
     @to_account = ln_node.available_funds
     @date = invoice.created_at
     @amount_to_register = invoice.settled ? invoice_product.product_price : 0
