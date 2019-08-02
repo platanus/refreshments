@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user_product do
+  factory :product do
     name { 'custom product name' }
     user { create(:user) }
     stock { 10 }

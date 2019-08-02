@@ -11,8 +11,8 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     let(:invoice_params) do
       { invoice: { products: products_hash } }
     end
-    let!(:user_product_1) { create(:user_product, id: 123) }
-    let!(:user_product_2) { create(:user_product, id: 234) }
+    let!(:product_1) { create(:product, id: 123) }
+    let!(:product_2) { create(:product, id: 234) }
 
     before do
       expect(CreateInvoice).to receive(:for)
@@ -26,11 +26,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     it 'shopping_cart_items have correct values' do
       post :create, params: invoice_params, as: :json
       expect(assigns(:shopping_cart_items).first).to have_attributes(
-        user_product: user_product_1,
+        product: product_1,
         amount: 3
       )
       expect(assigns(:shopping_cart_items).last).to have_attributes(
-        user_product: user_product_2,
+        product: product_2,
         amount: 2
       )
     end

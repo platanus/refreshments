@@ -29,7 +29,7 @@ describe SettleInvoiceJob, type: :job do
     end
 
     it 'reduces stock of invoice products' do
-      expect { perform }.to change { invoice_product_a.user_product.reload.stock }.by(-1)
+      expect { perform }.to change { invoice_product_a.product.reload.stock }.by(-1)
     end
   end
 

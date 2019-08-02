@@ -16,8 +16,8 @@ ActiveAdmin.register Invoice do
                     .invoice_products
     table_for sold_products do
       column "Producto" do |invoice_product|
-        user_product = invoice_product.user_product
-        link_to user_product.name, [:admin, user_product]
+        product = invoice_product.product
+        link_to product.name, [:admin, product]
       end
       column :product_price
     end

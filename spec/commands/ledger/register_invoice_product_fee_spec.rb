@@ -11,7 +11,7 @@ describe Ledger::RegisterInvoiceProductFee do
   let(:fee_rate) { 0.01 }
   let(:invoice) { create(:invoice, settled: settled, amount: price) }
   let(:invoice_product) { create(:invoice_product, invoice: invoice, fee_rate: fee_rate) }
-  let(:user) { invoice_product.user_product.user }
+  let(:user) { invoice_product.product.user }
 
   before do
     ENV["BUSINESS_USER_ID"] = business_user.id.to_s

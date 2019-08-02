@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'basic validations' do
-    it { should have_many(:user_products) }
+    it { should have_many(:products) }
     it { should have_many(:invoices) }
     it { should have_many(:withdrawals) }
   end
@@ -102,10 +102,10 @@ RSpec.describe User, type: :model do
     context 'user with 1 products with 1 settled and 1 unsettled invoices' do
       let(:products_with_sales) { user_with_product.products_with_sales }
       before do
-        create(:invoice_product, user_product: user_with_product.user_products.first)
+        create(:invoice_product, product: user_with_product.products.first)
         create(
           :invoice_product,
-          user_product: user_with_product.user_products.first,
+          product: user_with_product.products.first,
           invoice_settled: false
         )
       end
@@ -126,8 +126,8 @@ RSpec.describe User, type: :model do
     context 'user with 1 product and 2 settled invoices' do
       let(:products_with_sales) { user_with_product.products_with_sales }
       before do
-        create(:invoice_product, user_product: user_with_product.user_products.first)
-        create(:invoice_product, user_product: user_with_product.user_products.first)
+        create(:invoice_product, product: user_with_product.products.first)
+        create(:invoice_product, product: user_with_product.products.first)
       end
 
       it 'returns array with 1 element' do
@@ -152,12 +152,12 @@ RSpec.describe User, type: :model do
         create(
           :invoice_product,
           invoice: invoice_a,
-          user_product: user_with_multiple_products.user_products.first
+          product: user_with_multiple_products.products.first
         )
         create(
           :invoice_product,
           invoice: invoice_b,
-          user_product: user_with_multiple_products.user_products.second
+          product: user_with_multiple_products.products.second
         )
       end
 

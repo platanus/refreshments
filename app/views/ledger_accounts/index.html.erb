@@ -70,9 +70,9 @@
                 <td class="balance-index__table-info"> Venta </td>
                 <td class="balance-index__table-info">
                   <% if line.category === 'settled' %>
-                    <%= "#{line.accountable.user_product.name} a $#{line.accountable.price_in_clp}" %>
+                    <%= "#{line.accountable.product.name} a $#{line.accountable.price_in_clp}" %>
                   <% elsif line.category === 'fee' %>
-                    Comisión por venta <%= "#{line.accountable.user_product.name} de #{number_to_percentage(line.accountable.fee_percentage, precision: 1)}" %>
+                    Comisión por venta <%= "#{line.accountable.product.name} de #{number_to_percentage(line.accountable.fee_percentage, precision: 1)}" %>
                   <% end %>
                 </td>
               <% elsif line.accountable_type === 'LightningNetworkWithdrawal' %>

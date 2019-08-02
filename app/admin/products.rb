@@ -1,10 +1,10 @@
-ActiveAdmin.register UserProduct do
+ActiveAdmin.register Product do
   permit_params :name, :price, :fee_rate, :user_id, :active, :stock, :category, :image
 
   form partial: 'form'
 
   preserve_default_filters!
-  filter :category, as: :check_boxes, collection: proc { UserProduct.categories }
+  filter :category, as: :check_boxes, collection: proc { Product.categories }
   show do
     attributes_table do
       row :name

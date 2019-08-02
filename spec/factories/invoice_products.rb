@@ -5,6 +5,6 @@ FactoryBot.define do
     end
 
     invoice { create(:invoice, settled: invoice_settled) }
-    user_product { create(:user_product) }
+    product { create(:product) }
   end
 end

@@ -8,13 +8,7 @@ es-CL:
               cant_exceed_withdrawable_amount: 'no puede exceder la cantidad disponible para retiro'
             btc_address:
               must_be_a_valid_address: 'debe ser una dirección valida'
-        user_product:
-          attributes:
-            product_id:
-              cant_change_product_reference: 'asociado no puede ser cambiado'
     attributes:
       withdrawal:
         btc_address: 'Dirección BTC'
         amount: 'Monto'
-      user_product:
-        product_id: 'Producto'
