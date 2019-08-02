@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 
 import { shuffle } from 'lodash';
 
-import api from './api';
+import productApi from '../api/products';
+import invoiceApi from '../api/invoices';
 
 const REFRESH_INTERVAL_TIME = 300000;
 
@@ -59,7 +60,7 @@ const store = new Vuex.Store({
   },
   actions: {
     getProducts: context => {
-      api.products().then((response) => {
+      productApi.products().then((response) => {
         const products = response.products.reduce((acc, product) => {
           acc[product.id] = { ...product, amount: 0 };
 
@@ -92,7 +93,7 @@ const store = new Vuex.Store({
       }
     },
     updateProduct: (context, payload) => {
-      api.product(payload.id).then((response) => {
+      productApi.product(payload.id).then((response) => {
         context.commit('setProduct', response.product);
       });
     },
@@ -102,7 +103,7 @@ const store = new Vuex.Store({
 
         context.commit('setLoading', true);
 
-        api.buy(cartProducts).then((response) => {
+        invoiceApi.buy(cartProducts).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
         });
@@ -126,7 +127,7 @@ const store = new Vuex.Store({
       context.commit('setStatus', false);
     },
     updateInvoiceSettled: context => {
-      api.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
+      invoiceApi.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
         context.commit('setInvoiceSettled', response.data.settled);
       });
     },
@@ -151,7 +152,7 @@ const store = new Vuex.Store({
       }
     },
     getGif: context => {
-      api.getGif().then((response) => {
+      invoiceApi.getGif().then((response) => {
         context.commit('setGif', response.gif_url.gif_url);
       });
     },
