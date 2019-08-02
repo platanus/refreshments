@@ -1,6 +1,8 @@
 import Vue from 'vue/dist/vue.esm.js';
 import Vuex from 'vuex';
 
+import { shuffle } from 'lodash';
+
 import api from './api';
 
 const REFRESH_INTERVAL_TIME = 120000;
@@ -156,11 +158,17 @@ const store = new Vuex.Store({
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
-    onSaleProducts: (state, getters) => (getters.productsAsArray
-      .filter(product => product.for_sale))
-      .sort((a, b) => a.name.localeCompare(b.name)),
-    groupByCategory: (state, getters) => keyword => (getters.onSaleProducts
-      .filter(product => product.category === keyword)
+    onSaleProducts: (state, getters) => (
+      getters.productsAsArray.filter(product => product.for_sale)
+    ),
+    sortRandom: (state, getters) => (
+      shuffle(getters.onSaleProducts)
+    ),
+    sortByFee: (state, getters) => (
+      getters.sortRandom.sort((a, b) => b.fee_rate - a.fee_rate)
+    ),
+    groupByCategory: (state, getters) => keyword => (
+      getters.sortByFee.filter(product => product.category === keyword)
     ),
     totalAmount: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
