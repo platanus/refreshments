@@ -42,6 +42,12 @@ import product from './components/product.vue';
 import feedback from './components/feedback.vue';
 
 export default {
+  data() {
+    return {
+      inactiveTime: null,
+      refreshTime: 300000,
+    };
+  },
   components: {
     appResume,
     appInvoice,
@@ -67,9 +73,20 @@ export default {
     closeModal() {
       this.$store.commit('setStatus', false);
     },
+    checkInactivity() {
+      clearTimeout(this.inactiveTime);
+      this.inactiveTime = setTimeout(() => this.refreshScrollBar(), this.refreshTime);
+    },
+    refreshScrollBar() {
+      const categories = [...this.$el.querySelectorAll('.product-category')];
+      categories.forEach(category => {
+        category.scrollLeft = 0;
+      });
+    },
   },
   mounted() {
     this.$store.dispatch('getProducts');
+    this.$el.addEventListener('click', this.checkInactivity);
   },
 };
 </script>
