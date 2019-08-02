@@ -5,7 +5,7 @@ import { shuffle } from 'lodash';
 
 import api from './api';
 
-const REFRESH_INTERVAL_TIME = 120000;
+const REFRESH_INTERVAL_TIME = 300000;
 
 Vue.use(Vuex);
 
