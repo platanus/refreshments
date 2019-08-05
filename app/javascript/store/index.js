@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 
 import { shuffle } from 'lodash';
 
-import api from './api';
+import productApi from '../api/products';
+import invoiceApi from '../api/invoices';
 
 const REFRESH_INTERVAL_TIME = 300000;
 
@@ -59,7 +60,7 @@ const store = new Vuex.Store({
   },
   actions: {
     getProducts: context => {
-      api.products().then((response) => {
+      productApi.products().then((response) => {
         const products = response.products.reduce((acc, product) => {
           acc[product.id] = { ...product, amount: 0 };
 
@@ -92,7 +93,7 @@ const store = new Vuex.Store({
       }
     },
     updateProduct: (context, payload) => {
-      api.product(payload.id).then((response) => {
+      productApi.product(payload.id).then((response) => {
         context.commit('setProduct', response.product);
       });
     },
@@ -102,7 +103,7 @@ const store = new Vuex.Store({
 
         context.commit('setLoading', true);
 
-        api.buy(cartProducts).then((response) => {
+        invoiceApi.buy(cartProducts).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
         });
@@ -126,8 +127,8 @@ const store = new Vuex.Store({
       context.commit('setStatus', false);
     },
     updateInvoiceSettled: context => {
-      api.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
-        context.commit('setInvoiceSettled', response.data.settled);
+      invoiceApi.checkInvoiceStatus(context.state.invoice.rHash).then((response) => {
+        context.commit('setInvoiceSettled', response.settled);
       });
     },
     testInvoice: context => {
@@ -151,21 +152,21 @@ const store = new Vuex.Store({
       }
     },
     getGif: context => {
-      api.getGif().then((response) => {
-        context.commit('setGif', response.gif_url.gif_url);
+      invoiceApi.getGif().then((response) => {
+        context.commit('setGif', response.gifUrl.gifUrl);
       });
     },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     onSaleProducts: (state, getters) => (
-      getters.productsAsArray.filter(product => product.for_sale)
+      getters.productsAsArray.filter(product => product.forSale)
     ),
     sortRandom: (state, getters) => (
       shuffle(getters.onSaleProducts)
     ),
     sortByFee: (state, getters) => (
-      getters.sortRandom.sort((a, b) => b.fee_rate - a.fee_rate)
+      getters.sortRandom.sort((a, b) => b.feeRate - a.feeRate)
     ),
     groupByCategory: (state, getters) => keyword => (
       getters.sortByFee.filter(product => product.category === keyword)

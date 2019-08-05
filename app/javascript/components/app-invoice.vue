@@ -22,7 +22,7 @@
         v-if="showCopy"
       >
         <div class="invoice__copy-value">
-          {{ invoice.payment_request }}
+          {{ invoice.paymentRequest }}
         </div>
         <span class="invoice__copy-icon">
           <font-awesome-icon icon="clipboard" />
@@ -41,7 +41,7 @@
           key="unpaid"
         >
           <qrcode
-            :value="invoice.payment_request"
+            :value="invoice.paymentRequest"
             :options="{ size: 160 }"
             v-if="totalPrice > 0"
           />
@@ -88,7 +88,7 @@ export default {
     showCopy() {
       const isTablet = /(android)/i.test(navigator.userAgent) && screen.width > LENOVO_TAB_4_WIDTH;
 
-      return (this.invoice.payment_request && !isTablet);
+      return (this.invoice.paymentRequest && !isTablet);
     },
   },
   methods: {
@@ -104,7 +104,7 @@ export default {
       this.toggleResume();
     },
     copyPaymentRequest() {
-      this.$copyText(this.invoice.payment_request).then(e => {
+      this.$copyText(this.invoice.paymentRequest).then(e => {
         console.log(e)
       }, e => {
         console.log(e)

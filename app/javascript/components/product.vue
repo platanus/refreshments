@@ -5,9 +5,14 @@
   >
     <img
       class="product__image"
-      :src="product.image_url"
+      :src="product.imageUrl"
     >
     <span class="product__price">${{ product.price }}</span>
+    <img
+      v-if="isFeaturedProduct"
+      class="product__image product__image--framework"
+      src="~/assets/images/platanus-highlight.png"
+    >
   </v-touch>
 </template>
 <script>
@@ -48,6 +53,9 @@ export default {
       'actionMessage',
       'actionProductId',
     ]),
+    isFeaturedProduct() {
+      return this.product.feeRate > 0;
+    },
   },
   beforeDestroy() {
     this.unsubscribe();
