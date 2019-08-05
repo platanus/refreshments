@@ -22,7 +22,12 @@ const store = new Vuex.Store({
     actionProductId: null,
     intervalId: null,
     gif: null,
+<<<<<<< HEAD
     feeBalance: 0,
+=======
+    shuffled: false,
+    shuffledIndexes: {},
+>>>>>>> a505ae0... bug(catalogue): fix constant product order randomization when updating cart
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -62,6 +67,12 @@ const store = new Vuex.Store({
     setFeeBalance: (state, payload) => {
       state.feeBalance = payload;
     },
+    setShuffled: (state, payload) => {
+      state.shuffled = payload;
+    },
+    setShuffledIndexes: (state, payload) => {
+      state.shuffledIndexes = payload;
+    },
   },
   actions: {
     getProducts: context => {
@@ -73,7 +84,15 @@ const store = new Vuex.Store({
         }, {});
         context.commit('setProducts', products);
         context.dispatch('startGetProductsInterval');
+        if (!context.state.shuffled) {
+          context.dispatch('getShuffledIndexes');
+        }
       });
+    },
+    getShuffledIndexes: context => {
+      const shuffledIndexes = shuffle(context.state.products).map(product => product.id);
+      context.commit('setShuffledIndexes', shuffledIndexes);
+      context.commit('setShuffled', true);
     },
     decrementProduct: (context, payload) => {
       const amount = payload.amount - 1 > 0 ? payload.amount - 1 : 0;
@@ -172,9 +191,18 @@ const store = new Vuex.Store({
     onSaleProducts: (state, getters) => (
       getters.productsAsArray.filter(product => product.forSale)
     ),
-    sortRandom: (state, getters) => (
-      shuffle(getters.onSaleProducts)
-    ),
+    sortRandom: (state, getters) => {
+      if (state.shuffled) {
+        const order = state.shuffledIndexes;
+        const reShuffledProducts = getters.onSaleProducts.sort(
+          (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
+        );
+
+        return reShuffledProducts;
+      }
+
+      return shuffle(getters.onSaleProducts);
+    },
     sortByFee: (state, getters) => (
       getters.sortRandom.sort((a, b) => b.feeRate - a.feeRate)
     ),
