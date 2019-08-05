@@ -127,8 +127,8 @@ const store = new Vuex.Store({
       context.commit('setStatus', false);
     },
     updateInvoiceSettled: context => {
-      invoiceApi.checkInvoiceStatus(context.state.invoice.r_hash).then((response) => {
-        context.commit('setInvoiceSettled', response.data.settled);
+      invoiceApi.checkInvoiceStatus(context.state.invoice.rHash).then((response) => {
+        context.commit('setInvoiceSettled', response.settled);
       });
     },
     testInvoice: context => {
@@ -153,20 +153,20 @@ const store = new Vuex.Store({
     },
     getGif: context => {
       invoiceApi.getGif().then((response) => {
-        context.commit('setGif', response.gif_url.gif_url);
+        context.commit('setGif', response.gifUrl.gifUrl);
       });
     },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     onSaleProducts: (state, getters) => (
-      getters.productsAsArray.filter(product => product.for_sale)
+      getters.productsAsArray.filter(product => product.forSale)
     ),
     sortRandom: (state, getters) => (
       shuffle(getters.onSaleProducts)
     ),
     sortByFee: (state, getters) => (
-      getters.sortRandom.sort((a, b) => b.fee_rate - a.fee_rate)
+      getters.sortRandom.sort((a, b) => b.feeRate - a.feeRate)
     ),
     groupByCategory: (state, getters) => keyword => (
       getters.sortByFee.filter(product => product.category === keyword)

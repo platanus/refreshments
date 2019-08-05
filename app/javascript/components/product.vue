@@ -5,7 +5,7 @@
   >
     <img
       class="product__image"
-      :src="product.image_url"
+      :src="product.imageUrl"
     >
     <span class="product__price">${{ product.price }}</span>
   </v-touch>
