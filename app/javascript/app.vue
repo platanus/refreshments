@@ -87,7 +87,9 @@ export default {
   mounted() {
     this.$store.dispatch('getProducts');
     this.$store.dispatch('getFeeBalance');
-    this.$el.addEventListener('click', this.checkInactivity);
+    ['click', 'mousedown', 'touchmove'].forEach(
+      event => this.$el.addEventListener(event, this.checkInactivity)
+    );
   },
 };
 </script>
