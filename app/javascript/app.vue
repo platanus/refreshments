@@ -75,13 +75,20 @@ export default {
     },
     checkInactivity() {
       clearTimeout(this.inactiveTime);
-      this.inactiveTime = setTimeout(() => this.refreshScrollBar(), this.refreshTime);
+      this.inactiveTime = setTimeout(() => {
+        this.refreshScrollBar();
+        this.refreshProducts();
+      }, this.refreshTime);
     },
     refreshScrollBar() {
       const categories = [...this.$el.querySelectorAll('.product-category')];
       categories.forEach(category => {
         category.scrollLeft = 0;
       });
+    },
+    refreshProducts() {
+      this.$store.commit('setShuffled', false);
+      this.$store.dispatch('getProducts');
     },
   },
   mounted() {
