@@ -19,12 +19,9 @@ const store = new Vuex.Store({
     actionMessage: '',
     actionProductId: null,
     gif: null,
-<<<<<<< HEAD
     feeBalance: 0,
-=======
     shuffled: false,
     shuffledIndexes: {},
->>>>>>> a505ae0... bug(catalogue): fix constant product order randomization when updating cart
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -78,11 +75,11 @@ const store = new Vuex.Store({
         }, {});
         context.commit('setProducts', products);
         if (!context.state.shuffled) {
-          context.dispatch('getShuffledIndexes');
+          context.dispatch('shuffleIndexes');
         }
       });
     },
-    getShuffledIndexes: context => {
+    shuffleIndexes: context => {
       const shuffledIndexes = shuffle(context.state.products).map(product => product.id);
       context.commit('setShuffledIndexes', shuffledIndexes);
       context.commit('setShuffled', true);
