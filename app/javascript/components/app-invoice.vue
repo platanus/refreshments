@@ -97,11 +97,13 @@ export default {
       'cleanCart',
       'cleanInvoice',
       'updateInvoiceSettled',
+      'getFeeBalance',
     ]),
     close() {
       this.cleanInvoice();
       this.cleanCart();
       this.toggleResume();
+      this.getFeeBalance();
     },
     copyPaymentRequest() {
       this.$copyText(this.invoice.paymentRequest).then(e => {
