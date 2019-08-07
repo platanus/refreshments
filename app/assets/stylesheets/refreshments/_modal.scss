@@ -26,15 +26,26 @@ $modal-backgorund-color: #419a41;
     font-size: 45px;
     color: #fff;
     text-align: center;
-    height: 25%;
+    height: 15%;
   }
 
-  &__body {
+  &__gif {
     position: relative;
     padding: 20px;
     height: 65%;
     display: flex;
     justify-content: center;
+  }
+
+  &__detail {
+    font-size: 26px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+
+    &--fee-balance {
+      font-weight: bold;
+    }
   }
 }
 

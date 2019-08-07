@@ -18,5 +18,11 @@ FactoryBot.define do
         )
       end
     end
+
+    factory :user_ledger_account do
+      association :accountable, factory: :user
+      category { 'available_funds' }
+      balance { -1000 }
+    end
   end
 end

@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :products, only: [:index, :show]
-      get '/satoshi_price', to: 'prices#satoshi_price'
       resources :invoices, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
+      get '/satoshi_price', to: 'prices#satoshi_price'
       get '/gif', to: 'gifs#show_random'
+
+      get '/statistics/fee_balance'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config

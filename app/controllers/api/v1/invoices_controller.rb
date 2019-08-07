@@ -3,7 +3,7 @@ class Api::V1::InvoicesController < Api::V1::BaseController
     shopping_cart_items
     invoice = CreateInvoice.for(shopping_cart_items: shopping_cart_items)
 
-    respond_with invoice: invoice
+    render json: invoice
   end
 
   def status
