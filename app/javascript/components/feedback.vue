@@ -19,12 +19,18 @@
           </slot>
         </header>
         <section
-          class="feedback-modal__body"
+          class="feedback-modal__gif"
           id="modalDescription"
         >
-          <slot name="body">
+          <slot name="gif">
             <img :src="gif">
           </slot>
+        </section>
+        <section class="feedback-modal__detail">
+          Con tu compra aportaste {{ invoice.feeAmount }} SAT para el asado
+        </section>
+        <section class="feedback-modal__detail feedback-modal__detail--fee-balance">
+          Acumulados: {{ updatedFeeBalance }} SAT
         </section>
       </div>
     </div>
@@ -41,7 +47,12 @@ export default {
     ...mapState([
       'gif',
       'status',
+      'invoice',
+      'feeBalance',
     ]),
+    updatedFeeBalance() {
+      return this.feeBalance + this.invoice.feeAmount || 0;
+    },
   },
   methods: {
     ...mapActions(['getGif']),
