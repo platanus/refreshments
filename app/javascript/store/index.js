@@ -5,6 +5,7 @@ import { shuffle } from 'lodash';
 
 import productApi from '../api/products';
 import invoiceApi from '../api/invoices';
+import statisticsApi from '../api/statistics';
 
 const REFRESH_INTERVAL_TIME = 300000;
 
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
     actionProductId: null,
     intervalId: null,
     gif: null,
+    feeBalance: 0,
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -56,6 +58,9 @@ const store = new Vuex.Store({
     },
     setGif: (state, payload) => {
       state.gif = payload;
+    },
+    setFeeBalance: (state, payload) => {
+      state.feeBalance = payload;
     },
   },
   actions: {
@@ -154,6 +159,11 @@ const store = new Vuex.Store({
     getGif: context => {
       invoiceApi.getGif().then((response) => {
         context.commit('setGif', response.gifUrl.gifUrl);
+      });
+    },
+    getFeeBalance: context => {
+      statisticsApi.feeBalance().then((response) => {
+        context.commit('setFeeBalance', response.feeBalance);
       });
     },
   },
