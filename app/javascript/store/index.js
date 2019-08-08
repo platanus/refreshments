@@ -158,6 +158,10 @@ const store = new Vuex.Store({
         context.commit('setFeeBalance', response.feeBalance);
       });
     },
+    refreshProducts: context => {
+      context.commit('setShuffled', false);
+      context.dispatch('getProducts');
+    },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
