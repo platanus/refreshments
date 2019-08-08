@@ -170,15 +170,18 @@ const store = new Vuex.Store({
     ),
     sortRandom: (state, getters) => {
       if (state.shuffled) {
-        const order = state.shuffledIndexes;
-        const reShuffledProducts = getters.onSaleProducts.sort(
-          (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
-        );
-
-        return reShuffledProducts;
+        return getters.restorePreviousOrder;
       }
 
       return shuffle(getters.onSaleProducts);
+    },
+    restorePreviousOrder: (state, getters) => {
+      const previousOrder = state.shuffledIndexes;
+      const reOrderedProducts = getters.onSaleProducts.sort(
+        (a, b) => previousOrder.indexOf(a.id) - previousOrder.indexOf(b.id)
+      );
+
+      return reOrderedProducts;
     },
     sortByFee: (state, getters) => (
       getters.sortRandom.sort((a, b) => b.feeRate - a.feeRate)
