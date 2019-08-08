@@ -75,7 +75,10 @@ export default {
     },
     checkInactivity() {
       clearTimeout(this.inactiveTime);
-      this.inactiveTime = setTimeout(() => this.refreshScrollBar(), this.refreshTime);
+      this.inactiveTime = setTimeout(() => {
+        this.$store.dispatch('refreshProducts');
+        this.refreshScrollBar();
+      }, this.refreshTime);
     },
     refreshScrollBar() {
       const categories = [...this.$el.querySelectorAll('.product-category')];
@@ -87,7 +90,9 @@ export default {
   mounted() {
     this.$store.dispatch('getProducts');
     this.$store.dispatch('getFeeBalance');
-    this.$el.addEventListener('click', this.checkInactivity);
+    ['click', 'mousedown', 'touchmove'].forEach(
+      event => this.$el.addEventListener(event, this.checkInactivity)
+    );
   },
 };
 </script>

@@ -7,8 +7,6 @@ import productApi from '../api/products';
 import invoiceApi from '../api/invoices';
 import statisticsApi from '../api/statistics';
 
-const REFRESH_INTERVAL_TIME = 300000;
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -20,9 +18,10 @@ const store = new Vuex.Store({
     loading: false,
     actionMessage: '',
     actionProductId: null,
-    intervalId: null,
     gif: null,
     feeBalance: 0,
+    shuffled: false,
+    shuffledIndexes: {},
   },
   mutations: {
     setProduct: (state, payload) => {
@@ -53,14 +52,17 @@ const store = new Vuex.Store({
     setLoading: (state, payload) => {
       state.loading = payload;
     },
-    setIntervalId: (state, payload) => {
-      state.intervalId = payload;
-    },
     setGif: (state, payload) => {
       state.gif = payload;
     },
     setFeeBalance: (state, payload) => {
       state.feeBalance = payload;
+    },
+    setShuffled: (state, payload) => {
+      state.shuffled = payload;
+    },
+    setShuffledIndexes: (state, payload) => {
+      state.shuffledIndexes = payload;
     },
   },
   actions: {
@@ -72,15 +74,21 @@ const store = new Vuex.Store({
           return acc;
         }, {});
         context.commit('setProducts', products);
-        context.dispatch('startGetProductsInterval');
+        if (!context.state.shuffled) {
+          context.dispatch('shuffleIndexes');
+        }
       });
+    },
+    shuffleIndexes: context => {
+      const shuffledIndexes = shuffle(context.state.products).map(product => product.id);
+      context.commit('setShuffledIndexes', shuffledIndexes);
+      context.commit('setShuffled', true);
     },
     decrementProduct: (context, payload) => {
       const amount = payload.amount - 1 > 0 ? payload.amount - 1 : 0;
       context.commit('setActionProduct', payload.id);
       context.commit('setActionMessage', 'decrement');
       context.commit('setProduct', { ...payload, amount });
-      context.dispatch('startGetProductsInterval');
       context.dispatch('buy');
     },
     incrementProduct: (context, payload) => {
@@ -91,7 +99,6 @@ const store = new Vuex.Store({
       if (payload.stock > payload.amount) {
         context.commit('setProduct', { ...payload, amount: payload.amount + 1 });
         context.commit('setActionMessage', 'increment');
-        context.dispatch('stopGetProductsInterval');
         context.dispatch('buy');
       } else {
         context.commit('setActionMessage', 'maxStock');
@@ -125,7 +132,6 @@ const store = new Vuex.Store({
         context.commit('setProduct', { ...product, amount: 0 });
       });
       context.commit('setLoading', false);
-      context.dispatch('startGetProductsInterval');
     },
     cleanInvoice: context => {
       context.commit('setInvoice', {});
@@ -142,20 +148,6 @@ const store = new Vuex.Store({
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);
     },
-    startGetProductsInterval: context => {
-      if (context.getters.totalAmount === 0 && !context.state.intervalId) {
-        const interval = setInterval(() => {
-          context.dispatch('getProducts');
-        }, REFRESH_INTERVAL_TIME);
-        context.commit('setIntervalId', interval);
-      }
-    },
-    stopGetProductsInterval: context => {
-      if (context.state.intervalId) {
-        clearInterval(context.state.intervalId);
-        context.commit('setIntervalId', null);
-      }
-    },
     getGif: context => {
       invoiceApi.getGif().then((response) => {
         context.commit('setGif', response.gifUrl.gifUrl);
@@ -166,15 +158,31 @@ const store = new Vuex.Store({
         context.commit('setFeeBalance', response.feeBalance);
       });
     },
+    refreshProducts: context => {
+      context.commit('setShuffled', false);
+      context.dispatch('getProducts');
+    },
   },
   getters: {
     productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
     onSaleProducts: (state, getters) => (
       getters.productsAsArray.filter(product => product.forSale)
     ),
-    sortRandom: (state, getters) => (
-      shuffle(getters.onSaleProducts)
-    ),
+    sortRandom: (state, getters) => {
+      if (state.shuffled) {
+        return getters.restorePreviousOrder;
+      }
+
+      return shuffle(getters.onSaleProducts);
+    },
+    restorePreviousOrder: (state, getters) => {
+      const previousOrder = state.shuffledIndexes;
+      const reOrderedProducts = getters.onSaleProducts.sort(
+        (a, b) => previousOrder.indexOf(a.id) - previousOrder.indexOf(b.id)
+      );
+
+      return reOrderedProducts;
+    },
     sortByFee: (state, getters) => (
       getters.sortRandom.sort((a, b) => b.feeRate - a.feeRate)
     ),
