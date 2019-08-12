@@ -1,0 +1,62 @@
+<div class="main-page rankings-index">
+  <%= render 'shared/navigation' %>
+
+  <div class= "rankings-index__table-container">
+    <div class="rankings-index__header">
+      <h1 class="rankings-index__title"> Rankings </h1>
+    </div>
+    <h4>
+      Comisión Recaudada: <%= number_to_currency(
+        -@fee_balance,
+        unit: 'Satoshis',
+        format: '%n %u',
+        negative_format: '%n %u'
+      ) %>
+    </h4>
+    <% if @fee_balance > 0 %>
+      <table class="rankings-index__table">
+        <thead>
+          <tr>
+            <th class="rankings-index__table-header--width-rank"> Puesto </th>
+            <th class="rankings-index__table-header"> Usuario </th>
+            <th class="rankings-index__table-header--fixed-right"> Monto recaudado (Satoshis)</th>
+            <th class="rankings-index__table-header--fixed-right"> Monto recaudado del total (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each_with_index do |user, index| %>
+            <tr>
+              <td class="rankings-index__table-info--width-rank">
+                <%= index + 1 %>
+              </td>
+              <td>
+                <% if index == 0 %>
+                  <%= user.name %>
+                  <%= image_tag "mvp_crown.png", :class => "rankings-index__table-icon" %>
+                <% else %>
+                  <%= user.name%>
+                <% end %>
+              </td>
+              <td class="rankings-index__table-info--fixed-right">
+                <%= number_to_currency(
+                  user.collected_fee,
+                  unit: 'Satoshis',
+                  format: '%n'
+                ) %>
+              </td>
+              <td class="rankings-index__table-info--fixed-right">
+                <% if user.collected_fee > 0%>
+                  <%= number_to_percentage(@fee_balance / user.collected_fee * 100, precision: 1) %>
+                <% else %>
+                  0%
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="rankings-index__message">  El pozo de comisiones se encuetra vacío :( </p>
+    <% end %>
+  </div>
+</div>
