@@ -1,0 +1,58 @@
+$rankings-index-main-font-color: #383769;
+
+.rankings-index {
+  &__table-container {
+    margin: 30px 50px;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    color: $rankings-index-main-font-color;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: left;
+    margin-top: 40px;
+  }
+
+  &__table-header {
+    &--fixed-right {
+      text-align: right;
+    }
+
+    &--width-rank {
+      width: 10%;
+    }
+  }
+
+  &__table-info {
+    &--fixed-right {
+      text-align: right;
+    }
+
+    &--width-rank {
+      width: 10%;
+    }
+  }
+
+  &__table-icon {
+    height: 28px;
+    object-fit: contain;
+  }
+
+  &__message {
+    text-align: center;
+  }
+}
