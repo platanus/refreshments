@@ -22,6 +22,14 @@ RSpec.describe User, type: :model do
     it { should have_many(:withdrawals) }
   end
 
+  describe '#collected_fee' do
+    let(:user_with_collected_fee) { create(:user, :with_collected_fee) }
+
+    it 'returns correct collected_fee' do
+      expect(user_with_collected_fee.collected_fee).to eq(100)
+    end
+  end
+
   describe '#products_with_sales' do
     context 'user with 1 product and 0 invoices' do
       let(:products_with_sales) { user_with_product.products_with_sales }
