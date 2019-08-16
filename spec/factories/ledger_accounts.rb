@@ -23,6 +23,22 @@ FactoryBot.define do
       association :accountable, factory: :user
       category { 'available_funds' }
       balance { -1000 }
+
+      trait :with_fee_line do
+        transient do
+          invoice_product { create(:invoice_product) }
+        end
+
+        after(:create) do |account, evaluator|
+          create(
+            :ledger_line,
+            ledger_account: account,
+            accountable: evaluator.invoice_product,
+            category: 'fee',
+            amount: '100'
+          )
+        end
+      end
     end
   end
 end
