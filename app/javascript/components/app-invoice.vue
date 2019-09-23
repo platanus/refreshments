@@ -16,6 +16,21 @@
       >
         ${{ invoice.clp || 0 }} CLP
       </div>
+      <h3 class="invoice__title">
+        Recaudado
+      </h3>
+      <div
+        class="invoice__price"
+        :class="{ 'invoice__price--loading': loading}"
+      >
+        ${{ totalFee.clp }} CLP
+      </div>
+      <div
+        class="invoice__price"
+        :class="{ 'invoice__price--loading': loading}"
+      >
+        {{ totalFee.sat }} Satoshis
+      </div>
       <div
         class="invoice__copy"
         @click="copyPaymentRequest"
@@ -81,6 +96,7 @@ export default {
     ]),
     ...mapGetters({
       'totalPrice': 'totalPrice',
+      'totalFee': 'totalFee',
     }),
     statusVerbose() {
       return this.status ? '¡Pagado!' : 'Esperando pago...';
