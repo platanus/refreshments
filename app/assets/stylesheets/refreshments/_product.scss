@@ -32,6 +32,7 @@ $shadow-color: #10131e;
 
   &__product {
     display: flex;
+    position: relative;
     flex: 25% 0 0;
     flex-direction: column;
     font-size: 18px;
@@ -45,9 +46,17 @@ $shadow-color: #10131e;
       height: 100%;
       object-fit: contain;
 
-      &--framework {
-        position: relative;
-        bottom: 115%;
+      &--fee__rate {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 2.5em;
+        width: 2.5em;
+        line-height: 2.5em;
+        border-radius: 50%;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 5px 5px 1px #ddd;
       }
     }
 
