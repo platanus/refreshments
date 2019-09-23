@@ -55,7 +55,10 @@ $shadow-color: #10131e;
         line-height: 2.5em;
         border-radius: 50%;
         text-align: center;
-        background-color: #fff;
+        background-image: url(fire.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
         box-shadow: 0 5px 5px 1px #ddd;
       }
     }
