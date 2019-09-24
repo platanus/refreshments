@@ -79,12 +79,16 @@ $default-color: #676775;
     position: relative;
     text-align: left;
     font-weight: bold;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
   }
 
   &-total__value {
     position: absolute;
     right: 20px;
     top: 20px;
+
+    &.sat {
+      top: 0;
+    }
   }
 }

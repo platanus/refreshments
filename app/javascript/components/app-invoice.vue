@@ -28,39 +28,6 @@
           Pagado!
         </div>
       </transition>
-    </div>
-
-    <div class="invoice__resume">
-      <h3 class="invoice__title">
-        Resumen
-      </h3>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        {{ invoice.amount || 0 }} Satoshis
-      </div>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        ${{ invoice.clp || 0 }} CLP
-      </div>
-      <h3 class="invoice__title">
-        Recaudado
-      </h3>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        ${{ totalFee.clp }} CLP
-      </div>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        {{ totalFee.sat }} Satoshis
-      </div>
       <div
         class="invoice__copy"
         @click="copyPaymentRequest"

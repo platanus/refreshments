@@ -40,6 +40,15 @@
         <span class="resume-total__title">Total</span>
         <span class="resume-total__value">${{ totalPrice }}</span>
       </div>
+      <div class="resume-total">
+        <span class="resume-total__value sat">{{ invoice.amount || 0 }} Satoshis</span>
+      </div>
+      <div class="resume-total">
+        <span class="resume-total__title">Aporta para el asado</span>
+      </div>
+      <div class="resume-total">
+        <span class="resume-total__value sat">{{ totalFee.sat || 0 }} Satoshis</span>
+      </div>
     </div>
   </div>
 </template>
@@ -60,6 +69,7 @@ export default {
       'products': 'productsAsArray',
       'totalAmount': 'totalAmount',
       'totalPrice': 'totalPrice',
+      'totalFee': 'totalFee',
     }),
     cartProducts() {
       return this.products.filter(product => product.amount > 0);
