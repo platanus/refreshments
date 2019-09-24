@@ -34,19 +34,19 @@ $copy-icon-color: #fff;
   }
 
   &__resume {
-    flex: 1 0 0;
     padding: 10px;
     text-align: left;
-    height: 160px;
+    width: fit-content;
   }
 
   &__info {
-    flex: 1 0 0;
     margin: auto;
     position: relative;
   }
 
   &__price {
+    width: fit-content;
+
     &--loading {
       color: transparent;
       text-shadow: 0 0 5px rgba(0,0,0,0.5);

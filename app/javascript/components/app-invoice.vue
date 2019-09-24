@@ -1,5 +1,35 @@
 <template>
   <div class="invoice">
+    <div
+      class="invoice__info"
+      v-if="totalPrice > 0"
+    >
+      <loading v-if="loading" />
+      <transition
+        name="slide-fade"
+        v-else
+      >
+        <div
+          v-if="!status"
+          key="unpaid"
+        >
+          <qrcode
+            :value="invoice.paymentRequest"
+            :options="{ size: 160 }"
+            v-if="totalPrice > 0"
+          />
+        </div>
+        <div
+          v-else
+          key="slide-fade"
+          class="invoice-info--paid"
+        >
+          <font-awesome-icon icon="check-circle" />
+          Pagado!
+        </div>
+      </transition>
+    </div>
+
     <div class="invoice__resume">
       <h3 class="invoice__title">
         Resumen
@@ -43,33 +73,6 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
-    </div>
-
-    <div class="invoice__info">
-      <loading v-if="loading" />
-      <transition
-        name="slide-fade"
-        v-else
-      >
-        <div
-          v-if="!status"
-          key="unpaid"
-        >
-          <qrcode
-            :value="invoice.paymentRequest"
-            :options="{ size: 160 }"
-            v-if="totalPrice > 0"
-          />
-        </div>
-        <div
-          v-else
-          key="slide-fade"
-          class="invoice-info--paid"
-        >
-          <font-awesome-icon icon="check-circle" />
-          Pagado!
-        </div>
-      </transition>
     </div>
   </div>
 </template>
