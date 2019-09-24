@@ -198,8 +198,8 @@ const store = new Vuex.Store({
       return getters.productsAsArray.reduce((acc, product) => {
         const clp = acc.clp + product.feeRate * product.price * product.amount;
         return {
-          clp,
-          sat: clp * satoshiValue,
+          clp: Math.round(clp),
+          sat: Math.round(clp * satoshiValue),
         };
       }, { clp: 0, sat: 0 });
     },
