@@ -10,12 +10,12 @@
     <span class="product__price">${{ product.price }}</span>
     <div
       v-if="isFeaturedProduct"
-      class="product__image product__image__fee-rate"
+      class="product__image product__fee-rate"
     >
-      <label class="product__image__fee-rate__label">
+      <label class="product__fee-rate__label">
         {{ product.feeRate * 100 }}%
       </label>
-      <div class="product__image__fee-rate__icon"/>
+      <div class="product__fee-rate__icon"/>
     </div>
   </v-touch>
 </template>
