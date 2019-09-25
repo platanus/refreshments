@@ -37,17 +37,16 @@
         </v-touch>
       </div>
       <div class="resume-total">
-        <span class="resume-total__title">Total</span>
-        <span class="resume-total__value">${{ totalPrice }}</span>
+        <span class="resume-total__title">Total (CLP)</span>
+        <span class="resume-total__value">$ {{ totalPrice }}</span>
       </div>
       <div class="resume-total">
-        <span class="resume-total__value sat">{{ invoice.amount || 0 }} Satoshis</span>
+        <span class="resume-total__title">Total (SAT)</span>
+        <span class="resume-total__value">S {{ invoice.amount || 0 }}</span>
       </div>
-      <div class="resume-total">
-        <span class="resume-total__title">Aporta para el asado</span>
-      </div>
-      <div class="resume-total">
-        <span class="resume-total__value sat">{{ totalFee.sat || 0 }} Satoshis</span>
+      <div class="resume-total fee">
+        <span class="resume-total__title">Aporte al asado</span>
+        <span class="resume-total__value fee">S {{ totalFee.sat || 0 }}</span>
       </div>
     </div>
   </div>

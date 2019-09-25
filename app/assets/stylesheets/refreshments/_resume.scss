@@ -74,21 +74,25 @@ $default-color: #676775;
   &-total {
     color: $alt-color;
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 24px;
     position: relative;
     text-align: left;
     font-weight: bold;
-    padding: 20px 20px 0 20px;
+    padding: 10px 0 0 15px;
+
+    &.fee {
+      padding-top: 20px;
+    }
   }
 
   &-total__value {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 15px;
+    top: 10px;
 
-    &.sat {
-      top: 0;
+    &.fee {
+      top: 20px;
     }
   }
 }
