@@ -42,11 +42,21 @@
       </div>
       <div class="resume-total">
         <span class="resume-total__title">Total (SAT)</span>
-        <span class="resume-total__value">S {{ invoice.amount || 0 }}</span>
+        <span
+          class="resume-total__value"
+          :class="{ 'loading__value': loading}"
+        >
+          S {{ invoice.amount || 0 }}
+        </span>
       </div>
       <div class="resume-total fee">
         <span class="resume-total__title">Aporte al asado</span>
-        <span class="resume-total__value fee">S {{ totalFee.sat || 0 }}</span>
+        <span
+          class="resume-total__value fee"
+          :class="{ 'loading__value': loading}"
+        >
+          S {{ totalFee.sat || 0 }}
+        </span>
       </div>
     </div>
   </div>
@@ -63,6 +73,7 @@ export default {
     ...mapState([
       'showResume',
       'invoice',
+      'loading',
     ]),
     ...mapGetters({
       'products': 'productsAsArray',
