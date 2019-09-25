@@ -1,6 +1,7 @@
 $border-color: #eee;
 $title-color: #383769;
 $alt-color: #ff4343;
+$fee-color: #45aa34;
 $default-color: #676775;
 
 .resume {
@@ -83,6 +84,7 @@ $default-color: #676775;
 
     &.fee {
       padding-top: 20px;
+      color: $fee-color;
     }
   }
 
