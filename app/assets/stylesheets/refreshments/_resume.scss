@@ -84,7 +84,7 @@ $default-color: #676775;
     font-weight: bold;
     padding: 10px 0 0 15px;
 
-    &.fee {
+    &--fee {
       padding-top: 20px;
       color: $fee-color;
     }
@@ -95,17 +95,17 @@ $default-color: #676775;
     right: 15px;
     top: 10px;
 
-    &.loading__value {
+    &--loading {
       color: $alt-color-transparent;
       text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
 
-    &.fee {
+    &--fee {
       top: 20px;
+    }
 
-      &.loading__value {
-        color: $fee-color-transparent;
-      }
+    &--loading#{&}--fee {
+      color: $fee-color-transparent;
     }
   }
 }

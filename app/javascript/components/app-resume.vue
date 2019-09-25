@@ -44,16 +44,16 @@
         <span class="resume-total__title">Total (SAT)</span>
         <span
           class="resume-total__value"
-          :class="{ 'loading__value': loading}"
+          :class="{ 'resume-total__value--loading': loading}"
         >
           S {{ invoice.amount || 0 }}
         </span>
       </div>
-      <div class="resume-total fee">
+      <div class="resume-total resume-total--fee">
         <span class="resume-total__title">Aporte al asado</span>
         <span
-          class="resume-total__value fee"
-          :class="{ 'loading__value': loading}"
+          class="resume-total__value resume-total__value--fee"
+          :class="{ 'resume-total__value--loading': loading}"
         >
           S {{ totalFee.sat || 0 }}
         </span>
