@@ -1,9 +1,9 @@
 $border-color: #eee;
 $title-color: #383769;
 $alt-color: #ff4343;
-$alt-color-transparent: rgba(255, 67, 67, 0.5);
+$alt-color-transparent: rgba(255, 67, 67, .5);
 $fee-color: #45aa34;
-$fee-color-transparent: rgba(70, 170, 52, 0.5);
+$fee-color-transparent: rgba(70, 170, 52, .5);
 $default-color: #676775;
 
 .resume {
@@ -97,7 +97,7 @@ $default-color: #676775;
 
     &--loading {
       color: $alt-color-transparent;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 0 5px rgba(0, 0, 0, .5);
     }
 
     &--fee {
