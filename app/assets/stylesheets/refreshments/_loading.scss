@@ -4,7 +4,7 @@ $loading-color: #ffc107c2;
   margin: 10px auto;
   width: 160px;
   height: 160px;
-  background-image: url('loading.gif');
+  background-image: asset-url('loading.gif');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
