@@ -74,6 +74,7 @@ const store = new Vuex.Store({
           return acc;
         }, {});
         context.commit('setProducts', products);
+        context.dispatch('cleanInvoice');
         if (!context.state.shuffled) {
           context.dispatch('shuffleIndexes');
         }
