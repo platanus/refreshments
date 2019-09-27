@@ -59,38 +59,48 @@ $default-color: #676775;
     color: rgba($alt-color, 0.63);
     text-transform: uppercase;
   }
+}
 
-  &-product__price {
+.resume-product {
+  &__price {
     flex: 20% 1 1;
   }
 
-  &-product__name {
+  &__name {
     flex: 60% 1 1;
   }
 
-  &-product__total {
+  &__total {
     flex: 30% 1 1;
     font-size: 14px;
     text-align: right;
   }
+}
 
-  &-total {
-    color: $alt-color;
-    text-transform: uppercase;
-    font-size: 15px;
-    line-height: 24px;
-    position: relative;
-    text-align: left;
-    font-weight: bold;
-    padding: 10px 0 0 15px;
+.resume-total {
+  color: $alt-color;
+  text-transform: uppercase;
+  font-size: 15px;
+  line-height: 24px;
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+  padding: 10px 0 0 15px;
 
-    &--fee {
-      padding-top: 20px;
-      color: $fee-color;
+  &--fee {
+    padding-top: 20px;
+    color: $fee-color;
+
+    .resume-total__value {
+      top: 20px;
+
+      &--loading {
+        color: $fee-color-transparent;
+      }
     }
   }
 
-  &-total__value {
+  &__value {
     position: absolute;
     right: 15px;
     top: 10px;
@@ -98,14 +108,6 @@ $default-color: #676775;
     &--loading {
       color: $alt-color-transparent;
       text-shadow: 0 0 5px rgba(0, 0, 0, .5);
-    }
-
-    &--fee {
-      top: 20px;
-    }
-
-    &--loading#{&}--fee {
-      color: $fee-color-transparent;
     }
   }
 }
