@@ -62,7 +62,7 @@ $shadow-color: #10131e;
       background-color: #fff;
 
       &__icon {
-        background-image: url('bbq.png');
+        background-image: asset-url('bbq.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
