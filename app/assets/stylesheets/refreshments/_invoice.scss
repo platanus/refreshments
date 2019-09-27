@@ -15,42 +15,16 @@ $copy-icon-color: #fff;
 
 .invoice {
   font-size: 18px;
-  padding: 10px;
+  padding: 10px 0;
   height: 250px;
   margin: auto;
   overflow: scroll;
   position: relative;
-  display: flex;
   border-top: 1px solid $border-color;
 
-  &__title {
-    height: 28px;
-    color: $title-color;
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 0.6px;
-    line-height: 28px;
-    margin-top: 0;
-  }
-
-  &__resume {
-    flex: 1 0 0;
-    padding: 10px;
-    text-align: left;
-    height: 160px;
-  }
-
   &__info {
-    flex: 1 0 0;
     margin: auto;
     position: relative;
-  }
-
-  &__price {
-    &--loading {
-      color: transparent;
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    }
   }
 
   &__status {
@@ -65,13 +39,13 @@ $copy-icon-color: #fff;
   }
 
   &__copy {
-    width: 100%;
     display: flex;
+    width: fit-content;
+    margin: auto;
   }
 
   &__copy-value {
     border: 1px solid $border-color;
-    flex: 0 0 100px;
     max-width: 100px;
     text-overflow: ellipsis;
     overflow: hidden;

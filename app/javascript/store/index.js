@@ -192,6 +192,21 @@ const store = new Vuex.Store({
     totalAmount: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.amount, 0)
     ),
+    totalFee: (state, getters) => {
+      const { clp, amount } = state.invoice;
+      const satoshiValue = amount && clp ? amount / clp : 0;
+
+      const totalClp = getters.productsAsArray.reduce((acc, product) => {
+        const actualFee = product.feeRate * product.price * product.amount;
+
+        return Math.round(acc + actualFee);
+      }, 0);
+
+      return {
+        clp: totalClp,
+        sat: Math.round(totalClp * satoshiValue),
+      };
+    },
     totalPrice: (state, getters) => (
       getters.onSaleProducts.reduce((acc, product) => acc + product.price * product.amount, 0)
     ),

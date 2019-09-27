@@ -8,11 +8,15 @@
       :src="product.imageUrl"
     >
     <span class="product__price">${{ product.price }}</span>
-    <img
+    <div
       v-if="isFeaturedProduct"
-      class="product__image product__image--framework"
-      src="~/assets/images/platanus-highlight.png"
+      class="fee-rate"
     >
+      <label class="fee-rate__label">
+        {{ product.feeRate * 100 }}%
+      </label>
+      <div class="fee-rate__icon"/>
+    </div>
   </v-touch>
 </template>
 <script>

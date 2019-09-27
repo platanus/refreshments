@@ -37,8 +37,26 @@
         </v-touch>
       </div>
       <div class="resume-total">
-        <span class="resume-total__title">Total</span>
-        <span class="resume-total__value">${{ totalPrice }}</span>
+        <span class="resume-total__title">Total (CLP)</span>
+        <span class="resume-total__value">$ {{ totalPrice }}</span>
+      </div>
+      <div class="resume-total">
+        <span class="resume-total__title">Total (SAT)</span>
+        <span
+          class="resume-total__value"
+          :class="{ 'resume-total__value--loading': loading}"
+        >
+          S {{ invoice.amount || 0 }}
+        </span>
+      </div>
+      <div class="resume-total resume-total--fee">
+        <span class="resume-total__title">Aporte al asado</span>
+        <span
+          class="resume-total__value"
+          :class="{ 'resume-total__value--loading': loading}"
+        >
+          S {{ totalFee.sat || 0 }}
+        </span>
       </div>
     </div>
   </div>
@@ -55,11 +73,13 @@ export default {
     ...mapState([
       'showResume',
       'invoice',
+      'loading',
     ]),
     ...mapGetters({
       'products': 'productsAsArray',
       'totalAmount': 'totalAmount',
       'totalPrice': 'totalPrice',
+      'totalFee': 'totalFee',
     }),
     cartProducts() {
       return this.products.filter(product => product.amount > 0);

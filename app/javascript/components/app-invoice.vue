@@ -1,36 +1,9 @@
 <template>
   <div class="invoice">
-    <div class="invoice__resume">
-      <h3 class="invoice__title">
-        Resumen
-      </h3>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        {{ invoice.amount || 0 }} Satoshis
-      </div>
-      <div
-        class="invoice__price"
-        :class="{ 'invoice__price--loading': loading}"
-      >
-        ${{ invoice.clp || 0 }} CLP
-      </div>
-      <div
-        class="invoice__copy"
-        @click="copyPaymentRequest"
-        v-if="showCopy"
-      >
-        <div class="invoice__copy-value">
-          {{ invoice.paymentRequest }}
-        </div>
-        <span class="invoice__copy-icon">
-          <font-awesome-icon icon="clipboard" />
-        </span>
-      </div>
-    </div>
-
-    <div class="invoice__info">
+    <div
+      class="invoice__info"
+      v-if="totalPrice > 0"
+    >
       <loading v-if="loading" />
       <transition
         name="slide-fade"
@@ -55,6 +28,18 @@
           Pagado!
         </div>
       </transition>
+      <div
+        class="invoice__copy"
+        @click="copyPaymentRequest"
+        v-if="showCopy"
+      >
+        <div class="invoice__copy-value">
+          {{ invoice.paymentRequest }}
+        </div>
+        <span class="invoice__copy-icon">
+          <font-awesome-icon icon="clipboard" />
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +66,7 @@ export default {
     ]),
     ...mapGetters({
       'totalPrice': 'totalPrice',
+      'totalFee': 'totalFee',
     }),
     statusVerbose() {
       return this.status ? '¡Pagado!' : 'Esperando pago...';
