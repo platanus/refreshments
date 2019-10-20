@@ -49,9 +49,10 @@ end
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  product_price :integer          not null
+#  product_id    :bigint(8)
 #  product_fee   :integer          default(0), not null
 #  fee_rate      :decimal(, )      default(0.0), not null
-#  product_id    :bigint(8)
+#  dispensed     :boolean          default(FALSE)
 #
 # Indexes
 #
