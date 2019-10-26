@@ -4,7 +4,7 @@ gem 'aasm'
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'active_skin'
 gem 'active_storage_validations'
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin', '~> 2.1'
 gem 'activeadmin_addons'
 gem "aws-sdk-s3"
 gem 'bootstrap'
