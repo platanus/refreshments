@@ -13,6 +13,7 @@ jobs:
     - run: docker info
     - run: docker-compose -f docker-compose.ci.yml pull
     - run: docker-compose -f docker-compose.ci.yml build test
+    - run: docker-compose -f docker-compose.ci.yml run test gem install bundler -v $(cat Gemfile.lock | tail -1 | tr -d " ")
     - run: bin/cibuild services
     - run: bin/cibuild deps
 
