@@ -42,6 +42,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     before do
       allow(InvoiceUtils).to receive(:status).with(r_hash).and_return(true)
       allow(SettleInvoiceJob).to receive(:perform_later).with(r_hash)
+      allow(DispenseProductsJob).to receive(:perform_later).with(r_hash)
     end
 
     it 'returns http success' do
@@ -57,6 +58,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     it 'calls SettleInvoiceJob' do
       get :status, params: { r_hash: 'r_hash' }, as: :json
       expect(SettleInvoiceJob).to have_received(:perform_later).with(r_hash)
+    end
+
+    it 'calls DispenseProductsJob' do
+      get :status, params: { r_hash: 'r_hash' }, as: :json
+      expect(DispenseProductsJob).to have_received(:perform_later).with(r_hash)
     end
   end
 end
