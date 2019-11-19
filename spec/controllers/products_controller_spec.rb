@@ -211,32 +211,34 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    context 'unauthenticated user' do
+    context 'when is an unauthenticated user' do
       it 'redirects to sign up form' do
         get :edit, params: { id: 5 }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
 
-    context 'authenticated user' do
+    context 'when is an authenticated user' do
       let(:user) { create(:user_with_product) }
-      let(:product) { user.products.first }
+      let(:user_product) { user.products.first }
+      let(:product) { create(:product) }
+
       before { mock_authentication }
 
-      context 'product exists and belongs to user' do
-        before { get :edit, params: { id: product.id } }
+      context 'when product exists and belongs to user' do
+        before { get :edit, params: { id: user_product.id } }
 
         it { expect(assigns(:product)).to be_a(Product) }
-        it { expect(assigns(:product)).to have_attributes(id: product.id) }
+        it { expect(assigns(:product)).to have_attributes(id: user_product.id) }
 
         it 'returns correct "edit" view' do
           expect(response).to render_template('products/edit')
         end
       end
 
-      context 'product doesnt exists in users scope' do
+      context 'when product doesnt exists in users scope' do
         it 'returns 404 error' do
-          expect { get(:edit, params: { id: 100 }) }
+          expect { get(:edit, params: { id: product.id }) }
             .to raise_error(ActiveRecord::RecordNotFound)
         end
       end

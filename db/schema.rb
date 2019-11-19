@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_155914) do
+ActiveRecord::Schema.define(version: 2019_10_27_215447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_155914) do
     t.bigint "product_id"
     t.integer "product_fee", default: 0, null: false
     t.decimal "fee_rate", default: "0.0", null: false
+    t.boolean "dispensed", default: false
     t.index ["invoice_id"], name: "index_invoice_products_on_invoice_id"
     t.index ["product_id"], name: "index_invoice_products_on_product_id"
   end
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_155914) do
     t.string "name"
     t.integer "category", default: 2, null: false
     t.decimal "fee_rate", default: "0.0", null: false
+    t.string "webhook_url"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 

@@ -6,6 +6,7 @@ class InvoiceProduct < ApplicationRecord
   belongs_to :invoice
 
   scope :settled, -> { joins(:invoice).merge(Invoice.settled) }
+  scope :undispensed, -> { where(dispensed: false, product: Product.where.not(webhook_url: nil)) }
 
   before_validation :fix_product_price_and_fee, on: :create
 
@@ -49,9 +50,10 @@ end
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  product_price :integer          not null
+#  product_id    :bigint(8)
 #  product_fee   :integer          default(0), not null
 #  fee_rate      :decimal(, )      default(0.0), not null
-#  product_id    :bigint(8)
+#  dispensed     :boolean          default(FALSE)
 #
 # Indexes
 #

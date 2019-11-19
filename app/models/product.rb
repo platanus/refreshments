@@ -31,16 +31,17 @@ end
 #
 # Table name: products
 #
-#  id         :bigint(8)        not null, primary key
-#  user_id    :bigint(8)        not null
-#  price      :integer          not null
-#  stock      :integer          not null
-#  active     :boolean          default(TRUE)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  name       :string
-#  category   :integer          default("other"), not null
-#  fee_rate   :decimal(, )      default(0.0), not null
+#  id          :bigint(8)        not null, primary key
+#  user_id     :bigint(8)        not null
+#  price       :integer          not null
+#  stock       :integer          not null
+#  active      :boolean          default(TRUE)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  name        :string
+#  category    :integer          default("other"), not null
+#  fee_rate    :decimal(, )      default(0.0), not null
+#  webhook_url :string
 #
 # Indexes
 #
