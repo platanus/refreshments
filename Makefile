@@ -53,8 +53,8 @@ services-port:
 	docker-compose $(DOCKER_COMPOSE_ARGS) port ${SERVICE} ${PORT} 2> /dev/null | cut -d':' -f2 || echo ${PORT}
 
 services-exec-lnd:
-	@echo "Always use the ${BOLD}--no-macaroons${NORMAL} flag"
-	@echo "For example ${BOLD}lncli --no-macaroon getinfo${NORMAL}"
+	@echo "Always use the ${BOLD}--network testnet${NORMAL} flag"
+	@echo "For example ${BOLD}lncli --bitcoin.testnet getinfo${NORMAL}"
 	@echo ""
 	@echo For help:
 	@echo "${BOLD}lncli --help${NORMAL}"
@@ -64,10 +64,13 @@ services-exec-lnd:
 
 # Lightning
 lnd-create:
-	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons create
+	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --network testnet create
 
 lnd-unlock:
-	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons unlock
+	docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --network testnet unlock
 
 lnd-pubkey:
-	@docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --no-macaroons getinfo | jq '.identity_pubkey'
+	@docker-compose $(DOCKER_COMPOSE_ARGS) exec lnd lncli --network testnet getinfo | jq '.identity_pubkey'
+
+lnd-get-macaroon:
+	docker cp $(shell docker-compose ${DOCKER_COMPOSE_ARGS} ps -q lnd):/root/.lnd/data/chain/bitcoin/testnet/admin.macaroon admin.macaroon
