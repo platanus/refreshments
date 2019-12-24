@@ -40,6 +40,7 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
+      <div><button type="button">No funciona :( ?</button></div>
     </div>
   </div>
 </template>

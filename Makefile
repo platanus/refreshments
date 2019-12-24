@@ -74,3 +74,17 @@ lnd-pubkey:
 
 lnd-get-macaroon:
 	docker cp $(shell docker-compose ${DOCKER_COMPOSE_ARGS} ps -q lnd):/root/.lnd/data/chain/bitcoin/testnet/admin.macaroon admin.macaroon
+
+backup-staging: ROLE=staging
+backup-production: ROLE=production
+backup-%:
+	@echo Capturing $(ROLE)....
+	@heroku pg:backups:capture --remote $(ROLE)
+restore-from-staging: ROLE=staging
+restore-from-production: ROLE=production
+restore-from-%:
+	$(eval TEMP_FILE=$(shell mktemp))
+	@echo Restoring from $(ROLE)....
+	@heroku pg:backups:download --remote $(ROLE) --output $(TEMP_FILE)
+	@pg_restore --verbose --clean --no-acl --no-owner -h localhost \
+		-U postgres -p $(shell make services-port SERVICE=postgresql PORT=5432) -d $(PROJECT)_development $(TEMP_FILE)
