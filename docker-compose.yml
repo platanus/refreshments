@@ -26,11 +26,10 @@ services:
       - 8080
     entrypoint: lnd
     command:
-      - --no-macaroons
       - --bitcoin.active
       - --debuglevel=debug
-      - --restlisten=127.0.0.1:8080
-      - --rpclisten=127.0.0.1:10009
+      - --restlisten=0.0.0.0:8080
+      - --rpclisten=0.0.0.0:10009
       - --bitcoin.testnet
       - --bitcoin.node=neutrino
       - --neutrino.connect=faucet.lightning.community
