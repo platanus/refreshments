@@ -1,5 +1,8 @@
 <template>
   <div class="invoice">
+    <modal name="apology-modal">
+      Disculpe las molestias :(
+    </modal>
     <div
       class="invoice__info"
       v-if="totalPrice > 0"
@@ -40,7 +43,15 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
-      <div><button type="button">No funciona :( ?</button></div>
+      <div>
+        <button
+          type="button"
+          class="btn"
+          @click="show"
+        >
+          No funciona :c ?
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -105,6 +116,12 @@ export default {
           this.close();
         }, CLOSE_AFTER_SUCCESSFUL_BUY_WAIT);
       }
+    },
+    show() {
+      this.$modal.show('apology-modal');
+    },
+    hide() {
+      this.$modal.hide('apology-modal');
     },
   },
   mounted() {
