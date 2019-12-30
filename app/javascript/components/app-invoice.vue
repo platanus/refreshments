@@ -1,7 +1,10 @@
 <template>
   <div class="invoice">
     <modal name="apology-modal">
-      Disculpe las molestias :(
+      <div class="invoice__apology-modal-text">
+        <h1>Error en el pago</h1>
+        Disculpe las molestias :(, lo vamos a revisar para que puedas pagar en el futuro
+      </div>
     </modal>
     <div
       class="invoice__info"
@@ -43,13 +46,13 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
-      <div>
+      <div class="invoice__error-btn ">
         <button
           type="button"
           class="btn"
           @click="show"
         >
-          No funciona :c ?
+          ¿No funciona?
         </button>
       </div>
     </div>
@@ -63,6 +66,7 @@ import invoiceApi from '../api/invoices';
 
 const LENOVO_TAB_4_WIDTH = 1000;
 const CLOSE_AFTER_SUCCESSFUL_BUY_WAIT = 10000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 7000;
 
 export default {
   components: {
@@ -121,6 +125,9 @@ export default {
     show() {
       this.$modal.show('apology-modal');
       invoiceApi.notifyPaymentError();
+      setTimeout(() => {
+        this.$modal.hide('apology-modal');
+      }, CLOSE_MODAL_AFTER_IDLE_WAIT);
     },
     hide() {
       this.$modal.hide('apology-modal');
