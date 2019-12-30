@@ -28,4 +28,13 @@ export default {
       url: path,
     });
   },
+
+  notifyPaymentError() {
+    const path = '/api/v1/notify_payment_error';
+
+    return api({
+      method: 'get',
+      url: path,
+    });
+  },
 };

@@ -59,6 +59,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import loading from './loading.vue';
+import invoiceApi from '../api/invoices';
 
 const LENOVO_TAB_4_WIDTH = 1000;
 const CLOSE_AFTER_SUCCESSFUL_BUY_WAIT = 10000;
@@ -119,6 +120,7 @@ export default {
     },
     show() {
       this.$modal.show('apology-modal');
+      invoiceApi.notifyPaymentError();
     },
     hide() {
       this.$modal.hide('apology-modal');
