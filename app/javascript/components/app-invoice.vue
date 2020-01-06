@@ -1,11 +1,5 @@
 <template>
   <div class="invoice">
-    <modal name="apology-modal">
-      <div class="invoice__apology-modal-text">
-        <h1>Error en el pago</h1>
-        Disculpe las molestias :(, lo vamos a revisar para que puedas pagar en el futuro
-      </div>
-    </modal>
     <div
       class="invoice__info"
       v-if="totalPrice > 0"
@@ -46,15 +40,7 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
-      <div class="invoice__error-btn ">
-        <button
-          type="button"
-          class="btn"
-          @click="show"
-        >
-          ¿No funciona?
-        </button>
-      </div>
+      <errorNotification v-if="!loading" />
     </div>
   </div>
 </template>
@@ -62,15 +48,15 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import loading from './loading.vue';
-import invoiceApi from '../api/invoices';
+import errorNotification from './payment-error-button.vue';
 
 const LENOVO_TAB_4_WIDTH = 1000;
 const CLOSE_AFTER_SUCCESSFUL_BUY_WAIT = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 7000;
 
 export default {
   components: {
     loading,
+    errorNotification,
   },
   data: function () {
     return {}
@@ -121,16 +107,6 @@ export default {
           this.close();
         }, CLOSE_AFTER_SUCCESSFUL_BUY_WAIT);
       }
-    },
-    show() {
-      this.$modal.show('apology-modal');
-      invoiceApi.notifyPaymentError();
-      setTimeout(() => {
-        this.$modal.hide('apology-modal');
-      }, CLOSE_MODAL_AFTER_IDLE_WAIT);
-    },
-    hide() {
-      this.$modal.hide('apology-modal');
     },
   },
   mounted() {
