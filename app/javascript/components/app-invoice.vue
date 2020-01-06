@@ -1,5 +1,6 @@
 <template>
   <div class="invoice">
+    <errorNotification v-if="!loading" />
     <div
       class="invoice__info"
       v-if="totalPrice > 0"
@@ -40,7 +41,6 @@
           <font-awesome-icon icon="clipboard" />
         </span>
       </div>
-      <errorNotification v-if="!loading" />
     </div>
   </div>
 </template>
