@@ -1,6 +1,6 @@
 <template>
   <div class="invoice">
-    <errorNotification v-if="!loading" />
+    <errorNotification v-if="!loading && invoice.paymentRequest" />
     <div
       class="invoice__info"
       v-if="totalPrice > 0"
