@@ -145,6 +145,7 @@ const store = new Vuex.Store({
     },
     testInvoice: context => {
       context.commit('setInvoiceSettled', true);
+      context.commit('setInvoice', { settled: true });
     },
     setLoading: (context, payload) => {
       context.commit('setLoading', payload);

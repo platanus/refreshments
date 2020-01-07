@@ -10,6 +10,7 @@ import VueTouch from 'vue-touch';
 import VueProgress from 'vue-progress-path';
 import VueFlashMessage from 'vue-flash-message';
 import VModal from 'vue-js-modal';
+import ActionCableVue from 'actioncable-vue';
 
 import App from '../app.vue';
 import store from '../store';
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.component('font-awesome-layers', FontAwesomeLayers);
   Vue.component('font-awesome-layers-text', FontAwesomeLayersText);
   Vue.component(VueQrcode.name, VueQrcode);
+  Vue.use(ActionCableVue, {connectionUrl: '/cable'});
   Vue.use(VModal);
   Vue.use(VueClipboard);
   Vue.use(VueTouch, { name: 'v-touch' });

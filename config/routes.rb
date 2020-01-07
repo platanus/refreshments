@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root 'pages#welcome'
   get 'buy', to: 'pages#buy'
   scope path: '/api' do
