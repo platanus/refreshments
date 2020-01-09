@@ -5,6 +5,16 @@
         <h1>Error en el pago</h1>
         Disculpe las molestias :(, lo vamos a revisar para que puedas pagar en el futuro
       </div>
+      <div
+        class="invoice__apology-modal-debtn"
+      >
+        <button
+          type="button"
+          class="btn"
+        >
+          Fiar
+        </button>
+      </div>
     </modal>
     <div class="invoice__error-btn ">
       <button
@@ -39,9 +49,6 @@ export default {
       setTimeout(() => {
         this.$modal.hide('apology-modal');
       }, CLOSE_MODAL_AFTER_IDLE_WAIT);
-    },
-    hide() {
-      this.$modal.hide('apology-modal');
     },
   },
   mounted() {

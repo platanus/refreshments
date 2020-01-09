@@ -34,6 +34,13 @@ $copy-icon-color: #fff;
     padding-top: 80px;
   }
 
+  &__apology-modal-debtn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
+
   &__info {
     margin: auto;
     position: relative;
