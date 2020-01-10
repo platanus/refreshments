@@ -1,0 +1,47 @@
+.debt-product-list {
+  display: table;
+
+  &__info {
+    display: table-row;
+  }
+
+  &__title {
+    display: table-row;
+  }
+
+  &__total {
+    display: table-cell;
+  }
+
+  &__name {
+    display: table-cell;
+    padding-right: 80px;
+  }
+
+  &__amount {
+    display: table-cell;
+    padding-right: 40px;
+  }
+
+}
+
+
+.debt-total {
+  display: table-row;
+
+  &__title {
+    display: table-cell;
+    padding-right: 180px;
+  }
+
+  &__value {
+    display: table-cell;
+    padding-left: 10px;
+    text-align: right;
+  }
+
+  &__void-cell {
+    display: table-cell;
+  }
+}
+
