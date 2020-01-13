@@ -1,17 +1,18 @@
 <template>
   <div class="payment-error-button">
     <modal name="apology-modal">
+      <div class="invoice__apology-modal-flexbox">
       <div class="invoice__apology-modal-text">
-        <div v-if="showApologyText">
-          <h1> Error en el pago </h1>
+        <div class="invoice__apology-modal-text-first" v-if="showApologyText">
+          <h5> Error en el pago </h5>
           Disculpe las molestias :(, lo vamos a revisar para que puedas pagar en el futuro
         </div>
-        <div v-if="showCartOnDebtModal">
-          <h1> Productos </h1>
+        <div class="invoice__apology-modal-text-second" v-if="showCartOnDebtModal">
+          <h5> Productos </h5>
           <cartProducts/>
         </div>
         <div v-if="showDebtFinalMessage">
-          <h1> Listo! </h1>
+          <h5> Listo! </h5>
           Recuerda pagarle al vendedor cuando puedas :)
         </div>
       </div>
@@ -39,6 +40,7 @@
         > Confirmar
         </button>
       </div>
+      </div>
     </modal>
     <div class="invoice__error-btn ">
       <button
@@ -60,7 +62,7 @@ import invoiceApi from '../api/invoices';
 import cartProducts from './cart-products.vue';
 
 const SHOW_APOLOGY_BUTTON = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 10000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 100000000;
 
 export default {
   components: {
