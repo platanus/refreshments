@@ -3,6 +3,7 @@
   overflow: scroll;
   height: 150px;
   display: block;
+  overscroll-behavior-y: contain;
 
   &__info {
     display: table-row;
