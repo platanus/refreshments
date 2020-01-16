@@ -80,6 +80,7 @@ export default {
       showNameTextBox: false,
       showApologyText: true,
       showDebtFinalMessage: false,
+      message: '',
     };
   },
   computed: {
@@ -116,7 +117,21 @@ export default {
       this.showCartOnDebtModal = false;
       this.showNameTextBox = false;
       this.showDebtFinalMessage = true;
+      const products = this.cartProductsToReqFormat();
+      console.log(this.cartProductsToReqFormat);
+      invoiceApi.createDebtProduct({
+        "debtor": this.message,
+        "products": products,
+       });
     },
+      cartProductsToReqFormat() {
+        const productsArray = this.products.filter(product => product.amount > 0);
+        let productsToReqFormatArray = [];
+        productsArray.forEach(prod => {
+          productsToReqFormatArray.push({ "product_id": prod.id, "product_price": prod.price });
+        });
+        return productsToReqFormatArray;
+      },
   },
   mounted() {
     setTimeout(() => {
