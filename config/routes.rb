@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get '/satoshi_price', to: 'prices#satoshi_price'
       get '/gif', to: 'gifs#show_random'
       get '/notify_payment_error', to: 'sentry#notify_payment_error'
-      post '/create_debt_product', to: 'debt_products#create_debt_product'
+      put '/debt_products', to: 'debt_products#debt_products'
       get '/statistics/fee_balance'
     end
   end

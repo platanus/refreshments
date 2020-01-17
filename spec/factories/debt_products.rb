@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :debt_product do
-    debtor { "MyString" }
-    product_id { "" }
+    sequence(:debtor) { |n| "debtor_#{n}" }
     product_price { 1 }
+    product
   end
 end

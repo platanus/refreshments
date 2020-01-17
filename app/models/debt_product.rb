@@ -1,5 +1,5 @@
 class DebtProduct < ApplicationRecord
-  validate :debtor, :product_id, :product_price
+  validates :debtor, :product_id, :product_price, presence: true
 
   belongs_to :product
 end

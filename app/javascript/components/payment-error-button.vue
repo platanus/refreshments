@@ -3,47 +3,50 @@
     <modal name="apology-modal">
       <div class="invoice__apology-modal-flexbox">
         <div class="invoice__apology-modal-text">
-          <div class="invoice__apology-modal-text-first"
+          <div
+            class="invoice__apology-modal-text-first"
             v-if="showApologyText"
           >
             <h5> Error en el pago </h5>
             Disculpe las molestias :(, lo vamos a revisar para que puedas pagar en el futuro
           </div>
-          <div class="invoice__apology-modal-text-second"
+          <div
+            class="invoice__apology-modal-text-second"
             v-if="showCartOnDebtModal"
           >
             <h5> Productos </h5>
-            <cartProducts/>
+            <cartProducts />
           </div>
           <div v-if="showDebtFinalMessage">
             <h5> Listo! </h5>
             Recuerda pagarle al vendedor cuando puedas :)
           </div>
         </div>
-      <div
-        class="invoice__apology-modal-debtn"
-      >
-        <button
-          type="button"
-          class="btn"
-          v-if="showDebtButton"
-          @click="debtorNameInput"
+        <div
+          class="invoice__apology-modal-debtn"
         >
-          Fiar
-        </button>
-        <input
-          v-model="message"
-          placeholder="Tu Nombre"
-          v-if="showNameTextBox"
-        >
-        <button
-          type="button"
-          class="btn"
-          v-if="showNameTextBox"
-          @click="confirmDebtButton"
-        > Confirmar
-        </button>
-      </div>
+          <button
+            type="button"
+            class="btn"
+            v-if="showDebtButton"
+            @click="debtorNameInput"
+          >
+            Fiar
+          </button>
+          <input
+            v-model="message"
+            placeholder="Tu Nombre"
+            v-if="showNameTextBox"
+          >
+          <button
+            type="button"
+            class="btn"
+            v-if="showNameTextBox"
+            @click="confirmDebtButton"
+          >
+            Confirmar
+          </button>
+        </div>
       </div>
     </modal>
     <div class="invoice__error-btn ">
@@ -118,20 +121,21 @@ export default {
       this.showNameTextBox = false;
       this.showDebtFinalMessage = true;
       const products = this.cartProductsToReqFormat();
-      console.log(this.cartProductsToReqFormat);
       invoiceApi.createDebtProduct({
-        "debtor": this.message,
-        "products": products,
-       });
+        'debtor': this.message,
+        'products': products,
+      });
     },
-      cartProductsToReqFormat() {
-        const productsArray = this.products.filter(product => product.amount > 0);
-        let productsToReqFormatArray = [];
-        productsArray.forEach(prod => {
-          productsToReqFormatArray.push({ "product_id": prod.id, "product_price": prod.price });
-        });
-        return productsToReqFormatArray;
-      },
+    cartProductsToReqFormat() {
+      const productsArray = this.products.filter(product => product.amount > 0);
+      const productsToReqFormatArray = [];
+      productsArray.forEach(prod => {
+        productsToReqFormatArray.push(
+          { 'product_id': prod.id, 'product_price': prod.price, 'product_amount': prod.amount });
+      });
+
+      return productsToReqFormatArray;
+    },
   },
   mounted() {
     setTimeout(() => {

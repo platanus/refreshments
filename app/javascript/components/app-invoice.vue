@@ -1,6 +1,6 @@
 <template>
   <div class="invoice">
-    <!-- <errorNotification v-if="!loading && invoice.paymentRequest" /> -->
+    <!-- <errorNotification v-if="!loading && invoice.paymentRequest" />-->
     <errorNotification />
     <div
       class="invoice__info"

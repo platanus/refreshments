@@ -39,10 +39,10 @@ export default {
   },
 
   createDebtProduct({ debtor, products }) {
-    const path = '/api/v1/create_debt_product'
+    const path = '/api/v1/debt_products';
 
     return api({
-      method: 'post',
+      method: 'put',
       url: path,
       data: { debt_product: { debtor, products } },
     });
