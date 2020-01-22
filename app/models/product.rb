@@ -13,6 +13,7 @@ class Product < ApplicationRecord
 
   belongs_to :user
   has_many :invoice_products
+  has_many :debt_products
   has_many :invoices, through: :invoice_products
 
   CATEGORIES = [:snacks, :drinks, :other]

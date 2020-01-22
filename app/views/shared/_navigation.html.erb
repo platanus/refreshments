@@ -15,6 +15,11 @@
       data: { turbolinks: false }
     %>
 
+    <%= link_to "Deudas", user_debt_products_path,
+      class: 'navbar__link',
+      data: { turbolinks: false }
+    %>
+
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
       class: 'navbar__link navbar__link--right',

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :withdrawals
     resources :ledger_accounts, path: '/balance', as: 'balance'
     resources :lightning_network_withdrawals
+    resources :debt_products, only: [:index]
   end
 
   post 'user/withdrawals/validate', to: 'withdrawals#validate'
