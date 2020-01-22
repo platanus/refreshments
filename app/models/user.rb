@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :invoices, through: :invoice_products
   has_many :withdrawals
 
+  scope :all_except, ->(user) { where.not(id: user) }
+
   def withdrawable_amount
     available_funds.balance * -1
   end
@@ -37,6 +39,10 @@ class User < ApplicationRecord
 
   def unconfirmed_withdrawal_funds
     LedgerAccount.find_or_create_by(category: 'unconfirmed_withdrawal_funds', accountable: self)
+  end
+
+  def collected_fee
+    available_funds.ledger_lines.where("category = 'fee'").sum(:amount)
   end
 end
 

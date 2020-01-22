@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#welcome'
   get 'buy', to: 'pages#buy'
+  get 'rankings', to: 'rankings#index'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :products, only: [:index, :show]

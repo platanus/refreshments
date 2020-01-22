@@ -15,6 +15,11 @@
       data: { turbolinks: false }
     %>
 
+    <%= link_to "Rankings", rankings_path,
+      class: 'navbar__link',
+      data: { turbolinks: false }
+  %>
+
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
       class: 'navbar__link navbar__link--right',
@@ -32,5 +37,4 @@
       data: { turbolinks: false }
     %>
   <% end %>
-
 </div>

@@ -16,6 +16,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_collected_fee do
+      after(:create) do |user|
+        create(:user_ledger_account, :with_fee_line, accountable: user)
+      end
+    end
+
     factory :user_with_product do
       transient do
         product_count { 1 }
