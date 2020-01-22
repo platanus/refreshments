@@ -66,7 +66,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-nc', require: false
   gem 'rspec-rails'
-  gem 'rubocop-rspec'
 end
 
 group :production, :development, :test do

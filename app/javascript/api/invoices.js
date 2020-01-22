@@ -37,4 +37,14 @@ export default {
       url: path,
     });
   },
+
+  createDebtProduct({ debtor, products }) {
+    const path = '/api/v1/debt_products';
+
+    return api({
+      method: 'put',
+      url: path,
+      data: { debt_product: { debtor, products } },
+    });
+  },
 };
