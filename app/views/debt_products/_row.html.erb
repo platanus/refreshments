@@ -9,6 +9,15 @@
   <td> <%= debt_product.debtor %> </td>
   <td> <%= debt_product.product.name %> </td>
   <td> <%= debt_product.product_price %> </td>
+  <td><%= debt_product.paid %></td>
   <td class="products-index__table-actions">
+  </td>
+
+  <td class="products-index__table-actions">
+    <%= link_to "Pagado", user_debt_product_mark_as_paid_path(debt_product_id: debt_product.id),
+      data: { confirm: 'Are you sure?' },
+      method: :put,
+      class: 'products-index__action products-index__table-action'
+    %>
   </td>
 </tr>

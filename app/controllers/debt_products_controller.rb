@@ -2,16 +2,18 @@ class DebtProductsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @debt_products = get_user_debts
+    @debt_products = user_debts
+  end
+
+  def mark_as_paid
+    @debt_product = DebtProduct.find(params[:debt_product_id])
+    @debt_product.update!(paid: true)
+    redirect_to user_debt_products_path
   end
 
   private
 
-  def get_user_debts
-    array = []
-    current_user.products.each do |product|
-      array << product.debt_products
-    end
-    array.flatten
+  def user_debts
+    DebtProduct.where(product_id: current_user.products.ids).order(updated_at: :desc)
   end
 end
