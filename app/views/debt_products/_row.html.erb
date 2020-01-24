@@ -1,0 +1,29 @@
+<tr>
+  <td>
+    <%= debt_product.product.image.attached? ?
+      image_tag(url_for(debt_product.product.image),
+      class: 'products-index__table-image--fixed-size')
+      : 'N/A'
+    %>
+  </td>
+  <td> <%= debt_product.debtor %> </td>
+  <td> <%= debt_product.product.name %></td>
+  <td> <%= debt_product.product_price %></td>
+  <% if debt_product.paid == false %>
+    <td> No </td>
+  <% else %>
+    <td> Si </td>
+  <% end %>
+  <td class="products-index__table-actions">
+  </td>
+
+  <td class="products-index__table-actions">
+    <% if debt_product.paid == false %>
+      <%= link_to "Pagado", user_debt_product_mark_as_paid_path(debt_product_id: debt_product.id),
+        data: { confirm: 'Are you sure?' },
+        method: :put,
+        class: 'products-index__action products-index__table-action'
+      %>
+    <% end %>
+  </td>
+</tr>

@@ -20,6 +20,10 @@ $products-index-table-actions-background: #acabfb;
     margin-bottom: 8px;
   }
 
+  &__subtable-header {
+    padding-top: 40px;
+  }
+
   &__title {
     color: $products-index-main-font-color;
     margin: 0;
