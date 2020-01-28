@@ -47,4 +47,13 @@ export default {
       data: { debt_product: { debtor, products } },
     });
   },
+
+  getSlackUsers() {
+    const path = 'api/v1/slack';
+
+    return api({
+      method: 'get',
+      url: path,
+    });
+  },
 };

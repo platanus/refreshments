@@ -84,6 +84,7 @@ export default {
       showApologyText: true,
       showDebtFinalMessage: false,
       message: '',
+      slackUsers: {},
     };
   },
   computed: {
@@ -136,8 +137,17 @@ export default {
 
       return productsToReqFormatArray;
     },
+    getUsers() {
+      return invoiceApi.getSlackUsers();
+    },
   },
   mounted() {
+    // this.getUsers().then(() => console.log(JSON.parse(JSON.stringify(this.slackUsers))));
+    // this.getUsers();
+    // console.log(invoiceApi.getSlackUsers());
+    this.getUsers().then((slackUsers) => {
+      this.slackUsers = slackUsers;
+    });
     setTimeout(() => {
       this.showApologyButton = true;
     }, SHOW_APOLOGY_BUTTON);

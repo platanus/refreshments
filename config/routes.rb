@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get '/notify_payment_error', to: 'sentry#notify_payment_error'
       put '/debt_products', to: 'debt_products#debt_products'
       get '/statistics/fee_balance'
+      get '/slack', to: 'slack#get_users'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
