@@ -33,11 +33,10 @@
           >
             Fiar
           </button>
-          <input
-            v-model="message"
-            placeholder="Tu Nombre"
-            v-if="showNameTextBox"
-          >
+          <select v-model="message" v-if="showNameTextBox">
+            <option disabled value="">Usuario de Slack</option>
+            <option v-for="user in slackUsers.slack">{{ user }}</option>
+          </select>
           <button
             type="button"
             class="btn"
