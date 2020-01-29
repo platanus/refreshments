@@ -1,6 +1,5 @@
 class SlackService
   def initialize
-    puts 'inicializando'
     Slack.configure do |config|
       config.token = ENV['SLACK_API_TOKEN']
     end
@@ -14,14 +13,6 @@ class SlackService
       all_members.concat(response.members)
     end
     all_members
-  end
-
-  def  notify_user(user)
-    client.chat_postMessage(
-      channel: user.slack_id,
-      as_user: true,
-      text: "#{user.real_name}, fiaron un producto tuyo!"
-    )
   end
 
   private
