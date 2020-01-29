@@ -33,9 +33,22 @@
           >
             Fiar
           </button>
-          <select v-model="message" v-if="showNameTextBox">
-            <option disabled value="">Usuario de Slack</option>
-            <option v-for="user in slackUsers.slack">{{ user }}</option>
+          <select
+            v-model="message"
+            v-if="showNameTextBox"
+          >
+            <option
+              disabled
+              value=""
+            >
+              Usuario de Slack
+            </option>
+            <option
+              v-for="user in slackUsers.slack"
+              :key="user"
+            >
+              {{ user }}
+            </option>
           </select>
           <button
             type="button"

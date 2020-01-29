@@ -30,4 +30,3 @@ class SlackService
     @client ||= Slack::Web::Client.new
   end
 end
-
