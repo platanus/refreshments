@@ -44,7 +44,7 @@ export default {
     return api({
       method: 'put',
       url: path,
-      data: { debt_product: { debtor, products } },
+      data: { debtProduct: { debtor, products } },
     });
   },
 
@@ -54,6 +54,15 @@ export default {
     return api({
       method: 'get',
       url: path,
+    });
+  },
+  notifyUser(userName, userId) {
+    const path = 'api/v1/slack';
+
+    return api({
+      method: 'post',
+      url: path,
+      data: { userName, userId },
     });
   },
 };

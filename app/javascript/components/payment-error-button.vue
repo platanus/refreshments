@@ -36,6 +36,7 @@
           <select
             v-model="message"
             v-if="showNameTextBox"
+            @change="getSelectedUser($event)"
           >
             <option
               disabled
@@ -45,9 +46,10 @@
             </option>
             <option
               v-for="user in slackUsers.slack"
+              :value="user"
               :key="user"
             >
-              {{ user }}
+              {{ user.displayNameNormalized }}
             </option>
           </select>
           <button
@@ -97,6 +99,7 @@ export default {
       showDebtFinalMessage: false,
       message: '',
       slackUsers: {},
+      selectedUser: {},
     };
   },
   computed: {
@@ -129,15 +132,19 @@ export default {
       this.showNameTextBox = true;
       this.showApologyText = false;
     },
+    getSelectedUser(event) {
+      this.selectedUser = event.target.value;
+    },
     confirmDebtButton() {
       this.showCartOnDebtModal = false;
       this.showNameTextBox = false;
       this.showDebtFinalMessage = true;
       const products = this.cartProductsToReqFormat();
       invoiceApi.createDebtProduct({
-        'debtor': this.message,
+        'debtor': this.message.displayNameNormalized,
         'products': products,
       });
+      invoiceApi.notifyUser(this.message.displayNameNormalized, this.message.id);
     },
     cartProductsToReqFormat() {
       const productsArray = this.products.filter(product => product.amount > 0);
@@ -154,9 +161,6 @@ export default {
     },
   },
   mounted() {
-    // this.getUsers().then(() => console.log(JSON.parse(JSON.stringify(this.slackUsers))));
-    // this.getUsers();
-    // console.log(invoiceApi.getSlackUsers());
     this.getUsers().then((slackUsers) => {
       this.slackUsers = slackUsers;
     });

@@ -15,9 +15,17 @@ class SlackService
     all_members
   end
 
+  def  notify_user(user_name, user_id)
+    client.chat_postMessage(
+      channel: user_id,
+      as_user: true,
+      text: "#{user_name}, fiaste un producto!"
+    )
+  end
+
   private
 
   def client
-    @client ||= Slack::Web::Client.new
+    @client ||= Slack::Web::Client.new(open_timeout: 1, timeout: 1)
   end
 end

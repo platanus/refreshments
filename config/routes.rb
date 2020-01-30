@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       put '/debt_products', to: 'debt_products#debt_products'
       get '/statistics/fee_balance'
       get '/slack', to: 'slack#get_users'
+      post '/slack', to: 'slack#notify_user'
     end
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
