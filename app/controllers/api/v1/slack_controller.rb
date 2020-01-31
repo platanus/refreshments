@@ -8,7 +8,7 @@ class Api::V1::SlackController < Api::V1::BaseController
       { "display_name_normalized": m.profile.display_name_normalized, "id": m.id }
     end
 
-    render json: user_names
+    render json: sort_by_username(user_names)
   end
 
   def notify_user
@@ -16,6 +16,12 @@ class Api::V1::SlackController < Api::V1::BaseController
   end
 
   private
+
+  def sort_by_username(user_names)
+    user_names.sort do |a, b|
+      a[:display_name_normalized].downcase <=> b[:display_name_normalized].downcase
+    end
+  end
 
   def non_human_names
     ['', 'Slackbot', 'apiai_bot', 'paperbot', 'todobot', 'trello']
