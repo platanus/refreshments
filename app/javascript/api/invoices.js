@@ -65,4 +65,12 @@ export default {
       data: { userName, userId },
     });
   },
+  getSeller(product) {
+    const path = `api/v1/products/${product.id}/get_seller`;
+
+    return api({
+      method: 'get',
+      url: path,
+    });
+  },
 };
