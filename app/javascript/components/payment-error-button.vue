@@ -144,8 +144,10 @@ export default {
         'debtor': this.message.displayNameNormalized,
         'products': products,
       });
-      //invoiceApi.notifyUser(this.message.displayNameNormalized, this.message.id);
-      this.notifySellersOfDebt(this.products.filter(product => product.amount > 0));
+      const cart = this.products.filter(product => product.amount > 0);
+      if (cart) {
+        this.notifySellersOfDebt(cart);
+      }
     },
     cartProductsToReqFormat() {
       const productsArray = this.products.filter(product => product.amount > 0);
@@ -161,9 +163,14 @@ export default {
       return invoiceApi.getSlackUsers();
     },
     notifySellersOfDebt(products) {
+      const message = `${this.message.displayNameNormalized} acaba de fiar un producto tuyo!`;
       products.forEach(prod => {
         invoiceApi.getSeller(prod).then((seller) => {
-          invoiceApi.notifyUser(this.message.displayNameNormalized, seller.user.slackUser);
+          const messageToDebtor = `${this.message.displayNameNormalized}, acabas de fiar un producto de ${seller.user.name}`
+          invoiceApi.notifyUser(this.message.displayNameNormalized, this.message.id, messageToDebtor);
+          if (seller.user.slackUser) {
+            invoiceApi.notifyUser(this.message.displayNameNormalized, seller.user.slackUser, message);
+          }
         });
       });
     },

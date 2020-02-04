@@ -20,6 +20,11 @@
       data: { turbolinks: false }
     %>
 
+    <%= link_to "Editar Perfil", edit_user_registration_path,
+      class: 'navbar__link',
+      data: { turbolinks: false }
+    %>
+
     <%= link_to "Cerrar sesión", destroy_user_session_path,
       method: :delete,
       class: 'navbar__link navbar__link--right',
