@@ -12,7 +12,7 @@ class Api::V1::SlackController < Api::V1::BaseController
   end
 
   def notify_user
-    slack.notify_user(params[:user_name], params[:user_id])
+    slack.notify_user(params[:user_id], params[:message])
   end
 
   private
@@ -28,7 +28,7 @@ class Api::V1::SlackController < Api::V1::BaseController
   end
 
   def notify_params
-    params.permit(:user_name, :user_id)
+    params.permit(:user_id, :message)
   end
 
   def slack

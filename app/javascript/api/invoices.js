@@ -56,13 +56,21 @@ export default {
       url: path,
     });
   },
-  notifyUser(userName, userId) {
+  notifyUser(userId, message) {
     const path = 'api/v1/slack';
 
     return api({
       method: 'post',
       url: path,
-      data: { userName, userId },
+      data: { userId, message },
+    });
+  },
+  seller(product) {
+    const path = `api/v1/products/${product.id}/seller`;
+
+    return api({
+      method: 'get',
+      url: path,
     });
   },
 };

@@ -53,6 +53,7 @@ end
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  name                   :string           not null
+#  slack_user             :string           default("")
 #
 # Indexes
 #
