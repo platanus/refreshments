@@ -7,7 +7,13 @@ class Api::V1::ProductsController < Api::V1::BaseController
     render json: Product.find(params[:id])
   end
 
-  def get_seller
-    render json: Product.find(params[:product_id]).user
+  def seller
+    render json: product.user
+  end
+
+  private
+
+  def product
+    @product ||= Product.find(params[:product_id] || params[:id])
   end
 end

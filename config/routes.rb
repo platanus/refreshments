@@ -3,10 +3,9 @@ Rails.application.routes.draw do
   get 'buy', to: 'pages#buy'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      # resources :products, only: [:index, :show]
       resources :invoices, only: [:create]
       resources :products, only: [:index, :show] do
-        get 'get_seller', to: 'products#get_seller'
+        get 'seller', to: 'products#seller'
       end
       get 'invoices/status/:r_hash', to: 'invoices#status'
       get '/satoshi_price', to: 'prices#satoshi_price'

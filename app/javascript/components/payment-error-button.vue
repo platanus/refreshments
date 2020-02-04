@@ -140,8 +140,9 @@ export default {
       this.showNameTextBox = false;
       this.showDebtFinalMessage = true;
       const products = this.cartProductsToReqFormat();
+      const debtor = this.message.displayNameNormalized;
       invoiceApi.createDebtProduct({
-        'debtor': this.message.displayNameNormalized,
+        'debtor': debtor,
         'products': products,
       });
       const cart = this.products.filter(product => product.amount > 0);
@@ -163,13 +164,14 @@ export default {
       return invoiceApi.getSlackUsers();
     },
     notifySellersOfDebt(products) {
-      const message = `${this.message.displayNameNormalized} acaba de fiar un producto tuyo!`;
+      const debtor = this.message.displayNameNormalized;
+      const message = `${debtor} acaba de fiar un producto tuyo!`;
       products.forEach(prod => {
-        invoiceApi.getSeller(prod).then((seller) => {
-          const messageToDebtor = `${this.message.displayNameNormalized}, acabas de fiar un producto de ${seller.user.name}`
-          invoiceApi.notifyUser(this.message.displayNameNormalized, this.message.id, messageToDebtor);
+        invoiceApi.seller(prod).then((seller) => {
+          const messageToDebtor = `${debtor}, acabas de fiar un producto de ${seller.user.name}`;
+          invoiceApi.notifyUser(this.message.id, messageToDebtor);
           if (seller.user.slackUser) {
-            invoiceApi.notifyUser(this.message.displayNameNormalized, seller.user.slackUser, message);
+            invoiceApi.notifyUser(seller.user.slackUser, message);
           }
         });
       });

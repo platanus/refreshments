@@ -15,7 +15,7 @@ class SlackService
     all_members
   end
 
-  def  notify_user(user_name, user_id, message)
+  def  notify_user(user_id, message)
     client.chat_postMessage(
       channel: user_id,
       as_user: true,

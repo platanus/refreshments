@@ -29,7 +29,6 @@ describe Api::V1::SlackController, type: :controller do
     end
     it "notifies user" do
       post :notify_user, params: {
-        user_name: slack_user.profile["display_name_normalized"],
         user_id: slack_user.profile["id"],
         message: "hola"
       }
