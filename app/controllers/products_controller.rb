@@ -16,6 +16,8 @@ class ProductsController < ApplicationController
   def create
     @product = current_user.products.new(permitted_params)
     if @product.save
+      ActionCable.server.broadcast 'products',
+        product: @product
       redirect_to user_products_path
     else
       render "new"

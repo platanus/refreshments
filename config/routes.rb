@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index, :show] do
         get 'seller', to: 'products#seller'
       end
+      resources :websocket, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
       get '/satoshi_price', to: 'prices#satoshi_price'
       get '/gif', to: 'gifs#show_random'
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users
   mount Sidekiq::Web => '/queue'
+  mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_scope :user do
     get 'suppliers/sign_up', to: 'devise/registrations#new'

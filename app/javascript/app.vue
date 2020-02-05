@@ -69,6 +69,18 @@ export default {
       ];
     },
   },
+  channels: {
+    ProductsChannel: {
+      connected() { console.log('connected'); },
+      received(data) {
+        if (data) {
+          console.log(data);
+          console.log(data.product);
+          this.productsArray.push(data.product);
+        }
+      },
+    },
+  },
   methods: {
     closeModal() {
       this.$store.commit('setStatus', false);
@@ -88,10 +100,13 @@ export default {
     },
   },
   mounted() {
+    this.$cable.subscribe({
+      channel: 'ProductsChannel',
+    });
     this.$store.dispatch('getProducts');
     this.$store.dispatch('getFeeBalance');
     ['click', 'mousedown', 'touchmove'].forEach(
-      event => this.$el.addEventListener(event, this.checkInactivity)
+      event => this.$el.addEventListener(event, this.checkInactivity),
     );
   },
 };

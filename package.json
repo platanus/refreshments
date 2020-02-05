@@ -7,6 +7,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "@rails/webpacker": "3.5",
     "@xkeshi/vue-qrcode": "^1.0.0",
+    "actioncable-vue": "^1.5.1",
     "add": "^2.0.6",
     "axios": "^0.18.0",
     "humps": "^2.0.1",
