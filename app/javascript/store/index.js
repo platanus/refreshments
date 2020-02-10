@@ -31,7 +31,7 @@ const store = new Vuex.Store({
       console.log('Abajo imprimiendo products');
       console.log(state.products);
       console.log(payload);
-      Object.assign(state.products, payload);
+      state.products = Object.assign({}, state.products, payload);
     },
     setActionMessage: (state, payload) => {
       state.actionMessage = payload;
@@ -176,7 +176,7 @@ const store = new Vuex.Store({
     },
   },
   getters: {
-    productsAsArray: state => (Object.keys(state.products).map(key => ({ id: key, ...state.products[key] }))),
+    productsAsArray: state => Object.values(state.products),
     onSaleProducts: (state, getters) => (
       getters.productsAsArray.filter(product => product.forSale)
     ),

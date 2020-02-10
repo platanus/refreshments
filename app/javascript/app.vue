@@ -35,6 +35,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex';
+import humps from 'humps';
 
 import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
@@ -73,8 +74,11 @@ export default {
     ProductsChannel: {
       connected() { console.log('connected'); },
       received(data) {
+        console.log(data.product);
         if (data) {
-          this.$store.dispatch('addProduct', data.product);
+          console.log(data);
+          console.log(data.product);
+          this.$store.dispatch('addProduct', humps.camelizeKeys(data.product));
         }
       },
     },
