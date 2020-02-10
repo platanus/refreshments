@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  include PowerTypes::Observable
   validates :name, :price, :stock, :category, presence: true
   validates :price, :stock, numericality: { greater_than_or_equal_to: 0 }
   validates :fee_rate, inclusion: { in: (0..1).step(0.001) }

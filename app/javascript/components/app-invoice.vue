@@ -96,9 +96,9 @@ export default {
     },
     copyPaymentRequest() {
       this.$copyText(this.invoice.paymentRequest).then(e => {
-        console.log(e)
+        console.log(e);
       }, e => {
-        console.log(e)
+        console.log(e);
       })
     },
     reset() {

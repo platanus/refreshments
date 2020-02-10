@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
 
 import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
@@ -74,14 +74,15 @@ export default {
       connected() { console.log('connected'); },
       received(data) {
         if (data) {
-          console.log(data);
-          console.log(data.product);
-          this.productsArray.push(data.product);
+          this.$store.dispatch('addProduct', data.product);
         }
       },
     },
   },
   methods: {
+    ...mapActions([
+      'addProduct',
+    ]),
     closeModal() {
       this.$store.commit('setStatus', false);
     },

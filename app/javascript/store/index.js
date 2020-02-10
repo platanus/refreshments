@@ -27,6 +27,12 @@ const store = new Vuex.Store({
     setProduct: (state, payload) => {
       Object.assign(state.products[payload.id], payload);
     },
+    addProduct: (state, payload) => {
+      console.log('Abajo imprimiendo products');
+      console.log(state.products);
+      console.log(payload);
+      Object.assign(state.products, payload);
+    },
     setActionMessage: (state, payload) => {
       state.actionMessage = payload;
     },
@@ -66,6 +72,11 @@ const store = new Vuex.Store({
     },
   },
   actions: {
+    addProduct: (context, payload) => {
+      const prod = {};
+      prod[payload.id] = payload;
+      context.commit('addProduct', prod);
+    },
     getProducts: context => {
       productApi.products().then((response) => {
         const products = response.products.reduce((acc, product) => {
