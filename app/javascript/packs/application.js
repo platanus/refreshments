@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     debug: true,
     debugLevel: 'error',
     connectionUrl: process.env.RAILS_ENV === 'production' ?
-    process.env.APPLICATION_HOST.replace('https', 'wss') : 'ws://localhost:3000/cable',
+    process.env.APPLICATION_HOST.replace('https', 'wss')+'/cable' : 'ws://localhost:3000/cable',
     connectImmediately: true,
   });
   Vue.use(VueTouch, { name: 'v-touch' });
