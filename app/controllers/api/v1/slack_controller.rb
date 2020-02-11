@@ -2,7 +2,8 @@ class Api::V1::SlackController < Api::V1::BaseController
   def get_users
     result = slack.get_slack_users
     members = result.select do |member|
-      !member.deleted && !non_human_names.include?(member.profile.display_name_normalized)
+      (!member.deleted && !non_human_names.include?(member.profile.display_name_normalized) &&
+      !member.is_ultra_restricted)
     end
     user_names = members.map do |m|
       { "display_name_normalized": m.profile.display_name_normalized, "id": m.id }
