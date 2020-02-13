@@ -3,10 +3,10 @@ Rails.application.configure do
   config.webpacker.check_yarn_integrity = true
 
   config.action_cable.url = "ws://#{ENV['APPLICATION_HOST']}/cable"
-  config.action_cable.allowed_request_origins = [
-    "https://#{ENV['APPLICATION_HOST']}:3000",
-    "http://#{ENV['APPLICATION_HOST']}:3000"
-  ]
+  # config.action_cable.allowed_request_origins = [
+  #   "https://#{ENV['APPLICATION_HOST']}:3000",
+  #   "http://#{ENV['APPLICATION_HOST']}:3000"
+  # ]
 
   config.active_job.queue_adapter = :async
   config.cache_classes = false

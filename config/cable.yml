@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  channel_prefix: pl-refreshments_production
+  url: <%= ENV.fetch("REDIS_URL", "") %>
