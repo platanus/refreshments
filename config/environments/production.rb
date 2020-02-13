@@ -3,7 +3,7 @@ Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
-  # config.force_ssl = true
+  config.force_ssl = true
   config.cache_classes = true
   config.eager_load = true
   config.consider_all_requests_local       = false
