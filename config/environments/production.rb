@@ -3,7 +3,7 @@ Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
-  config.force_ssl = true
+  # config.force_ssl = true
   config.cache_classes = true
   config.eager_load = true
   config.consider_all_requests_local       = false
@@ -18,10 +18,10 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
   config.web_socket_server_url = "wss://#{ENV['APPLICATION_HOST']}/cable"
-  #config.action_cable.allowed_request_origins = [
-   # "https://#{ENV['APPLICATION_HOST']}",
-   # "http://#{ENV['APPLICATION_HOST']}"
-  #]
+  config.action_cable.allowed_request_origins = [
+    "https://#{ENV['APPLICATION_HOST']}",
+    "http://#{ENV['APPLICATION_HOST']}"
+  ]
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
