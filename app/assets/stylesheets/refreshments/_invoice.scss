@@ -30,6 +30,15 @@ $copy-icon-color: #fff;
     padding-bottom: 10px;
   }
 
+  &__apology-modal-close {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__apology-modal-close-button {
+    margin: 1px;
+  }
+
   &__error-btn {
     display: flex;
     justify-content: center;

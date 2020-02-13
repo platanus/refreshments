@@ -2,6 +2,9 @@
   <div class="payment-error-button">
     <modal name="apology-modal">
       <div class="invoice__apology-modal-flexbox">
+        <div class="invoice__apology-modal-close">
+          <font-awesome-icon icon="times" />
+        </div>
         <div class="invoice__apology-modal-text">
           <div
             class="invoice__apology-modal-text-first"
@@ -83,7 +86,7 @@ import invoiceApi from '../api/invoices';
 import cartProducts from './cart-products.vue';
 
 const SHOW_APOLOGY_BUTTON = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 20000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 20000000;
 
 export default {
   components: {
