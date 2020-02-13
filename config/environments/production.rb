@@ -18,10 +18,10 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
   config.web_socket_server_url = "wss://#{ENV['APPLICATION_HOST']}/cable"
-  config.action_cable.allowed_request_origins = [
-    "https://#{ENV['APPLICATION_HOST']}",
-    "http://#{ENV['APPLICATION_HOST']}"
-  ]
+  #config.action_cable.allowed_request_origins = [
+   # "https://#{ENV['APPLICATION_HOST']}",
+   # "http://#{ENV['APPLICATION_HOST']}"
+  #]
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
