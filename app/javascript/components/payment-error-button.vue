@@ -83,7 +83,7 @@ import invoiceApi from '../api/invoices';
 import cartProducts from './cart-products.vue';
 
 const SHOW_APOLOGY_BUTTON = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 20000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 5000;
 
 export default {
   components: {
@@ -122,9 +122,6 @@ export default {
       this.showCartOnDebtModal = false;
       this.showNameTextBox = false;
       invoiceApi.notifyPaymentError();
-      setTimeout(() => {
-        this.$modal.hide('apology-modal');
-      }, CLOSE_MODAL_AFTER_IDLE_WAIT);
     },
     debtorNameInput() {
       this.showCartOnDebtModal = true;
@@ -149,6 +146,9 @@ export default {
       if (cart) {
         this.notifySellersOfDebt(cart);
       }
+      setTimeout(() => {
+        this.$modal.hide('apology-modal');
+      }, CLOSE_MODAL_AFTER_IDLE_WAIT);
     },
     cartProductsToReqFormat() {
       const productsArray = this.products.filter(product => product.amount > 0);
