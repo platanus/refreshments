@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
+import humps from 'humps';
 
 import appResume from './components/app-resume.vue';
 import appInvoice from './components/app-invoice.vue';
@@ -69,7 +70,20 @@ export default {
       ];
     },
   },
+  channels: {
+    ProductsChannel: {
+      connected() { console.log('connected'); },
+      received(data) {
+        if (data) {
+          this.$store.dispatch('addProduct', humps.camelizeKeys(data.product));
+        }
+      },
+    },
+  },
   methods: {
+    ...mapActions([
+      'addProduct',
+    ]),
     closeModal() {
       this.$store.commit('setStatus', false);
     },
@@ -88,6 +102,9 @@ export default {
     },
   },
   mounted() {
+    this.$cable.subscribe({
+      channel: 'ProductsChannel',
+    });
     this.$store.dispatch('getProducts');
     this.$store.dispatch('getFeeBalance');
     ['click', 'mousedown', 'touchmove'].forEach(

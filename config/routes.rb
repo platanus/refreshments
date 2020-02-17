@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   root 'pages#welcome'
   get 'buy', to: 'pages#buy'
+  mount ActionCable.server => '/cable'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
       resources :invoices, only: [:create]
       resources :products, only: [:index, :show] do
         get 'seller', to: 'products#seller'
       end
+      resources :websocket, only: [:create]
       get 'invoices/status/:r_hash', to: 'invoices#status'
       get '/satoshi_price', to: 'prices#satoshi_price'
       get '/gif', to: 'gifs#show_random'

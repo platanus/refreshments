@@ -10,6 +10,7 @@ import VueTouch from 'vue-touch';
 import VueProgress from 'vue-progress-path';
 import VueFlashMessage from 'vue-flash-message';
 import VModal from 'vue-js-modal';
+import ActionCableVue from 'actioncable-vue';
 
 import App from '../app.vue';
 import store from '../store';
@@ -23,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.component(VueQrcode.name, VueQrcode);
   Vue.use(VModal);
   Vue.use(VueClipboard);
+  Vue.use(ActionCableVue, {
+    debug: true,
+    debugLevel: 'error',
+    connectionUrl: process.env.RAILS_ENV === 'production' ?
+      (`wss://${process.env.APPLICATION_HOST}/cable`) : 'ws://localhost:3000/cable',
+    connectImmediately: true,
+  });
   Vue.use(VueTouch, { name: 'v-touch' });
   Vue.use(VueProgress);
   Vue.use(VueFlashMessage, {
