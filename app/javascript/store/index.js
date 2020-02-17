@@ -28,7 +28,7 @@ const store = new Vuex.Store({
       Object.assign(state.products[payload.id], payload);
     },
     addProduct: (state, payload) => {
-      state.products = Object.assign({}, state.products, payload);
+      Object.assign(state.products[payload.id], payload);
     },
     setActionMessage: (state, payload) => {
       state.actionMessage = payload;
