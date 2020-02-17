@@ -28,9 +28,6 @@ const store = new Vuex.Store({
       Object.assign(state.products[payload.id], payload);
     },
     addProduct: (state, payload) => {
-      console.log('Abajo imprimiendo products');
-      console.log(state.products);
-      console.log(payload);
       state.products = Object.assign({}, state.products, payload);
     },
     setActionMessage: (state, payload) => {

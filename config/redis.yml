@@ -6,4 +6,4 @@ test:
   <<: *default
 
 production: &deploy
-  url: <%= ENV['REDIS_URL'] %>
+  url: <%= ENV.fetch("REDIS_URL", "") %>

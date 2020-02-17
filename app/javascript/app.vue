@@ -74,10 +74,7 @@ export default {
     ProductsChannel: {
       connected() { console.log('connected'); },
       received(data) {
-        console.log(data.product);
         if (data) {
-          console.log(data);
-          console.log(data.product);
           this.$store.dispatch('addProduct', humps.camelizeKeys(data.product));
         }
       },
@@ -111,7 +108,7 @@ export default {
     this.$store.dispatch('getProducts');
     this.$store.dispatch('getFeeBalance');
     ['click', 'mousedown', 'touchmove'].forEach(
-      event => this.$el.addEventListener(event, this.checkInactivity),
+      event => this.$el.addEventListener(event, this.checkInactivity)
     );
   },
 };

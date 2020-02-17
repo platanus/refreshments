@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users
   mount Sidekiq::Web => '/queue'
-  # mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_scope :user do
     get 'suppliers/sign_up', to: 'devise/registrations#new'

@@ -18,7 +18,6 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
   config.action_cable.url = "wss://#{ENV['APPLICATION_HOST']}/cable"
-  config.web_socket_server_url = "wss://#{ENV['APPLICATION_HOST']}/cable"
   config.action_cable.allowed_request_origins = [
     "https://#{ENV['APPLICATION_HOST']}",
     "http://#{ENV['APPLICATION_HOST']}"
