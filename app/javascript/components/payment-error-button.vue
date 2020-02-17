@@ -122,6 +122,7 @@ export default {
       this.showCartOnDebtModal = false;
       this.showNameTextBox = false;
       invoiceApi.notifyPaymentError();
+      this.message = '';
     },
     debtorNameInput() {
       this.showCartOnDebtModal = true;
