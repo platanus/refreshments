@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#welcome'
   get 'buy', to: 'pages#buy'
+  get 'debts_list', to: 'pages#debts_list'
   mount ActionCable.server => '/cable'
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do

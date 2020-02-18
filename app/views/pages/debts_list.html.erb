@@ -1,0 +1,26 @@
+<%= render 'shared/navigation' %>
+
+  <div id="products-index-table-container" class="products-index__table-container">
+  <% flash.each do |_, msg| %>
+    <%= content_tag :div, msg, class: 'alert alert-success' if msg.is_a?(String) %>
+  <% end %>
+
+      <h3>Deudas</h3>
+      <table class="products-index__table">
+        <thead>
+          <tr>
+            <th> Imagen </th>
+            <th class="products-index__table-header"> Deudor </th>
+            <th class="products-index__table-header"> Producto </th>
+            <th class="products-index__table-header"> Precio (CLP) </th>
+            <th class="products-index__table-header"> Vendedor </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @debt_products.each do |debt_product| %>
+              <%= render "row", debt_product: debt_product %>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>
