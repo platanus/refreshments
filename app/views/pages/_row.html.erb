@@ -1,0 +1,14 @@
+<tr>
+  <td>
+    <%= debt_product.product.image.attached? ?
+      image_tag(url_for(debt_product.product.image),
+      class: 'products-index__table-image products-index__table-image--fixed-size')
+      : 'N/A'
+    %>
+  </td>
+  <td> <%= debt_product.debtor %> </td>
+  <td> <%= debt_product.product.name %></td>
+  <td> <%= debt_product.product_price %></td>
+  <td> <%= debt_product.product.user.name%> </td>
+  </td>
+</tr>
