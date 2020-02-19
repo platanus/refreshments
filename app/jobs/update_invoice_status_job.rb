@@ -6,7 +6,7 @@ class UpdateInvoiceStatusJob < ApplicationJob
     settled = InvoiceUtils.status(r_hash_decoded)
     SettleInvoiceJob.perform_later(r_hash_decoded) if settled
     DispenseProductsJob.perform_later(r_hash_decoded) if settled
-    this.perform_later(r_hash) if !settled
+    UpdateInvoiceStatusJob.perform_later(r_hash) if !settled
     ActionCable.server.broadcast 'invoices', settled: settled
     respond_with settled: settled
   end
