@@ -135,8 +135,8 @@ export default {
       }
     }.bind(this), 1000); */
   },
-  watch: {
-    status: 'reset'
-  }
+  // watch: {
+    // status: 'reset'
+  // }
 }
 </script>
