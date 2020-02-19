@@ -2,6 +2,7 @@ class SettleInvoiceJob < ApplicationJob
   queue_as :default
 
   def perform(r_hash)
+    puts "it entered SettleInvoiceJob"
     @r_hash = r_hash
     unless invoice.nil? || invoice&.settled
       invoice&.update!(settled: true)
