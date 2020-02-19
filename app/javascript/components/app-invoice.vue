@@ -84,9 +84,7 @@ export default {
     InvoicesChannel: {
       connected() { console.log('connected to invoice channel'); },
       received(data) {
-        console.log('entro a InvoicesChannel');
         if (data) {
-          console.log(data);
           this.updateInvoiceSettled();
         }
       },
@@ -122,18 +120,9 @@ export default {
     },
   },
   mounted() {
-    // this.invoice.rHash = 'HpT9s76jAZ/OVuWSSW/egn/8gPp2rkxNIaBnUXGCCbw=';
     this.$cable.subscribe({
       channel: 'InvoicesChannel',
     });
-    // TODO: cambiar lo de abajo para usar sockets
-    /* this.interval = setInterval(function() {
-      if (this.invoice.id && !this.status) {
-        this.updateInvoiceSettled();
-      } else if (this.invoice.paid) {
-        clearInterval(this.interval);
-      }
-    }.bind(this), 1000); */
   },
   watch: {
     status: 'reset'

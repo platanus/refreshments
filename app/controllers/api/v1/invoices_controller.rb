@@ -8,13 +8,9 @@ class Api::V1::InvoicesController < Api::V1::BaseController
   end
 
   def status
-    puts "status in invoices controller"
     r_hash = URI.decode(params[:r_hash])
-    # r_hash = params[:r_hash]
     invoice = Invoice.find_by(r_hash: r_hash)
     settled = invoice&.settled
-    # SettleInvoiceJob.perform_later(r_hash) if settled
-    # DispenseProductsJob.perform_later(r_hash) if settled
     respond_with settled: settled
   end
 

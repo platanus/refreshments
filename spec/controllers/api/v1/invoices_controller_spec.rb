@@ -37,32 +37,16 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
   end
 
   describe 'GET #status' do
-    let(:r_hash) { 'r_hash' }
-
-    # before do
-      # allow(InvoiceUtils).to receive(:status).with(r_hash).and_return(true)
-      # allow(SettleInvoiceJob).to receive(:perform_later).with(r_hash)
-      # allow(DispenseProductsJob).to receive(:perform_later).with(r_hash)
-    # end
+    let(:invoice) { create(:invoice, r_hash: 'r_hash') }
 
     it 'returns http success' do
-      get :status, params: { r_hash: 'r_hash' }, as: :json
+      get :status, params: { r_hash: invoice.r_hash }, as: :json
       expect(response).to have_http_status(:success)
     end
 
-    # it 'returns settled' do
-      # get :status, params: { r_hash: 'r_hash' }, as: :json
-      # expect(JSON.parse(response.body)).to eq('settled' => true)
-    # end
-
-    # it 'calls SettleInvoiceJob' do
-      # get :status, params: { r_hash: 'r_hash' }, as: :json
-      # expect(SettleInvoiceJob).to have_received(:perform_later).with(r_hash)
-    # end
-
-    # it 'calls DispenseProductsJob' do
-      # get :status, params: { r_hash: 'r_hash' }, as: :json
-      # expect(DispenseProductsJob).to have_received(:perform_later).with(r_hash)
-    # end
+    it 'returns settled' do
+      get :status, params: { r_hash: invoice.r_hash }, as: :json
+      expect(JSON.parse(response.body)).to eq('settled' => true)
+    end
   end
 end
