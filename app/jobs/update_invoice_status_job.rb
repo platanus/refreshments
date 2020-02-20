@@ -1,13 +1,25 @@
 class UpdateInvoiceStatusJob < ApplicationJob
+  TIME_OUT = 15.minutes
+  SLEEP_TIME = 1
   queue_as :default
 
   def perform(r_hash)
-    r_hash_decoded = URI.decode(r_hash)
-    settled = InvoiceUtils.status(r_hash_decoded)
-    SettleInvoiceJob.perform_later(r_hash_decoded) if settled
-    DispenseProductsJob.perform_later(r_hash_decoded) if settled
-    UpdateInvoiceStatusJob.perform_later(r_hash) if !settled
+    settled = listen_invoice(r_hash)
+    SettleInvoiceJob.perform_later(r_hash) if settled
+    DispenseProductsJob.perform_later(r_hash) if settled
+    # UpdateInvoiceStatusJob.perform_later(r_hash) if !settled
     ActionCable.server.broadcast 'invoices', settled: settled
-    respond_with settled: settled
+  end
+
+  private
+
+  def listen_invoice(r_hash)
+    settled = false
+    start_time = Time.zone.now
+    while !settled && start_time + TIME_OUT > Time.zone.now
+      settled = InvoiceUtils.status(r_hash)
+      sleep SLEEP_TIME
+    end
+    settled
   end
 end
