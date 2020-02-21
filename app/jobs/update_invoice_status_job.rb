@@ -22,7 +22,7 @@ class UpdateInvoiceStatusJob < ApplicationJob
       puts "in while"
       puts "abajo imprime settled antes de llamar a InvoiceUtils.status"
       puts settled
-      settled = InvoiceUtils.status(r_hash)s
+      settled = InvoiceUtils.status(r_hash)
       puts "abajo imprime settled luego de llamar a InvoiceUtils.statu"
       puts settled
       sleep SLEEP_TIME
