@@ -56,6 +56,7 @@
             type="button"
             class="btn"
             v-if="showNameTextBox"
+            :disabled="confirmDebtButtonDisabled"
             @click="confirmDebtButton"
           >
             Confirmar
@@ -100,6 +101,7 @@ export default {
       message: '',
       slackUsers: {},
       selectedUser: {},
+      confirmDebtButtonDisabled: true,
     };
   },
   computed: {
@@ -116,6 +118,7 @@ export default {
   methods: {
     show() {
       this.$modal.show('apology-modal');
+      this.confirmDebtButtonDisabled = true;
       this.showDebtButton = true;
       this.showApologyText = true;
       this.showDebtFinalMessage = false;
@@ -132,6 +135,7 @@ export default {
     },
     getSelectedUser(event) {
       this.selectedUser = event.target.value;
+      if (event) this.confirmDebtButtonDisabled = false;
     },
     confirmDebtButton() {
       this.showCartOnDebtModal = false;
