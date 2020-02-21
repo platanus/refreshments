@@ -18,7 +18,7 @@ class UpdateInvoiceStatusJob < ApplicationJob
     start_time = Time.zone.now
     while !settled && start_time + TIME_OUT > Time.zone.now
       settled = InvoiceUtils.status(r_hash)
-      sleep SLEEP_TIME
+      # sleep SLEEP_TIME
     end
     settled
   end
