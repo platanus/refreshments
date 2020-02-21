@@ -20,7 +20,11 @@ class UpdateInvoiceStatusJob < ApplicationJob
     start_time = Time.zone.now
     while !settled && start_time + TIME_OUT > Time.zone.now
       puts "in while"
-      settled = InvoiceUtils.status(r_hash)
+      puts "abajo imprime settled antes de llamar a InvoiceUtils.status"
+      puts settled
+      settled = InvoiceUtils.status(r_hash)s
+      puts "abajo imprime settled luego de llamar a InvoiceUtils.statu"
+      puts settled
       sleep SLEEP_TIME
     end
     settled
