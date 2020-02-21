@@ -5,8 +5,8 @@ class UpdateInvoiceStatusJob < ApplicationJob
 
   def perform(r_hash)
     settled = listen_invoice(r_hash)
-    puts "abajo settled"
-    puts settled
+    # puts "abajo settled"
+    # puts settled
     SettleInvoiceJob.perform_later(r_hash) if settled
     DispenseProductsJob.perform_later(r_hash) if settled
     # UpdateInvoiceStatusJob.perform_later(r_hash) if !settled
@@ -16,7 +16,10 @@ class UpdateInvoiceStatusJob < ApplicationJob
   private
 
   def listen_invoice(r_hash)
-    settled = false
+    # settled = false
+    settled = InvoiceUtils.status(r_hash)
+    puts "abajo imprime r_hash"
+    puts r_hash
     start_time = Time.zone.now
     while !settled && start_time + TIME_OUT > Time.zone.now
       puts "in while"
@@ -27,6 +30,8 @@ class UpdateInvoiceStatusJob < ApplicationJob
       puts settled
       sleep SLEEP_TIME
     end
+    puts "sale del while"
+    puts settled
     settled
   end
 end
