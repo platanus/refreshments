@@ -16,8 +16,8 @@ class UpdateInvoiceStatusJob < ApplicationJob
   private
 
   def listen_invoice(r_hash)
-    # settled = false
-    settled = InvoiceUtils.status(r_hash)
+    settled = false
+    # settled = InvoiceUtils.status(r_hash)
     puts "abajo imprime r_hash"
     puts r_hash
     start_time = Time.zone.now
