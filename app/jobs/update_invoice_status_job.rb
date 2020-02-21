@@ -11,7 +11,7 @@ class UpdateInvoiceStatusJob < ApplicationJob
     puts settled
     SettleInvoiceJob.perform_later(r_hash) if settled
     DispenseProductsJob.perform_later(r_hash) if settled
-    UpdateInvoiceStatusJob.(wait: 1.second).perform_later(r_hash) if !settled && (Time.zone.now < date_created + 5.minutes )
+    UpdateInvoiceStatusJob.set(wait: 1.second).perform_later(r_hash) if !settled && (Time.zone.now < date_created + 5.minutes )
     ActionCable.server.broadcast 'invoices', settled: settled
   end
 
