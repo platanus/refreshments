@@ -84,7 +84,7 @@ import invoiceApi from '../api/invoices';
 import cartProducts from './cart-products.vue';
 
 const SHOW_APOLOGY_BUTTON = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 5000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 7000;
 
 export default {
   components: {
