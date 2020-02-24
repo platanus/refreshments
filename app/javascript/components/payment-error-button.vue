@@ -159,6 +159,7 @@ export default {
       setTimeout(() => {
         this.$modal.hide('apology-modal');
         this.$store.dispatch('cleanCart');
+        this.$store.dispatch('cleanInvoice');
       }, CLOSE_MODAL_AFTER_IDLE_WAIT);
     },
     cartProductsToReqFormat() {
