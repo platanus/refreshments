@@ -131,7 +131,6 @@ const store = new Vuex.Store({
             context.commit('setLoading', false);
             context.commit('setInvoice', {});
             context.dispatch('cleanCart');
-            console.log(this.invoice.paymentRequest);
             console.log('entra a setTimeout');
           }, 3000);
         });
