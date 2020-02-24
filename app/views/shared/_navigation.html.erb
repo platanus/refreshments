@@ -4,6 +4,11 @@
     data: { turbolinks: false }
   %>
 
+  <%= link_to "Deudas Totales", debts_list_path,
+      class: 'navbar__link navbar__link--buy',
+      data: { turbolinks: false }
+  %>
+
   <% if user_signed_in? %>
     <%= link_to "Cartola", user_balance_index_path,
       class: 'navbar__link',
@@ -31,13 +36,9 @@
       data: { turbolinks: false }
     %>
 
+
   <% else %>
     <%= link_to "Catálogo de compra", buy_path,
-      class: 'navbar__link navbar__link--buy',
-      data: { turbolinks: false }
-    %>
-
-    <%= link_to "Deudas", debts_list_path,
       class: 'navbar__link navbar__link--buy',
       data: { turbolinks: false }
     %>
