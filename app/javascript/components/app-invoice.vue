@@ -121,15 +121,9 @@ export default {
     },
   },
   mounted() {
-    console.log("HOLA");
     this.$cable.subscribe({
       channel: 'InvoicesChannel',
     });
-    setTimeout(() => {
-      this.totalPrice = 0;
-      console.log(this.invoice.paymentRequest);
-      console.log('entra a setTimeout');
-    }, CLEAN_INVOICE_TIME);
   },
   watch: {
     status: 'reset'

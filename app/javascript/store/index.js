@@ -127,6 +127,12 @@ const store = new Vuex.Store({
         invoiceApi.buy(cartProducts).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
+          setTimeout(() => {
+            context.commit('setLoading', false);
+            context.commit('setInvoice', {});
+            console.log(this.invoice.paymentRequest);
+            console.log('entra a setTimeout');
+          }, 3000);
         });
       } else {
         context.commit('setLoading', false);
