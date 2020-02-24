@@ -8,6 +8,7 @@ import invoiceApi from '../api/invoices';
 import statisticsApi from '../api/statistics';
 
 Vue.use(Vuex);
+const CLOSE_INVOICE_QR = 300000;
 
 const store = new Vuex.Store({
   state: {
@@ -131,8 +132,7 @@ const store = new Vuex.Store({
             context.commit('setLoading', false);
             context.commit('setInvoice', {});
             context.dispatch('cleanCart');
-            console.log('entra a setTimeout');
-          }, 3000);
+          }, CLOSE_INVOICE_QR);
         });
       } else {
         context.commit('setLoading', false);
