@@ -79,12 +79,12 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import invoiceApi from '../api/invoices';
 import cartProducts from './cart-products.vue';
 
 const SHOW_APOLOGY_BUTTON = 10000;
-const CLOSE_MODAL_AFTER_IDLE_WAIT = 7000;
+const CLOSE_MODAL_AFTER_IDLE_WAIT = 5000;
 
 export default {
   components: {
@@ -116,6 +116,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'cleanCart',
+      'cleanInvoice',
+      'getFeeBalance',
+    ]),
     show() {
       this.$modal.show('apology-modal');
       this.confirmDebtButtonDisabled = true;
@@ -153,6 +158,7 @@ export default {
       }
       setTimeout(() => {
         this.$modal.hide('apology-modal');
+        this.$store.dispatch('cleanCart');
       }, CLOSE_MODAL_AFTER_IDLE_WAIT);
     },
     cartProductsToReqFormat() {
