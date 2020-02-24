@@ -80,6 +80,16 @@ export default {
       return (this.invoice.paymentRequest && !isTablet);
     },
   },
+  channels: {
+    InvoicesChannel: {
+      connected() { console.log('connected to invoice channel'); },
+      received(data) {
+        if (data) {
+          this.updateInvoiceSettled();
+        }
+      },
+    },
+  },
   methods: {
     ...mapActions([
       'toggleResume',
@@ -110,13 +120,9 @@ export default {
     },
   },
   mounted() {
-    this.interval = setInterval(function() {
-      if (this.invoice.id && !this.status) {
-        this.updateInvoiceSettled();
-      } else if (this.invoice.paid) {
-        clearInterval(this.interval);
-      }
-    }.bind(this), 1000);
+    this.$cable.subscribe({
+      channel: 'InvoicesChannel',
+    });
   },
   watch: {
     status: 'reset'

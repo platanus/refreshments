@@ -2,15 +2,15 @@ class Api::V1::InvoicesController < Api::V1::BaseController
   def create
     shopping_cart_items
     invoice = CreateInvoice.for(shopping_cart_items: shopping_cart_items)
+    UpdateInvoiceStatusJob.perform_later(invoice.r_hash) if invoice
 
     render json: invoice
   end
 
   def status
     r_hash = URI.decode(params[:r_hash])
-    settled = InvoiceUtils.status(r_hash)
-    SettleInvoiceJob.perform_later(r_hash) if settled
-    DispenseProductsJob.perform_later(r_hash) if settled
+    invoice = Invoice.find_by(r_hash: r_hash)
+    settled = invoice&.settled
     respond_with settled: settled
   end
 
