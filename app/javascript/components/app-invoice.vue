@@ -52,7 +52,7 @@ import errorNotification from './payment-error-button.vue';
 
 const LENOVO_TAB_4_WIDTH = 1000;
 const CLOSE_AFTER_SUCCESSFUL_BUY_WAIT = 10000;
-const CLEAN_INVOICE_TIME = 50000;
+const CLEAN_INVOICE_TIME = 3000;
 
 export default {
   components: {
@@ -125,7 +125,7 @@ export default {
       channel: 'InvoicesChannel',
     });
     setTimeout(() => {
-      this.cleanInvoice();
+      this.totalPrice = 0;
     }, CLEAN_INVOICE_TIME);
   },
   watch: {
