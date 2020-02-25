@@ -8,7 +8,7 @@ import invoiceApi from '../api/invoices';
 import statisticsApi from '../api/statistics';
 
 Vue.use(Vuex);
-const CLOSE_INVOICE_QR = 300000;
+const CLOSE_INVOICE_QR = 3000;
 
 const store = new Vuex.Store({
   state: {
