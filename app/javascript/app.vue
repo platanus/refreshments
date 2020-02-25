@@ -90,7 +90,6 @@ export default {
     checkInactivity() {
       clearTimeout(this.inactiveTime);
       this.inactiveTime = setTimeout(() => {
-        this.$store.dispatch('refreshProducts');
         this.refreshScrollBar();
       }, this.refreshTime);
     },

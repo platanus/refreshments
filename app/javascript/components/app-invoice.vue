@@ -17,7 +17,7 @@
           <qrcode
             :value="invoice.paymentRequest"
             :options="{ size: 160 }"
-            v-if="totalPrice > 0"
+            v-if="totalPrice > 0 && invoice.paymentRequest"
           />
         </div>
         <div
