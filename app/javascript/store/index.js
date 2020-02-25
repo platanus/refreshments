@@ -128,10 +128,13 @@ const store = new Vuex.Store({
         invoiceApi.buy(cartProducts).then((response) => {
           context.commit('setInvoice', response.invoice);
           context.commit('setLoading', false);
+
           setTimeout(() => {
-            context.commit('setLoading', false);
-            context.commit('setInvoice', {});
-            context.dispatch('cleanCart');
+            if (this.invoice.settled) {
+              context.commit('setLoading', false);
+              context.commit('setInvoice', {});
+              context.dispatch('cleanCart');
+            }
           }, CLOSE_INVOICE_QR);
         });
       } else {
