@@ -73,7 +73,9 @@ const store = new Vuex.Store({
       const prod = {};
       console.log(context.state.products[payload.id]);
       console.log(payload);
-      prod[payload.id] = { ...payload, amount: context.state.products[payload.id].amount || 0 };
+      const amountValue = (typeof context.state.products[payload.id].amount === 'undefined') ? 0 : context.state.products[payload.id].amount;
+      console.log(amountValue);
+      prod[payload.id] = { ...payload, amount: amountValue };
       context.commit('addProduct', prod);
     },
     getProducts: context => {
