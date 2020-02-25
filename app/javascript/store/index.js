@@ -71,10 +71,7 @@ const store = new Vuex.Store({
   actions: {
     addProduct: (context, payload) => {
       const prod = {};
-      console.log(context.state.products[payload.id]);
-      console.log(payload);
       const amountValue = get(context, `state.products[${payload.id}].amount`, 0);
-      console.log(amountValue);
       prod[payload.id] = { ...payload, amount: amountValue };
       context.commit('addProduct', prod);
     },
