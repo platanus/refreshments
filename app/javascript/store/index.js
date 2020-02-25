@@ -1,7 +1,7 @@
 import Vue from 'vue/dist/vue.esm.js';
 import Vuex from 'vuex';
 
-import { shuffle } from 'lodash';
+import { shuffle, get } from 'lodash';
 
 import productApi from '../api/products';
 import invoiceApi from '../api/invoices';
@@ -73,7 +73,7 @@ const store = new Vuex.Store({
       const prod = {};
       console.log(context.state.products[payload.id]);
       console.log(payload);
-      const amountValue = (typeof context.state.products[payload.id].amount === 'undefined') ? 0 : context.state.products[payload.id].amount;
+      const amountValue = get(context, `state.products[${payload.id}].amount`, 0);
       console.log(amountValue);
       prod[payload.id] = { ...payload, amount: amountValue };
       context.commit('addProduct', prod);
